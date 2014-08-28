@@ -37,13 +37,13 @@ fs.logout()
 # Python imports
 try:
     # Python 3
-    from urllib.request import(build_opener, Request)
+    from urllib.request import(build_opener, Request, urlopen)
     from urllib.error import HTTPError
     from urllib.parse import(urlsplit, urlunsplit, parse_qs, urlencode)
 except ImportError:
     # Python 2
     from urllib import urlencode
-    from urllib2 import(build_opener, Request, HTTPError)
+    from urllib2 import(build_opener, Request, HTTPError, urlopen)
     from urlparse import(urlsplit, urlunsplit, parse_qs)
     
 import json
@@ -137,7 +137,17 @@ class FamilySearch(object):
             if error.code == 401:
                 self.logged_in = False
             raise
-
+    
+    def _head(self, url):
+        if self.logged_in and not self.cookies:
+            # Add sessionId parameter to url if cookie is not set
+            url = self._add_query_params(url, sessionId=self.session_id)
+        request = Request(url)
+        request.get_method = lambda: 'HEAD'
+        request.add_header('User-Agent', self.agent)
+        response = urlopen(request)
+        return response.info()
+        
     def _add_subpath(self, url, subpath):
         """
         Add a subpath to the path component of the given URL.
