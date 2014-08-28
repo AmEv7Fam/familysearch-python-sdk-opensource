@@ -10,10 +10,12 @@ import random
 import time
 try:
     # Python 3
-    from urllib.request import(build_opener, urlencode, HTTPCookieProcessor)
+    from urllib.request import(build_opener, HTTPCookieProcessor)
+    from urllib.parse import urlencode
 except ImportError:
     # Python 2
-    from urllib2 import(build_opener, urlencode, HTTPCookieProcessor)
+    from urllib import urlencode
+    from urllib2 import(build_opener, HTTPCookieProcessor)
 
 import json
 
@@ -24,7 +26,6 @@ def parse(input):
     if hasattr(input, "read"):
         input = input.read()
         input = input.decode("utf-8")
-    print(input)
     data = json.loads(input)
     return Identity(data)
 

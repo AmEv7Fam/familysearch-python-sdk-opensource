@@ -42,8 +42,9 @@ try:
     from urllib.parse import(urlsplit, urlunsplit, parse_qs, urlencode)
 except ImportError:
     # Python 2
+    from urllib import urlencode
     from urllib2 import(build_opener, Request, HTTPError)
-    from urlparse import(urlsplit, urlunsplit, parse_qs, urlencode)
+    from urlparse import(urlsplit, urlunsplit, parse_qs)
     
 import json
 
