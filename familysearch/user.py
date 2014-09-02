@@ -13,7 +13,7 @@ class User(object):
         return response[0]
     
     def current_user_person(self):
-        url = self.base + "platform/tree/current-person"
+        url = self.tree_base + "current-person"
         response = self._request(url)
         response = self._fs2py(response, 'persons')
         return response[0]
