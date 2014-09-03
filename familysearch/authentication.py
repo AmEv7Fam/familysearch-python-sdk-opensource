@@ -140,6 +140,26 @@ class Authentication(object):
         self.session_id = parse(self._request(url, credentials,)).session.id
         self.logged_in = True
         return self.session_id
+    
+    def login2(self, username, password):
+        """
+        Log into FamilySearch using Basic Authentication.
+
+        This mechanism is available only to approved developer keys.
+        
+        (Temporary name until OAuth2 system is in place.)
+        """
+        self.logged_in = False
+        self.cookies.clear()
+        url = 'https://ident.familysearch.org/cis-web/oauth2/v3/token'
+        credentials = urlencode({'username': username,
+                                 'password': password,
+                                 'client_id': self.key,
+                                 'grant_type': 'password'
+                                 })
+        response = self._request(url, credentials)
+        self.session_id = self._fs2py(response)['access_token']
+        self.logged_in = True
 
     def logout(self):
         """
