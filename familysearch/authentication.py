@@ -113,6 +113,13 @@ class Authentication(object):
         Set up the URLs for this IdentityV2 object.
         """
         self.identity_base = self.base + '/identity/v2/'
+        
+        if self.base == "familysearch.org":
+            self.auth_base = "https://ident.familysearch.org/cis-web/oauth2/v3/authorization"
+        elif self.base == "sandbox.familysearch.org":
+            self.auth_base = self.base + "/cis-web/oauth2/v3/authorization"
+        else:
+            self.auth_base = "https://identbeta.familysearch.org/cis-web/oauth2/v3/authorization"
 
         self.oauth_secrets = dict()
 
