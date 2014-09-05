@@ -11,11 +11,15 @@ try:
     from urllib.request import(build_opener, HTTPCookieProcessor)
     from urllib.parse import urlencode
     import socketserver
+    from http import server
 except ImportError:
     # Python 2
     from urllib import urlencode
     from urllib2 import(build_opener, HTTPCookieProcessor)
     import SocketServer as socketserver
+    import SimpleHTTPServer as server
+    
+import webbrowser
 
 # Magic
 
@@ -67,7 +71,14 @@ class Authentication(object):
         
         This mechanism is required for browser-based applications.
         """
-        pass
+        url = self.auth_base + 'authorization'
+        url = self._add_query_params(url, {'response_type': 'code',
+                                     'client_id': self.key,
+                                     'redirect_uri': "http://localhost:63342/login.html"
+                                     })
+        webbrowser.open(url)
+        socketserver.TCPServer(('', 63342), server.SimpleHTTPRequestHandler
+                               ).handle_request()
 
     def logout(self):
         """
@@ -93,6 +104,44 @@ class Authentication(object):
         #return self.session_id
         pass
 
+from BaseHTTPServer import BaseHTTPRequestHandler
+import urlparse
+
+class GetHandler(BaseHTTPRequestHandler):
+    
+    def do_GET(self):
+        parsed_path = urlparse.urlparse(self.path)
+        message_parts = [
+                'CLIENT VALUES:',
+                'client_address=%s (%s)' % (self.client_address,
+                                            self.address_string()),
+                'command=%s' % self.command,
+                'path=%s' % self.path,
+                'real path=%s' % parsed_path.path,
+                'query=%s' % parsed_path.query,
+                'request_version=%s' % self.request_version,
+                '',
+                'SERVER VALUES:',
+                'server_version=%s' % self.server_version,
+                'sys_version=%s' % self.sys_version,
+                'protocol_version=%s' % self.protocol_version,
+                '',
+                'HEADERS RECEIVED:',
+                ]
+        for name, value in sorted(self.headers.items()):
+            message_parts.append('%s=%s' % (name, value.rstrip()))
+        message_parts.append('')
+        message = '\r\n'.join(message_parts)
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(message)
+        return
+
+if __name__ == '__main__':
+    from BaseHTTPServer import HTTPServer
+    server = HTTPServer(('localhost', 8080), GetHandler)
+    print 'Starting server, use <Ctrl-C> to stop'
+    server.serve_forever()
 # FamilySearch imports
 
 from . import FamilySearch
