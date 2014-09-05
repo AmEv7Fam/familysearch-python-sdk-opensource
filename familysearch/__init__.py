@@ -64,7 +64,7 @@ class FamilySearch(object):
     """
 
     def __init__(self, agent, key, session=None,
-                 base='sandbox.familysearch.org'):
+                 base='https://sandbox.familysearch.org'):
         """
         Instantiate a FamilySearch proxy object.
 
@@ -75,7 +75,7 @@ class FamilySearch(object):
         password (optional)
         session (optional) -- existing session ID to reuse
         base (optional) -- base URL for the API;
-                           defaults to 'http://www.dev.usys.org' (the Reference System)
+                           defaults to 'https://sandbox.familysearch.org'
         """
         self.agent = '%s Python-FS-Stack/%s' % (agent, __version__)
         self.key = key
@@ -120,9 +120,7 @@ class FamilySearch(object):
         Returns a file-like object representing the response.
 
         """
-        if self.logged_in and not self.cookies:
-            # Add sessionId parameter to url if cookie is not set
-            url = self._add_query_params(url, sessionId=self.session_id)
+        
         if data:
             data = data.encode('utf-8')
         request = Request(url, data, headers)
@@ -130,6 +128,9 @@ class FamilySearch(object):
             request.add_header('Content-Type', 'application/json')
         else:
             request.add_header('Accept', 'application/json')
+        if self.logged_in and not self.cookies:
+            # Add sessionId parameter to url if cookie is not set
+            request.add_header('Authorization', 'Bearer ' + self.session_id)
         request.add_header('User-Agent', self.agent)
         try:
             return self.opener.open(request)
