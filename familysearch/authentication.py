@@ -42,6 +42,7 @@ class Authentication(object):
 
         # Assume logged_in if session_id is set
         self.logged_in = bool(self.session_id)
+        
 
         cookie_handler = HTTPCookieProcessor()
         self.cookies = cookie_handler.cookiejar
@@ -71,14 +72,28 @@ class Authentication(object):
         
         This mechanism is required for browser-based applications.
         """
+        self.logged_in = False
+        self.cookies.clear()
         url = self.auth_base + 'authorization'
         url = self._add_query_params(url, {'response_type': 'code',
                                      'client_id': self.key,
-                                     'redirect_uri': "http://127.0.0.1:63342"
+                                     'redirect_uri': "http://localhost:63342"
                                      })
         webbrowser.open(url)
-        socketserver.HTTPServer(('', 63342), getter
-                               ).handle_request()
+        server.HTTPServer(('', 63342), getter).handle_request()
+        
+        # Now that we have the authentication token, grab the access token.
+        
+        url = self.auth_base + '/token'
+        credentials = urlencode({'grant_type': 'authorization_code',
+                                 'code': qs,
+                                 'client_id': self.key
+                                  })
+        print(credentials)
+        response = self._request(url, credentials)
+        self.sesion_id = self._fs2py(response)['access_token']
+        self.logged_in = True
+        
 
     def logout(self):
         """
@@ -106,15 +121,25 @@ class Authentication(object):
     
 class getter(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        print("Just received a GET request")
         self.send_response(code=200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
         
         path = self.path
+        global qs
         qs = parse_qs(path)
+        qs = list(qs.values())[0][0]
+        server.wfile("<html>")
+        server.wfile("<head>")
+        server.wfile("<title>FSPySDKLogin</title>")
+        server.wfile("</head")
+        server.wfile("<body>")
+        server.wfile("<p>This page is intended for log-in purposes only.</p>")
+        server.wfile("<p>You can safely close this page.</p>")
+        server.wfile("</body")
+        server.wfile("</html>")
         
-        print(qs)
+        
 
 # FamilySearch imports
 
