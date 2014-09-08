@@ -9,7 +9,7 @@ Main class: Authentication, meant to be mixed-in to the FamilySearch class
 try:
     # Python 3
     from urllib.request import(build_opener, HTTPCookieProcessor)
-    from urllib.parse import urlencode
+    from urllib.parse import(urlencode, parse_qs)
     import socketserver
     from http import server
 except ImportError:
@@ -74,10 +74,10 @@ class Authentication(object):
         url = self.auth_base + 'authorization'
         url = self._add_query_params(url, {'response_type': 'code',
                                      'client_id': self.key,
-                                     'redirect_uri': "http://localhost:63342/login.html"
+                                     'redirect_uri': "http://127.0.0.1:63342"
                                      })
         webbrowser.open(url)
-        socketserver.TCPServer(('', 63342), server.SimpleHTTPRequestHandler
+        socketserver.HTTPServer(('', 63342), getter
                                ).handle_request()
 
     def logout(self):
@@ -103,6 +103,18 @@ class Authentication(object):
         #self.logged_in = True
         #return self.session_id
         pass
+    
+class getter(server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        print("Just received a GET request")
+        self.send_response(code=200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        
+        path = self.path
+        qs = parse_qs(path)
+        
+        print(qs)
 
 # FamilySearch imports
 
