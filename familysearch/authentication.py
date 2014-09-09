@@ -10,13 +10,11 @@ try:
     # Python 3
     from urllib.request import(build_opener, HTTPCookieProcessor)
     from urllib.parse import(urlencode, parse_qs)
-    import socketserver
     from http import server
 except ImportError:
     # Python 2
     from urllib import urlencode
     from urllib2 import(build_opener, HTTPCookieProcessor)
-    import SocketServer as socketserver
     import SimpleHTTPServer as server
     
 import webbrowser
@@ -89,9 +87,9 @@ class Authentication(object):
                                  'code': qs,
                                  'client_id': self.key
                                   })
-        print(credentials)
+
         response = self._request(url, credentials)
-        self.sesion_id = self._fs2py(response)['access_token']
+        self.session_id = self._fs2py(response)['access_token']
         self.logged_in = True
         
 
@@ -129,15 +127,15 @@ class getter(server.BaseHTTPRequestHandler):
         global qs
         qs = parse_qs(path)
         qs = list(qs.values())[0][0]
-        server.wfile("<html>")
-        server.wfile("<head>")
-        server.wfile("<title>FSPySDKLogin</title>")
-        server.wfile("</head")
-        server.wfile("<body>")
-        server.wfile("<p>This page is intended for log-in purposes only.</p>")
-        server.wfile("<p>You can safely close this page.</p>")
-        server.wfile("</body")
-        server.wfile("</html>")
+        self.wfile.write(b"<html>")
+        self.wfile.write(b"<head>")
+        self.wfile.write(b"<title>FSPySDKLogin</title>")
+        self.wfile.write(b"</head")
+        self.wfile.write(b"<body>")
+        self.wfile.write(b"<p>This page is intended for log-in purposes only.</p>")
+        self.wfile.write(b"<p>You can safely close this page.</p>")
+        self.wfile.write(b"</body")
+        self.wfile.write(b"</html>")
         
         
 
