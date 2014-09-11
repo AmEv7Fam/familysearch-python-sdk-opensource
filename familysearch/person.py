@@ -14,11 +14,13 @@ class Person:
     def parents(self, pid):
         url = self.person_base + pid + "/parents"
         response = self._request(url)
+        response = self._fs2py(response)
         return response
     
     def spouses(self, pid):
         url = self.person_base + pid + "/spouses"
         response = self._request(url)
+        response = self._fs2py(response)
         return response
     
     def children(self, pid):
