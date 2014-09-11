@@ -7,7 +7,10 @@ class Utilities:
         pass
     
     def pending_modifications(self):
-        pass
+        url = self.base + "/platform/pending-modifications"
+        response = self._request(url)
+        response = self._fs2py(response, "features")
+        return response
     
     def redirect(self):
         pass
