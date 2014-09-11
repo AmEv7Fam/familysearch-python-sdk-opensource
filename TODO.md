@@ -1,4 +1,6 @@
-## `__init__`
+## Main module
+
+Better method handling (as reference in #1)
 
 ## Authentation
 
@@ -29,6 +31,8 @@
 ## Spouses
 
 ## User
+
+Finished.
 
 ## Utilities
 
