@@ -7,9 +7,9 @@ class Person:
         self.person_base = self.tree_base + 'persons/'
         
     def create_person(self, data):
-        pass # Working on it!
-        #url = self.tree_base + 'persons'
-        #response = self._request(url, data)    
+        url = self.tree_base + 'persons'
+        response = self._request(url, data)
+        return dict(response.info())
         
     def parents(self, pid):
         url = self.person_base + pid + "/parents"
