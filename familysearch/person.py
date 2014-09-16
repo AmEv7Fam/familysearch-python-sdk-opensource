@@ -11,6 +11,12 @@ class Person:
         response = self._request(url, data)
         return dict(response.info())
     
+    def read_person(self, pid):
+        url = self.person_base + pid
+        response = self._request(url)
+        response = self._fs2py(response)
+        return response
+    
      def delete_person(self, pid, reason):
         url = self.person_base + 'pid'
         response = self._request(url, headers={'X-Reason': reason, method=DELETE})
