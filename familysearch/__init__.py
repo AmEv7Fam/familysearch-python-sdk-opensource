@@ -126,7 +126,7 @@ class FamilySearch(object):
             data = json.dumps(data)
             data = data.encode('utf-8')
         request = Request(url, data, headers, method=method)
-        if data:
+        if data or method:
             request.add_header('Content-Type', 'application/x-gedcomx-v1+json')
         else:
             request.add_header('Accept', 'application/json')

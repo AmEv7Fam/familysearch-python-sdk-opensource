@@ -10,6 +10,11 @@ class Person:
         url = self.tree_base + 'persons'
         response = self._request(url, data)
         return dict(response.info())
+    
+     def delete_person(self, pid, reason):
+        url = self.person_base + 'pid'
+        response = self._request(url, headers={'X-Reason': reason, method=DELETE})
+        return dict(response.info())
         
     def parents(self, pid):
         url = self.person_base + pid + "/parents"
