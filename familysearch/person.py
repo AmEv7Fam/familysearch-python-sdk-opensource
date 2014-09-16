@@ -22,6 +22,11 @@ class Person:
         response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
         return dict(response.info())
     
+    def restore_person(self, pid):
+        url = self.person_base + pid + "/restore"
+        response = self._request(url, method="POST", nojson=True)
+        return dict(response.info())
+    
     def parents(self, pid):
         url = self.person_base + pid + "/parents"
         response = self._request(url)
