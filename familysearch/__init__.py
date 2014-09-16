@@ -111,7 +111,7 @@ class FamilySearch(object):
         if self.session_id in self.oauth_secrets:
             self.logged_in = False
 
-    def _request(self, url, data=None, headers={}, method=None):
+    def _request(self, url, data=None, headers={}, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.
 
@@ -126,10 +126,11 @@ class FamilySearch(object):
             data = json.dumps(data)
             data = data.encode('utf-8')
         request = Request(url, data, headers, method=method)
-        if data or method:
-            request.add_header('Content-Type', 'application/x-gedcomx-v1+json')
-        else:
-            request.add_header('Accept', 'application/json')
+        if not nojson:
+            if data or method:
+                request.add_header('Content-Type', 'application/x-gedcomx-v1+json')
+            else:
+                request.add_header('Accept', 'application/json')
         if self.logged_in and not self.cookies:
             # Add sessionId parameter to url if cookie is not set
             request.add_header('Authorization', 'Bearer ' + self.session_id)
