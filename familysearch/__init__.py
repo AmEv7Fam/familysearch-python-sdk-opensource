@@ -111,21 +111,23 @@ class FamilySearch(object):
         if self.session_id in self.oauth_secrets:
             self.logged_in = False
 
-    def _request(self, url, data=None, headers={}):
+    def _request(self, url, data=None, headers={}, method=None):
         """
-        Make a GET or a POST request to the FamilySearch API.
+        Make a request to the FamilySearch API.
 
         Adds the User-Agent header and sets the response format to JSON.
-        If the data argument is supplied, makes a POST request.
+        If the data argument is supplied, makes a POST request unless specified
+        in the Method header.
         Returns a file-like object representing the response.
 
         """
         
         if data:
+            data = json.dumps(data)
             data = data.encode('utf-8')
-        request = Request(url, data, headers)
-        if headers:
-            request.add_header('Content-Type', 'application/json')
+        request = Request(url, data, headers, method=method)
+        if data:
+            request.add_header('Content-Type', 'application/x-gedcomx-v1+json')
         else:
             request.add_header('Accept', 'application/json')
         if self.logged_in and not self.cookies:
@@ -139,15 +141,6 @@ class FamilySearch(object):
                 self.logged_in = False
             raise
     
-    def _head(self, url):
-        if self.logged_in and not self.cookies:
-            # Add sessionId parameter to url if cookie is not set
-            url = self._add_query_params(url, sessionId=self.session_id)
-        request = Request(url)
-        request.get_method = lambda: 'HEAD'
-        request.add_header('User-Agent', self.agent)
-        response = urlopen(request)
-        return response.info()
         
     def _add_subpath(self, url, subpath):
         """
