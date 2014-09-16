@@ -17,11 +17,11 @@ class Person:
         response = self._fs2py(response)
         return response
     
-     def delete_person(self, pid, reason):
+    def delete_person(self, pid, reason):
         url = self.person_base + 'pid'
-        response = self._request(url, headers={'X-Reason': reason, method=DELETE})
+        response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
         return dict(response.info())
-        
+    
     def parents(self, pid):
         url = self.person_base + pid + "/parents"
         response = self._request(url)
