@@ -18,7 +18,7 @@ class Person:
         return response
     
     def delete_person(self, pid, reason):
-        url = self.person_base + 'pid'
+        url = self.person_base + pid
         response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
         return dict(response.info())
     
