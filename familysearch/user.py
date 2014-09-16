@@ -24,7 +24,7 @@ class User(object):
         response = self._fs2py(response, 'agents')
         return response[0]
     
-    def current_user_history(self, uid):
+    def current_user_history(self):
         url = self.user_base + "current/history"
         response = self._request(url)
         response = self._fs2py(response)
