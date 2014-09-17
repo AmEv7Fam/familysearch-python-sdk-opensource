@@ -6,10 +6,10 @@ class Spouses:
     def __init__(self):
         pass # TODO
     
-    def create_relaitionship(self):
+    def create_couple_relaitionship(self):
         pass # TODO
     
-    def couple_relationship(self):
+    def read_couple_relationship(self):
         pass # TODO
     
     def couple_relationship_conclusion(self):
