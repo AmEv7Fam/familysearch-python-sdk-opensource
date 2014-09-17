@@ -140,6 +140,8 @@ class FamilySearch(object):
         except HTTPError as error:
             if error.code == 401:
                 self.logged_in = False
+            if error.code == 400:
+                print(error.headers)
             raise
     
         
