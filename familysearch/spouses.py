@@ -40,11 +40,21 @@ class Spouses:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_couple_relationship(self):
-        pass # TODO
+    def read_couple_relationship(self, cpid):
+        url = self.couple_base + cpid
+        response = self._request(url)
+        response = self._fs2py(response)
+        return response
     
-    def couple_relationship_conclusion(self):
-        pass # TODO
+    def couple_relationship_conclusion(self, cpid, data):
+        url = self.couple_base + cpid
+        response = self._request(url, data)
+        return dict(response.info())
+    
+    def delete_couple_relationship_conclusion(self, cpid, cid, reason=None):
+        url = self.couple_base + cpid + '/conclusions/' + cid
+        response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
+        return dict(response.info())
     
     def delete_couple_relationship(self, cpid, reason=None):
         url = self.couple_base + cpid

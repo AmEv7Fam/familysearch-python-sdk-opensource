@@ -86,8 +86,10 @@ class Person:
         response = self._fs2py(response)
         return response
     
-    def person_conclusion(self, pic, cid):
-        pass # TODO
+    def person_conclusion(self, pid, data):
+        url = self.person_base + pid
+        response = self._request(url, data)
+        return dict(response.info())
     
     def person_merge(self, pid, dpid):
         pass # TODO
