@@ -82,7 +82,7 @@ class FamilySearch(object):
     """
 
     def __init__(self, agent, key, session=None,
-                 base='sandbox.familysearch.org'):
+                 base='https://sandbox.familysearch.org'):
         """
         Instantiate a FamilySearch proxy object.
 
@@ -93,7 +93,7 @@ class FamilySearch(object):
         password (optional)
         session (optional) -- existing session ID to reuse
         base (optional) -- base URL for the API;
-                           defaults to 'http://www.dev.usys.org' (the Reference System)
+                           defaults to 'https://sandbox.familysearch.org'
         """
         self.agent = '%s Python-FS-Stack/%s' % (agent, __version__)
         self.key = key
@@ -129,49 +129,40 @@ class FamilySearch(object):
         if self.session_id in self.oauth_secrets:
             self.logged_in = False
 
-    def _request(self, url, data=None, headers={}, **kwargs):
+    def _request(self, url, data=None, headers={}, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.
 
-        Adds the User-Agent header and sets the response format to JSON. By
-        default requests are made via a GET request. If the data argument is
-        supplied, makes a POST request. The method used for the request can
-        be specified by passing in the "method" keyword argument to be used
-        (i.e. _request(url, method='PUT')). Methods that have been tested in
-        addition to GET and POST include PUT, DELETE, OPTIONS and HEAD.
+        Adds the User-Agent header and sets the response format to JSON.
+        If the data argument is supplied, makes a POST request unless specified
+        in the Method header.
 
         Returns a file-like object representing the response.
-
         """
+        
+        if data:
+            data = json.dumps(data)
+            data = data.encode('utf-8')
+        request = Request(url, data, headers, method=method)
+        if not nojson:
+            if data or method:
+                request.add_header('Content-Type', 'application/x-gedcomx-v1+json')
+            else:
+                request.add_header('Accept', 'application/json')
         if self.logged_in and not self.cookies:
             # Add sessionId parameter to url if cookie is not set
-            url = self._add_query_params(url, sessionId=self.session_id)
-        if data:
-            data = data.encode('utf-8')
-        request = Request(url, data, headers, **kwargs)
-        if headers:
-            request.add_header('Content-Type', 'application/json')
-        else:
-            request.add_header('Accept', 'application/json')
+            request.add_header('Authorization', 'Bearer ' + self.session_id)
         request.add_header('User-Agent', self.agent)
         try:
             return self.opener.open(request)
         except HTTPError as error:
             if error.code == 401:
                 self.logged_in = False
+            if error.code == 400:
+                print(error.headers)
             raise
-
-    def _head(self, url):
-        if self.logged_in and not self.cookies:
-            # Add sessionId parameter to url if cookie is not set
-            url = self._add_query_params(url, sessionId=self.session_id)
-        request = Request(url)
-        request.get_method = lambda: 'HEAD'
-        request.add_header('User-Agent', self.agent)
-        response = urlopen(request)
-        return response.info()
-
-
+    
+    
     def _add_subpath(self, url, subpath):
         """
         Add a subpath to the path component of the given URL.

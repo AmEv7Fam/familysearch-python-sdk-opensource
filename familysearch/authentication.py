@@ -6,101 +6,20 @@ A module implementing the Identity version 2 API module
 Main class: Authentication, meant to be mixed-in to the FamilySearch class
 """
 
-import random
-import time
 try:
     # Python 3
     from urllib.request import(build_opener, HTTPCookieProcessor)
-    from urllib.parse import urlencode
+    from urllib.parse import(urlencode, parse_qs)
+    from http import server
 except ImportError:
     # Python 2
     from urllib import urlencode
     from urllib2 import(build_opener, HTTPCookieProcessor)
-
-import json
+    import SimpleHTTPServer as server
+    
+import webbrowser
 
 # Magic
-
-def parse(input):
-    """Parse specified file or string and return an Identity object created from it."""
-    if hasattr(input, "read"):
-        input = input.read()
-        input = input.decode("utf-8")
-    data = json.loads(input)
-    return Identity(data)
-
-class JSONBase:
-    """Base class for all JSON-related objects"""
-    def to_json(self):
-        return json.dumps(self.to_json_dict())
-
-    def __repr__(self):
-        return "%s(%s)" % (self.__class__.__name__, self.to_json_dict())
-
-    def __str__(self):
-        return self.to_json()
-
-
-class FSDict(dict):
-    """Convenience class to access FamilySearch-style property lists as dictionaries
-
-    For example,
-        [{"name": "key1", "value": "value1"}, {"name": "key2", "value": "value2"}]
-    converts to
-        {"key1": "value1", "key2": "value2"}
-
-    """
-
-    def __init__(self, pairs=None):
-        if isinstance(pairs, list) and all((isinstance(pair, dict) for pair in pairs)):
-            dict.__init__(self)
-            for pair in pairs:
-                self[pair["name"]] = pair["value"]
-
-    def to_json_array(self):
-        return [{"name": key, "value": self[key]} for key in self]
-
-class Identity(JSONBase):
-    def __init__(self, o):
-        if "statusCode" in o:
-            self.statusCode = o["statusCode"]
-        if "statusMessage" in o:
-            self.statusMessage = o["statusMessage"]
-        if "version" in o:
-            self.version = o["version"]
-        if "properties" in o:
-            self.properties = FSDict(o["properties"])
-        if "session" in o and o["session"]:
-            self.session = Session(o["session"])
-
-    def to_json_dict(self):
-        d = {}
-        if hasattr(self, "statusCode"):
-            d["statusCode"] = self.statusCode
-        if hasattr(self, "statusMessage"):
-            d["statusMessage"] = self.statusMessage
-        if hasattr(self, "version"):
-            d["version"] = self.version
-        if hasattr(self, "properties"):
-            d["properties"] = self.properties.to_json_array()
-        if hasattr(self, "session"):
-            d["session"] = self.session.to_json_dict()
-        return d
-
-class Session(JSONBase):
-    def __init__(self, o):
-        if "id" in o:
-            self.id = o["id"]
-        if "type" in o:
-            self.type = o["type"]
-
-    def to_json_dict(self):
-        d = {}
-        if hasattr(self, "id"):
-            d["id"] = self.id
-        if hasattr(self, "type"):
-            d["type"] = self.type
-        return d
 
 class Authentication(object):
 
@@ -110,14 +29,18 @@ class Authentication(object):
 
     def __init__(self):
         """
-        Set up the URLs for this IdentityV2 object.
+        Set up the URLs for authentication.
         """
-        self.identity_base = self.base + '/identity/v2/'
-
-        self.oauth_secrets = dict()
+        if self.base == "https://familysearch.org":
+            self.auth_base = "https://ident.familysearch.org/cis-web/oauth2/v3/"
+        elif self.base == "https://sandbox.familysearch.org":
+            self.auth_base = self.base + "/cis-web/oauth2/v3/"
+        else:
+            self.auth_base = "https://identbeta.familysearch.org/cis-web/oauth2/v3/"
 
         # Assume logged_in if session_id is set
         self.logged_in = bool(self.session_id)
+        
 
         cookie_handler = HTTPCookieProcessor()
         self.cookies = cookie_handler.cookiejar
@@ -127,27 +50,55 @@ class Authentication(object):
         """
         Log into FamilySearch using Basic Authentication.
 
-        Web applications must use OAuth.
-
+        This mechanism is available only to approved developer keys.
         """
         self.logged_in = False
         self.cookies.clear()
-        url = self.identity_base + 'login'
+        url = self.auth_base + '/token'
         credentials = urlencode({'username': username,
                                  'password': password,
-                                 'key': self.key,
-                                 'dataFormat': 'application/json'})
-        self.session_id = parse(self._request(url, credentials,)).session.id
+                                 'client_id': self.key,
+                                 'grant_type': 'password'
+                                 })
+        response = self._request(url, credentials)
+        self.session_id = self._fs2py(response)['access_token']
         self.logged_in = True
-        return self.session_id
+        
+    def oauth_login(self):
+        """
+        Log into FamilySearch using OAuth2 Authentication.
+        
+        This mechanism is required for browser-based applications.
+        """
+        self.logged_in = False
+        self.cookies.clear()
+        url = self.auth_base + 'authorization'
+        url = self._add_query_params(url, {'response_type': 'code',
+                                     'client_id': self.key,
+                                     'redirect_uri': "http://localhost:63342"
+                                     })
+        webbrowser.open(url)
+        server.HTTPServer(('', 63342), getter).handle_request()
+        
+        # Now that we have the authentication token, grab the access token.
+        
+        url = self.auth_base + '/token'
+        credentials = urlencode({'grant_type': 'authorization_code',
+                                 'code': qs,
+                                 'client_id': self.key
+                                  })
+
+        response = self._request(url, credentials)
+        self.session_id = self._fs2py(response)['access_token']
+        self.logged_in = True
+        
 
     def logout(self):
         """
         Log the current session out of FamilySearch.
         """
         self.logged_in = False
-        url = self.identity_base + 'logout'
-        self._request(url)
+        # TODO: Change to Delete Access Token
         self.session_id = None
         self.cookies.clear()
 
@@ -159,114 +110,34 @@ class Authentication(object):
         into a cookie without doing anything else.
 
         """
-        url = self.identity_base + 'session'
-        self.session_id = identity.parse(self._request(url)).session.id
-        self.logged_in = True
-        return self.session_id
-
-    def request_token(self, callback_url='oob'):
-        """
-        Get a request token for step 1 of the OAuth login process.
-
-        Returns a dictionary containing the OAuth response and stores the token
-        and token secret, which are needed to get an access token (step 3).
-
-        """
-        self.logged_in = False
-        self.cookies.clear()
-        url = self.identity_properties['request.token.url']
-        oauth_response = self._oauth_request(url, oauth_callback=callback_url)
-        response = dict(urllib.parse.parse_qsl(oauth_response.read()))
-        self.session_id = response['oauth_token']
-        self.oauth_secrets[response['oauth_token']] = response['oauth_token_secret']
-        return response
-
-    def authorize(self, request_token=None, options={}, **kw_options):
-        """
-        Construct and return the User Authorization URL for step 2 of the OAuth login process.
-
-        This URL should be loaded into the user's browser. It is the
-        application's responsibility to receive the OAuth verifier from the
-        callback URL (such as by running an HTTP server) or to provide a means
-        for the user to enter the verifier into the application.
-
-        """
-        if not request_token:
-            if self.session_id and self.session_id in self.oauth_secrets:
-                # Use current session ID for oauth_token if it is set
-                request_token = self.session_id
-            else:
-                # Otherwise, get a new request token and use it
-                request_token = self.request_token()['oauth_token']
-        # Add sessionId parameter to authorize.url
-        url = self.identity_properties['authorize.url']
-        url = self._add_query_params(url, sessionId=request_token)
-        if options or kw_options:
-            url = self._add_query_params(url, options, **kw_options)
-        return url
-
-    def access_token(self, verifier, request_token=None, token_secret=None):
-        """
-        Get an access token (session ID) to complete step 3 of the OAuth login process.
-
-        Returns a dictionary containing the OAuth response and stores the token
-        as the session ID to be used by future requests.
-
-        """
-        if not request_token and self.session_id:
-            # Use current session ID for oauth_token if it is set
-            request_token = self.session_id
-        if not token_secret and request_token in self.oauth_secrets:
-            # Use saved secret for oauth_token_secret if it is set
-            token_secret = self.oauth_secrets[request_token]
-        url = self.identity_properties['access.token.url']
-        oauth_response = self._oauth_request(url, token_secret,
-                                             oauth_token=request_token,
-                                             oauth_verifier=verifier)
-        response = dict(urllib.parse.parse_qsl(oauth_response.read()))
-        if self.session_id in self.oauth_secrets:
-            del self.oauth_secrets[self.session_id]
-        self.session_id = response['oauth_token']
-        self.logged_in = True
-        return response
-
-    def _oauth_request(self, url, token_secret='', params={}, **kw_params):
-        """
-        Make an OAuth request.
-
-        This function only supports the PLAINTEXT signature method.
-        Returns a file-like object representing the response.
-
-        Keyword arguments:
-        url -- the URL to request
-        token_secret (optional) -- the request token secret, if requesting an
-                                   access token (defaults to empty)
-        params -- a dictionary of parameters to add to the request, such as
-                  oauth_callback, oauth_token, or oauth_verifier
-
-        Additional parameters can be passed either as a dictionary or as
-        keyword arguments.
-
-        """
-        oauth_params = dict(params)
-        oauth_params.update(kw_params)
-        oauth_params.update({
-                             'oauth_consumer_key': self.key,
-                             'oauth_nonce': str(random.randint(0, 99999999)),
-                             'oauth_signature_method': 'PLAINTEXT',
-                             'oauth_signature': '%s&%s' % ('', token_secret),
-                             'oauth_timestamp': str(int(time.time())),
-                            })
-        data = urllib.parse.urlencode(oauth_params, True)
-        request = urllib.request.Request(url, data)
-        request.add_header('User-Agent', self.agent)
-        try:
-            return self.opener.open(request)
-        except urllib.error.HTTPError as error:
-            if error.code == 401:
-                self.logged_in = False
-            raise
-
+        # TODO: What is the new equivalent?
+        #url = self.identity_base + 'session'
+        #self.session_id = identity.parse(self._request(url)).session.id
+        #self.logged_in = True
+        #return self.session_id
+        pass
+    
+class getter(server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(code=200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        
+        path = self.path
+        global qs
+        qs = parse_qs(path)
+        qs = list(qs.values())[0][0]
+        self.wfile.write(b"<html>")
+        self.wfile.write(b"<head>")
+        self.wfile.write(b"<title>FSPySDKLogin</title>")
+        self.wfile.write(b"</head")
+        self.wfile.write(b"<body>")
+        self.wfile.write(b"<p>This page is intended for log-in purposes only.</p>")
+        self.wfile.write(b"<p>You can safely close this page.</p>")
+        self.wfile.write(b"</body")
+        self.wfile.write(b"</html>")
+        
+        
 
 # FamilySearch imports
 
