@@ -37,18 +37,36 @@ fs.logout()
 # Python imports
 try:
     # Python 3
-    from urllib.request import(build_opener, Request, urlopen)
+    from urllib.request import Request as BaseRequest
+    from urllib.request import(build_opener, urlopen)
     from urllib.error import HTTPError
     from urllib.parse import(urlsplit, urlunsplit, parse_qs, urlencode)
 except ImportError:
     # Python 2
     from urllib import urlencode
-    from urllib2 import(build_opener, Request, HTTPError, urlopen)
+    from urllib2 import Request as BaseRequest
+    from urllib2 import(build_opener, HTTPError, urlopen)
     from urlparse import(urlsplit, urlunsplit, parse_qs)
-    
+
 import json
 
 __version__ = '0.3pre'
+
+class EnhancedRequest(BaseRequest):
+    """Add ability to the Request object to allow it to handle additional methods.
+
+    The Request object has been enhanced to handle PUT, DELETE, OPTIONS and HEAD request methods."""
+    def __init__(self, *args, **kwargs):
+        self._method = kwargs.pop('method', None)
+        BaseRequest.__init__(self, *args, **kwargs)
+
+    def get_method(self):
+        if self._method:
+            return self._method
+        else:
+            return BaseRequest.get_method(self)
+Request = EnhancedRequest
+
 
 class object(object): pass
 class FamilySearch(object):
@@ -111,12 +129,17 @@ class FamilySearch(object):
         if self.session_id in self.oauth_secrets:
             self.logged_in = False
 
-    def _request(self, url, data=None, headers={}):
+    def _request(self, url, data=None, headers={}, **kwargs):
         """
-        Make a GET or a POST request to the FamilySearch API.
+        Make a request to the FamilySearch API.
 
-        Adds the User-Agent header and sets the response format to JSON.
-        If the data argument is supplied, makes a POST request.
+        Adds the User-Agent header and sets the response format to JSON. By
+        default requests are made via a GET request. If the data argument is
+        supplied, makes a POST request. The method used for the request can
+        be specified by passing in the "method" keyword argument to be used
+        (i.e. _request(url, method='PUT')). Methods that have been tested in
+        addition to GET and POST include PUT, DELETE, OPTIONS and HEAD.
+
         Returns a file-like object representing the response.
 
         """
@@ -125,7 +148,7 @@ class FamilySearch(object):
             url = self._add_query_params(url, sessionId=self.session_id)
         if data:
             data = data.encode('utf-8')
-        request = Request(url, data, headers)
+        request = Request(url, data, headers, **kwargs)
         if headers:
             request.add_header('Content-Type', 'application/json')
         else:
@@ -137,7 +160,7 @@ class FamilySearch(object):
             if error.code == 401:
                 self.logged_in = False
             raise
-    
+
     def _head(self, url):
         if self.logged_in and not self.cookies:
             # Add sessionId parameter to url if cookie is not set
@@ -147,7 +170,8 @@ class FamilySearch(object):
         request.add_header('User-Agent', self.agent)
         response = urlopen(request)
         return response.info()
-        
+
+
     def _add_subpath(self, url, subpath):
         """
         Add a subpath to the path component of the given URL.
@@ -159,6 +183,7 @@ class FamilySearch(object):
         parts = urlsplit(url)
         path = parts[2] + '/' + subpath
         return urlunsplit((parts[0], parts[1], path, parts[3], parts[4]))
+
 
     def _add_query_params(self, url, params={}, **kw_params):
         """
@@ -174,7 +199,7 @@ class FamilySearch(object):
         query = urlencode(query_parts, True)
         return urlunsplit((parts[0], parts[1], parts[2], query, parts[4]))
 
-    
+
     def _fs2py(self, response, type=None):
         """
         Take JSON from FamilySearch response, and allow Python to handle it.
@@ -186,6 +211,8 @@ class FamilySearch(object):
         if type:
             response = response[type]
         return response
+
+
     def _remove_nones(self, arg):
         """
         Remove all None values from a nested dict structure.
