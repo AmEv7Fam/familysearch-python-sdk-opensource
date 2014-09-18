@@ -4,7 +4,7 @@
 
 class Spouses:
     def __init__(self):
-        pass # TODO
+        self.couple_base = self.tree_base + 'couple-relationships/'
     
     def create_couple_relationship(self, mpid, fpid, change_message=None, date=None, place=None):
         url = self.tree_base + 'relationships'
@@ -46,9 +46,15 @@ class Spouses:
     def couple_relationship_conclusion(self):
         pass # TODO
     
-    def couple_relationship_restore(self):
-        pass # TODO
-
+    def delete_couple_relationship(self, cpid, reason=None):
+        url = self.couple_base + cpid
+        response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
+        return dict(response.info())
+    
+    def restore_couple_relationship(self, cpid):
+        url = self.couple_base + cpid + '/restore'
+        response = self._request(url, method="POST", nojson=True)
+        return dict(response.info()) 
 # FamilySearch imports
 
 from . import FamilySearch
