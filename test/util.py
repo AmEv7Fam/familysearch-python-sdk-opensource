@@ -24,7 +24,6 @@ except ImportError as ex:
 def get_config(section='fsTest'):
     """Get the configuration for the test program."""
     config_path = os.path.join(MODULE_PATH, CONFIG)
-    print(config_path)
     config = configparser.ConfigParser()
     config.read(config_path)
     return dict(config[section])

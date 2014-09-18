@@ -20,3 +20,6 @@ share
 
 # Ignore text editor backup files
 *~
+
+# Ignore test/config.ini
+test/config.ini

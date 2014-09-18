@@ -37,18 +37,36 @@ fs.logout()
 # Python imports
 try:
     # Python 3
-    from urllib.request import(build_opener, Request, urlopen)
+    from urllib.request import Request as BaseRequest
+    from urllib.request import(build_opener, urlopen)
     from urllib.error import HTTPError
     from urllib.parse import(urlsplit, urlunsplit, parse_qs, urlencode)
 except ImportError:
     # Python 2
     from urllib import urlencode
-    from urllib2 import(build_opener, Request, HTTPError, urlopen)
+    from urllib2 import Request as BaseRequest
+    from urllib2 import(build_opener, HTTPError, urlopen)
     from urlparse import(urlsplit, urlunsplit, parse_qs)
-    
+
 import json
 
 __version__ = '0.3pre'
+
+class EnhancedRequest(BaseRequest):
+    """Add ability to the Request object to allow it to handle additional methods.
+
+    The Request object has been enhanced to handle PUT, DELETE, OPTIONS and HEAD request methods."""
+    def __init__(self, *args, **kwargs):
+        self._method = kwargs.pop('method', None)
+        BaseRequest.__init__(self, *args, **kwargs)
+
+    def get_method(self):
+        if self._method:
+            return self._method
+        else:
+            return BaseRequest.get_method(self)
+Request = EnhancedRequest
+
 
 class object(object): pass
 class FamilySearch(object):
@@ -118,8 +136,8 @@ class FamilySearch(object):
         Adds the User-Agent header and sets the response format to JSON.
         If the data argument is supplied, makes a POST request unless specified
         in the Method header.
-        Returns a file-like object representing the response.
 
+        Returns a file-like object representing the response.
         """
         
         if data:
@@ -144,7 +162,7 @@ class FamilySearch(object):
                 print(error.headers)
             raise
     
-        
+    
     def _add_subpath(self, url, subpath):
         """
         Add a subpath to the path component of the given URL.
@@ -156,6 +174,7 @@ class FamilySearch(object):
         parts = urlsplit(url)
         path = parts[2] + '/' + subpath
         return urlunsplit((parts[0], parts[1], path, parts[3], parts[4]))
+
 
     def _add_query_params(self, url, params={}, **kw_params):
         """
@@ -171,7 +190,7 @@ class FamilySearch(object):
         query = urlencode(query_parts, True)
         return urlunsplit((parts[0], parts[1], parts[2], query, parts[4]))
 
-    
+
     def _fs2py(self, response, type=None):
         """
         Take JSON from FamilySearch response, and allow Python to handle it.
@@ -183,6 +202,8 @@ class FamilySearch(object):
         if type:
             response = response[type]
         return response
+
+
     def _remove_nones(self, arg):
         """
         Remove all None values from a nested dict structure.
