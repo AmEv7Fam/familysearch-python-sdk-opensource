@@ -12,21 +12,23 @@ class ChangeHistory:
         response = self._fs2py(response, 'users')
         return response
     
-    def capr_change_history(self, caprid):
+    def child_change_history(self, caprid):
         url = self.tree_base + "child-and-parents-relationships/"\
               + caprid + "/changes"
         response = self._request(url)
         response = self._fs2py(response, 'users')
         return response
     
-    def cr_change_history(self, crid):
+    def couple_change_history(self, crid):
         url = self.tree_base + "couple-relationships/" + crid + "/changes"
         response = self._request(url)
         response = self._fs2py(response, 'users')
         return response
     
     def restore_change(self, chid):
-        pass # TODO
+        url = self.tree_base + "changes/" + chid + "/restore"
+        response = self._request(url, method="POST")
+        return dict(response.info())
 
 # FamilySearch imports
 
