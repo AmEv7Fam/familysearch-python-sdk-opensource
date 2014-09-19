@@ -6,7 +6,7 @@ class ParentsAndChildren:
     def __init__(self):
         pass
 
-    def create_child_relationship(self, cpid, data):
+    def create_child_relationship(self, data):
         url = self.tree_base + 'relationships'
         response = self._request(url, data)
         return dict(response.info())
