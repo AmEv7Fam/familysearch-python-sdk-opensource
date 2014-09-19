@@ -10,7 +10,7 @@ Finished
 
 Needs to be finished..
 
-## Change History
+#### Change History
 
 Finished
 
@@ -38,11 +38,11 @@ Need to finish the Descendancy query.
 
 Merging needs to be finished.
 
-## Places
+#### Places
 
 Finished.
 
-#### Records
+## Records
 
 Needs to be done.
 
@@ -54,7 +54,7 @@ Needs to be done.
 
 Needs to be done.
 
-## Spouses
+#### Spouses
 
 Finished.
 
