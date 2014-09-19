@@ -1,12 +1,12 @@
-## Main module
+#### Main module
 
 Finished
 
-## Authentation
+#### Authentation
 
 Finished
 
-## Authorities
+### Authorities
 
 Needs to be finished..
 
@@ -26,15 +26,15 @@ Needs to be done.
 
 Needs to be done.
 
-## Parents and Children
+### Parents and Children
 
 Needs to be finished.
 
-## Pedigree
+### Pedigree
 
 Need to finish the Descendancy query.
 
-## Person
+### Person
 
 Merging needs to be finished.
 
@@ -42,7 +42,7 @@ Merging needs to be finished.
 
 Finished.
 
-## Records
+#### Records
 
 Needs to be done.
 
@@ -58,11 +58,11 @@ Needs to be done.
 
 Finished.
 
-## User
+#### User
 
 Finished.
 
-## Utilities
+### Utilities
 
 Finish redirect (probably would be useful for Python Web servers...)
 
