@@ -146,7 +146,7 @@ class FamilySearch(object):
         request = Request(url, data, headers, method=method)
         if not nojson:
             if data or method:
-                request.add_header('Content-Type', 'application/x-gedcomx-v1+json')
+                request.add_header('Content-Type', 'application/x-fs-v1+json')
             else:
                 request.add_header('Accept', 'application/json')
         if self.logged_in and not self.cookies:
