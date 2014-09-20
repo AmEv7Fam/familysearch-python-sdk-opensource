@@ -2,7 +2,7 @@
 
 Finished
 
-#### Authentation
+#### Authentication
 
 Finished
 
