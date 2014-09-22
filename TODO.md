@@ -22,9 +22,6 @@ Needs to be finished.
 
 Merging needs to be finished.
 
-## Records
-
-Needs to be done.
 
 ## Search and Match
 
