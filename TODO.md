@@ -1,18 +1,6 @@
-#### Main module
-
-Finished
-
-#### Authentication
-
-Finished
-
 ### Authorities
 
-Needs to be finished..
-
-#### Change History
-
-Finished
+Needs to be finished.
 
 ## Discussions
 
@@ -30,17 +18,9 @@ Needs to be done.
 
 Needs to be finished.
 
-#### Pedigree
-
-Finished.
-
 ### Person
 
 Merging needs to be finished.
-
-#### Places
-
-Finished.
 
 ## Records
 
@@ -53,14 +33,6 @@ Needs to be done.
 ## Sources
 
 Needs to be done.
-
-#### Spouses
-
-Finished.
-
-#### User
-
-Finished.
 
 ### Utilities
 
