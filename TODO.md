@@ -30,9 +30,9 @@ Needs to be done.
 
 Needs to be finished.
 
-### Pedigree
+#### Pedigree
 
-Need to finish the Descendancy query.
+Finished.
 
 ### Person
 
