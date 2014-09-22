@@ -2,10 +2,6 @@
 
 Needs to be finished.
 
-## Discussions
-
-Needs to be done.
-
 ## Memories
 
 Needs to be done.
@@ -21,7 +17,6 @@ Needs to be finished.
 ### Person
 
 Merging needs to be finished.
-
 
 ## Search and Match
 
