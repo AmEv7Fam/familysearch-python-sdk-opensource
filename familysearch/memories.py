@@ -6,9 +6,14 @@ class Memories:
     def __init__(self):
         self.memories_base = self.base + "/platform/memories/"
     
-    def create_memory(self):
-        pass # TODO
-    
+    def upload_memory(self, filename, title, filetype, data):
+        url = memories_base[:-1] + "?title=" + title
+        response = self._request(url, data, {"Content-disposition": "attachment",
+                                 "filename": filename,
+                                 "Content-Type": "application/"+ filetype},
+                                 nojson=True)
+        return dict(response.info())
+        
     def memory(self):
         pass # TODO
     
