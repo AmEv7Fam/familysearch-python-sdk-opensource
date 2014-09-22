@@ -6,10 +6,6 @@ Needs to be finished.
 
 Needs to be done.
 
-## Notes
-
-Needs to be done.
-
 ### Parents and Children
 
 Needs to be finished.
