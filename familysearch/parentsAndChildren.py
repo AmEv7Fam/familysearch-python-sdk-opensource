@@ -11,16 +11,26 @@ class ParentsAndChildren:
         response = self._request(url, data)
         return dict(response.info())
     
+    def read_child_relationship(self, crid):
+        url = self.child_base + crid
+        response = self._request(url)
+        response = self._fs2py(response)
+        return response
+    
     def delete_child_relationship_parent(self, crid, parent):
         url = self.child_base + crid + "/" + parent
         response = self._request(url, method="DELETE")
         return dict(response.info())
     
-    def cap_relationship_conclusion(self):
-        pass # TODO
+    def delete_child_relationship_conclusion(self, crid, cid, role):
+        url = self.child_base + crid + "/" + role + "/conclusions/" + cid
+        response = self._request(url, method="DELETE")
+        return dict(response.info())
     
-    def child_relationship_restore(self):
-        pass # TODO
+    def child_relationship_restore(self, crid):
+        url = self.child_base + crid + "/restore"
+        response = self._request(url, method="POST", nojson=True)
+        return dict(response.info())
 
 # FamilySearch imports
 
