@@ -98,7 +98,10 @@ class Authentication(object):
         Log the current session out of FamilySearch.
         """
         self.logged_in = False
-        # TODO: Change to Delete Access Token
+        
+        url = auth_base + "token"
+        self._request(url, method="DELETE")
+        
         self.session_id = None
         self.cookies.clear()
 
