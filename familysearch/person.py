@@ -91,26 +91,81 @@ class Person:
         response = self._request(url, data)
         return dict(response.info())
     
-    def person_merge(self, pid, dpid):
-        pass # TODO
+    def person_merge_analysis(self, pid, dpid):
+        url = self.tree_base + pid + "/merges/" + dpid
+        response = self._request(url)
+        response = self._fs2py(request)
+        return response
+    
+    def read_merge_constraint(self, pid, dpid):
+        url = self.tree_base + pid + "/merges/" + dpid
+        response = self._request(url, method="OPTIONS")
+        return dict(response.info())
+    
+    def merge_duplicate(self, pid, dpid, data):
+        url = self.tree_base + pid + "/merges/" + dpid
+        response = self._request(url, data)
+        return dict(response.info())
     
     def person_change_summary(self, pid):
         url = tree_base + "persons/" + pid + '/change-summary'
         response = self._request(url)
         response = self._fs2py(response)
         return response
+        
+    def update_person_not_a_match(self, pid, dpid, reason=None):
+        url = person_base + pid + "/not-a-match"
+        data = {
+            "persons": [ {
+                "id": dpid,
+                "changeMessage": reason
+            }]
+        }
+        response = self._request(url, data)
+        return dict(response.info())
     
-    def person_not_a_match(self, pid, dpid):
-        pass # TODO
+    def delete_person_not_a_match(self, pid, dpid, reason=None):
+        url = person_base + pid + "/not-a-match/" + dpid
+        response = self._request(url, headers={"x-Reason":reason}, method="DELETE")
+        return dict(response.info())
+     
+    def read_preferred_spouse_relationship(self, pid):
+        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+            "/preferred-spouse-relationships/" + pid
+        response = self._request(url)
+        return dict(response.info())
     
-    def person_restore(self, pid):
-        pass # TODO
+    def update_preferred_spouse_relationship(self, pid, crid):
+        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+            "/preferred-spouse-relationships/" + pid
+        response = self._request(url, headers={"Location": self.tree_base + \
+            "/couple-relationships/" + crid}, method="PUT")
+        return dict(response.info())
     
-    def preferred_spouse_relationship(self, uid, pid):
-        pass # TODO
+    def delete_preferred_spouse_relationship(self, uid, pid):
+        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+            "/preferred-spouse-relationships/" + pid
+        response = self._request(url, method="DELETE")
+        return dict(response.info())
     
-    def preferred_parent_relationship(self, uid, pid):
-        pass # TODO
+    def read_preferred_parent_relationship(self, pid):
+        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+            "/preferred-parent-relationships/" + pid
+        response = self._request(url)
+        return dict(response.info())
+    
+    def update_preferred_parent_relationship(self, pid, crid):
+        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+            "/preferred-parent-relationships/" + pid
+        response = self._request(url, headers={"Location": self.tree_base + \
+            "/couple-relationships/" + crid}, method="PUT")
+        return dict(response.info())
+    
+    def delete_preferred_parent_relationship(self, uid, pid):
+        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+            "/preferred-parent-relationships/" + pid
+        response = self._request(url, method="DELETE")
+        return dict(response.info())
     
     
 # FamilySearch imports

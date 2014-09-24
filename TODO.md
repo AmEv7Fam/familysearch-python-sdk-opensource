@@ -6,10 +6,6 @@ Needs to be finished.
 
 Needs to be finished.
 
-### Person
-
-Merging needs to be finished.
-
 ## Search and Match
 
 Needs to be done.
