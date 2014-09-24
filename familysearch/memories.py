@@ -7,8 +7,8 @@ class Memories:
         self.memories_base = self.base + "/platform/memories/"
     
     def upload_memory(self, filename, title, filetype, data):
-        url = memories_base[:-1] + "?title=" + title
-        response = self._request(url, data, {"Content-disposition": "attachment",
+        url = self.memories_base[:-1] + "?title=" + title
+        response = self._request(url, data, {"Content-disposition": "attachment;",
                                  "filename": filename,
                                  "Content-Type": "application/"+ filetype},
                                  nojson=True)
