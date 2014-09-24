@@ -12,8 +12,9 @@ class Utilities:
         response = self._fs2py(response, "features")
         return response
     
-    def redirect(self):
-        pass
+    def redirect(self, params):
+        url = self._add_query_params(self.base + "platform/redirect", params)
+        return url
 
 # FamilySearch imports
 
