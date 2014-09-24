@@ -17,7 +17,3 @@ Needs to be done.
 ### Utilities
 
 Finish redirect (probably would be useful for Python Web servers...)
-
-## Vocabularies
-
-Needs to be done.
