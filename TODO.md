@@ -1,7 +1,3 @@
-### Authorities
-
-Needs to be finished.
-
 ### Memories
 
 Needs to be finished.
