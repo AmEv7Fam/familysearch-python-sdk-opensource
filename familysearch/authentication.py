@@ -99,7 +99,7 @@ class Authentication(object):
         """
         self.logged_in = False
         
-        url = auth_base + "token"
+        url = self.auth_base + "token?access_token=" + self.session_id
         self._request(url, method="DELETE")
         
         self.session_id = None
