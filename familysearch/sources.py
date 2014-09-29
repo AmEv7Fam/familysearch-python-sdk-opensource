@@ -7,7 +7,9 @@ class Sources:
         self.source_base = self.base + "/platform/sources/"
     
     def create_source_description(self):
-        pass # TODO
+        url = source_base + "/descriptions"
+        response = self._request(url, data)
+        return dict(response.info())
     
     def create_user_source(self, data):
         url = source_base + "/descriptions"
