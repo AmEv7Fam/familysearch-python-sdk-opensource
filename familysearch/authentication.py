@@ -15,7 +15,7 @@ except ImportError:
     # Python 2
     from urllib import urlencode
     from urllib2 import(build_opener, HTTPCookieProcessor)
-    import SimpleHTTPServer as server
+    import BaseHTTPServer as server
     
 import webbrowser
 
