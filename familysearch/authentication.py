@@ -60,7 +60,9 @@ class Authentication(object):
                                  'client_id': self.key,
                                  'grant_type': 'password'
                                  })
-        response = self._request(url, credentials, {"accept": "application/json"}, nojson=True)
+        response = self._request(url, credentials,
+                                 {"Content-Type": "application/x-www-form-urlencoded",
+                                 "Accept": "application/json"}, nojson=True)
         self.session_id = self._fs2py(response)['access_token']
         self.logged_in = True
         
@@ -75,7 +77,7 @@ class Authentication(object):
         url = self.auth_base + 'authorization'
         url = self._add_query_params(url, {'response_type': 'code',
                                      'client_id': self.key,
-                                     'redirect_uri': "http://localhost:63342"
+                                     'redirect_uri': "http://localhost:63342/fslogin"
                                      })
         webbrowser.open(url)
         server.HTTPServer(('', 63342), getter).handle_request()
@@ -88,7 +90,9 @@ class Authentication(object):
                                  'client_id': self.key
                                   })
 
-        response = self._request(url, credentials, {"accept": "application/json"}, nojson=True)
+        response = self._request(url, credentials,
+                                 {"Content-Type": "application/x-www-form-urlencoded",
+                                 "Accept": "application/json"}, nojson=True)
         self.session_id = self._fs2py(response)['access_token']
         self.logged_in = True
         
