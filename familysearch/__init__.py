@@ -140,10 +140,9 @@ class FamilySearch(object):
         Returns a file-like object representing the response.
         """
         
-        if not nojson:
-            if data:
-                data = json.dumps(data)
-                data = data.encode('utf-8')
+        if data:
+            data = json.dumps(data)
+            data = data.encode('utf-8')
         request = Request(url, data, headers, method=method)
         if not nojson:
             if data or method:

@@ -88,7 +88,7 @@ class Authentication(object):
                                  'client_id': self.key
                                   })
 
-        response = self._request(url, credentials, {accept: application/json}, nojson=True)
+        response = self._request(url, credentials, {"accept": "application/json"}, nojson=True)
         self.session_id = self._fs2py(response)['access_token']
         self.logged_in = True
         
