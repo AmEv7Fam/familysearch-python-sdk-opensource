@@ -42,6 +42,7 @@ class Person:
     def children(self, pid):
         url = self.person_base + pid + "/children"
         response = self._request(url)
+        response = self._fs2py(response)
         return response
     
     def memories_query(self, pid):
