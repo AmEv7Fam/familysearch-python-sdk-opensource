@@ -93,13 +93,13 @@ class Person:
         return dict(response.info())
     
     def person_merge_analysis(self, pid, dpid):
-        url = self.tree_base + pid + "/merges/" + dpid
+        url = self.person_base + pid + "/merges/" + dpid
         response = self._request(url)
         response = self._fs2py(request)
         return response
     
     def read_merge_constraint(self, pid, dpid):
-        url = self.tree_base + pid + "/merges/" + dpid
+        url = self.person_base + pid + "/merges/" + dpid
         response = self._request(url, method="OPTIONS")
         return dict(response.info())
     
