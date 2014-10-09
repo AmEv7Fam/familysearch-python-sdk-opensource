@@ -52,7 +52,7 @@ import json
 
 __version__ = '0.3pre'
 
-class EnhancedRequest(BaseRequest):
+class Request(BaseRequest):
     """Add ability to the Request object to allow it to handle additional methods.
 
     The Request object has been enhanced to handle PUT, DELETE, OPTIONS and HEAD request methods."""
@@ -65,8 +65,6 @@ class EnhancedRequest(BaseRequest):
             return self._method
         else:
             return BaseRequest.get_method(self)
-Request = EnhancedRequest
-
 
 class object(object): pass
 class FamilySearch(object):
@@ -140,9 +138,10 @@ class FamilySearch(object):
         Returns a file-like object representing the response.
         """
         
-        if data:
-            data = json.dumps(data)
-            data = data.encode('utf-8')
+        if not nojson:
+            if data:
+                data = json.dumps(data)
+                data = data.encode('utf-8')
         request = Request(url, data, headers, method=method)
         if not nojson:
             if data or method:

@@ -54,12 +54,13 @@ class Authentication(object):
         """
         self.logged_in = False
         self.cookies.clear()
-        url = self.auth_base + '/token'
+        url = self.auth_base + 'token'
         credentials = urlencode({'username': username,
                                  'password': password,
                                  'client_id': self.key,
                                  'grant_type': 'password'
                                  })
+        credentials = credentials.encode("utf-8")
         response = self._request(url, credentials,
                                  {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}, nojson=True)
@@ -84,12 +85,12 @@ class Authentication(object):
         
         # Now that we have the authentication token, grab the access token.
         
-        url = self.auth_base + '/token'
+        url = self.auth_base + 'token'
         credentials = urlencode({'grant_type': 'authorization_code',
                                  'code': qs,
                                  'client_id': self.key
                                   })
-
+        credentials = credentials.encode("utf-8")
         response = self._request(url, credentials,
                                  {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}, nojson=True)
