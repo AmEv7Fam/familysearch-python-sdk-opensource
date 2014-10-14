@@ -219,7 +219,7 @@ class FamilySearch(object):
 
 # FamilySearch imports
 
-from . import(authentication, authorities, changeHistory, discussions, memories,
-              notes, parentsAndChildren, pedigree, person, places, records,
-              searchAndMatch, sourceBox, sources, spouses, user, utilities,
-              vocabularies)
+from . import(authentication, authorities, changeHistory, discussions, 
+              discovery, memories, notes, parentsAndChildren, pedigree, person, 
+              places, records,searchAndMatch, sourceBox, sources, spouses, user,
+              utilities, vocabularies)
