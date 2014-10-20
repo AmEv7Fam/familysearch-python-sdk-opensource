@@ -1,15 +1,17 @@
 
 # Python imports
 
+
+
+from . import FamilySearch
+
 # Magic
 
 class Discovery(object):
-    def collection(self):
-        url = self.base + '/.well-known/collection'
-        response = self._request(url)
-        return self._fs2py(response)
+    def __init__(self):
+        self.root_collection = self._get(self.base + '/.well-known/collection')
 
-# FamilySearch imports
 
-from . import FamilySearch
+# FamilySearch hookup
+
 FamilySearch.__bases__ += (Discovery,)
