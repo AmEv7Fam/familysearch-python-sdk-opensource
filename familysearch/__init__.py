@@ -157,10 +157,6 @@ class FamilySearch(object):
         except HTTPError as error:
             if error.code == 401:
                 self.logged_in = False
-            if error.code == 400:
-                print(error.headers)
-            raise
-    
     
     def _add_subpath(self, url, subpath):
         """
@@ -216,6 +212,9 @@ class FamilySearch(object):
             return [self._remove_nones(i) for i in arg if i is not None]
         else:
             return arg
+        
+    def _get(self, url):
+        return self._fs2py(self._request(url))
 
 # FamilySearch imports
 
