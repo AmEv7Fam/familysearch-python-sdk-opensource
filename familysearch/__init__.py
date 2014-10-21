@@ -100,7 +100,7 @@ class FamilySearch(object):
         self.user_base = self.base + "/platform/users/"
         self.tree_base = self.base + "/platform/tree/"
         self.opener = build_opener()
-        self.logged_in = False
+        self.logged_in = bool(self.session_id)
 
         for mixin in self.__class__.__bases__:
             mixin.__init__(self)
