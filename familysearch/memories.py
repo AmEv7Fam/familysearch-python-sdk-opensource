@@ -6,7 +6,7 @@ class Memories:
     def __init__(self):
         self.memories_base = self.base + "/platform/memories/"
     
-    def upload_memory(self, filename, title, filetype, data):
+    def post_memory(self, filename, title, filetype, data):
         url = memories_base[:-1] + "?title=" + title
         response = self._request(url, data, {"Content-disposition": "attachment",
                                  "filename": filename,
@@ -30,18 +30,18 @@ class Memories:
         response = self._request(url, method="DELETE")
         return dict(response.info())
     
-    def create_memory_persona(self, mid, data):
+    def post_memory_persona(self, mid, data):
         url = self.memories_base + mid + "/personas"
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_memory_personas(self, mid):
+    def get_memory_personas(self, mid):
         url = self.memories_base + mid + "/personas"
         response = self._request(url)
         response = self._fs2py(response)
         return response
     
-    def read_memory_persona(self, mid, pid):
+    def get_memory_persona(self, mid, pid):
         url = self.memories_base + mid + "/personas/"+ pid
         response = self._request(url)
         response = self._fs2py(response)
