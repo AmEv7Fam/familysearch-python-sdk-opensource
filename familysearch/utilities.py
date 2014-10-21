@@ -6,15 +6,13 @@ class Utilities:
     def __init__(self):
         pass
     
-    def pending_modifications(self):
-        url = self.base + "/platform/pending-modifications"
-        response = self._request(url)
-        response = self._fs2py(response, "features")
-        return response
+    def get_pending_modifications(self):
+        return self.get(self.root_collection['collections'][0]['links']\
+                        ['pending-modifications']['href'])
     
     def redirect(self, params):
-        url = self._add_query_params(self.base + "platform/redirect", params)
-        return url
+        return self._add_query_params(self.base + "platform/redirect", params)
+
 
 # FamilySearch imports
 
