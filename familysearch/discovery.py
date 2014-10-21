@@ -9,10 +9,10 @@ from . import FamilySearch
 
 class Discovery(object):
     def __init__(self):
-        self.root_collection = self._get(self.base + '/.well-known/collection')
+        self.root_collection = self.get(self.base + '/.well-known/collection')
         
     def fix_discovery(self):
-        self.root_collection = self._get(self.base + '/platform/collection')
+        self.root_collection = self.get(self.base + '/platform/collection')
     
     
 # FamilySearch hookup

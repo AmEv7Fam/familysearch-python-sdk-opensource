@@ -214,7 +214,7 @@ class FamilySearch(object):
         else:
             return arg
         
-    def _get(self, url):
+    def get(self, url):
         return self._fs2py(self._request(url))
 
 # FamilySearch imports
