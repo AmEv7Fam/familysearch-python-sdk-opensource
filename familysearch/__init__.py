@@ -100,6 +100,7 @@ class FamilySearch(object):
         self.user_base = self.base + "/platform/users/"
         self.tree_base = self.base + "/platform/tree/"
         self.opener = build_opener()
+        self.logged_in = False
 
         for mixin in self.__class__.__bases__:
             mixin.__init__(self)
@@ -218,7 +219,7 @@ class FamilySearch(object):
 
 # FamilySearch imports
 
-from . import(authentication, authorities, changeHistory, discussions, 
-              discovery, memories, notes, parentsAndChildren, pedigree, person, 
-              places, records,searchAndMatch, sourceBox, sources, spouses, user,
-              utilities, vocabularies)
+from . import(discovery, authentication, authorities, changeHistory,
+              discussions, memories, notes, parentsAndChildren, pedigree, 
+              person, places, records,searchAndMatch, sourceBox, sources,
+              spouses, user, utilities, vocabularies)
