@@ -26,13 +26,13 @@ class Discovery(object):
                                          ['links']['self']['href'])
         self.dates_authority = self.get(self.collections['collections'][6]
                                         ['links']['self']['href'])
-        self.uid = {}
+        self.uid = ""
         
     def fix_discovery(self):
         try:
             self.uid = self.get_current_user()['users'][0]['treeUserId']
         except KeyError:
-            self.uid = {}
+            self.uid = ""
     
     
 # FamilySearch hookup
