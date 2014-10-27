@@ -11,7 +11,7 @@ class ParentsAndChildren:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_child_relationship(self, crid):
+    def get_child_relationship(self, crid):
         url = self.child_base + crid
         response = self._request(url)
         response = self._fs2py(response)

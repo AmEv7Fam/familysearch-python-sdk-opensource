@@ -31,7 +31,7 @@ class Sources:
         response = self._request(url, headers={"X-Reason": reason}, method="DELETE")
         return dict(response.info())
     
-    def read_spouse_relatioship_sources(self, crid):
+    def get_spouse_relatioship_sources(self, crid):
         url = self.tree_base + 'couple-relationships/' + crid
         response = self._request(url)
         response = self._fs2py(response)
@@ -42,7 +42,7 @@ class Sources:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_person_source_reference(self, pid, srid):
+    def get_person_source_reference(self, pid, srid):
         url = self.person_base + pid + "/source-references/" + srid
         response = self._request(url)
         response = self._fs2py(response)
@@ -53,13 +53,13 @@ class Sources:
         response = self._request(url, headers={"X-Reason": reason}, method="DELETE")
         return dict(response.info())
     
-    def read_person_sources(self, pid):
+    def get_person_sources(self, pid):
         url = self.person_base + pid + "/sources"
         response = self._request(url)
         response = self._fs2py(response)
         return response
     
-    def read_spouse_relatioship_sources(self, crid):
+    def get_spouse_relatioship_sources(self, crid):
         url = self.tree_base + 'couple-relationships/' + crid
         response = self._request(url)
         response = self._fs2py(response)
@@ -71,7 +71,7 @@ class Sources:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_spouse_relationship_source_reference(self, crid, srid):
+    def get_spouse_relationship_source_reference(self, crid, srid):
         url = self.tree_base + 'couple-relationships/' + crid\
               + "/source-references/" + srid
         response = self._request(url)
@@ -84,7 +84,7 @@ class Sources:
         response = self._request(url, headers={"X-Reason": reason}, method="DELETE")
         return dict(response.info())
     
-    def read_child_relatioship_sources(self, crid):
+    def get_child_relatioship_sources(self, crid):
         url = self.tree_base + 'child-and-parents-relationships/' + crid
         response = self._request(url)
         response = self._fs2py(response)
@@ -96,7 +96,7 @@ class Sources:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_child_relationship_source_reference(self, crid, srid):
+    def get_child_relationship_source_reference(self, crid, srid):
         url = self.tree_base + 'child-and-parents-relationships/' + crid\
               + "/source-references/" + srid
         response = self._request(url)
@@ -109,7 +109,7 @@ class Sources:
         response = self._request(url, headers={"X-Reason": reason}, method="DELETE")
         return dict(response.info())
     
-    def read_source_references(self, srid):
+    def get_source_references(self, srid):
         url = self.tree_base + "source-references?source=" + srid
         response = self._request(url)
         response = self._fs2py(response)

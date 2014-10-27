@@ -6,7 +6,7 @@ class SearchAndMatch:
     def __init__(self):
         pass
     
-    def person_search(self, query, **kwargs):
+    def get_person_search(self, query, **kwargs):
         url = tree_base + "search"
         url = self._add_query_params(url, query)
         url = self._add_query_params(url, kwargs)
@@ -14,7 +14,7 @@ class SearchAndMatch:
         response = self._fs2py(response)
         return response
     
-    def person_matches(self, pid, query, **kwargs):
+    def get_person_matches(self, pid, query, **kwargs):
         url = person_base + pid + "/matches"
         url = self._add_query_params(url, query)
         url = self._add_query_params(url, kwargs)
@@ -22,7 +22,7 @@ class SearchAndMatch:
         response = self._fs2py(response)
         return response
     
-    def person_matches_query(self, query, **kwargs):
+    def get_person_matches_query(self, query, **kwargs):
         url = tree_base + "matches"
         url = self._add_query_params(url, query)
         url = self._add_query_params(url, kwargs)
@@ -30,7 +30,7 @@ class SearchAndMatch:
         response = self._fs2py(response)
         return response
     
-    def read_person_not_a_match(self, pid):
+    def get_person_not_a_match(self, pid):
         url = self.person_base + pid + "/not-a-match"
         response = self._request(url)
         response = self._fs2py(response)

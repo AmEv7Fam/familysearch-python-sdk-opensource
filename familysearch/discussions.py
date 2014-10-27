@@ -11,7 +11,7 @@ class Discussions:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_discussion(self):
+    def get_discussion(self):
         url = self.discuss_base + did
         response = self._request(url)
         return dict(response.info)
@@ -52,7 +52,7 @@ class Discussions:
         response = self._fs2py(response)
         return response
     
-    def delete_discussion_reference(self, pid, drid):
+    def delete_discussion_reference(self, drid):
         url = self.person_base + "/discussion-references/" + drid
         response = self._request(url, method="DELETE")
         return dict(response.info)

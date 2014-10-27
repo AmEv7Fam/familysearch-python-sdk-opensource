@@ -6,7 +6,7 @@ class Pedigree:
     def __init__(self):
         pass
         
-    def ancestry(self, pid, person=False, spouse=None, marriage=False,
+    def get_ancestry(self, pid, person=False, spouse=None, marriage=False,
                  generations=None):
         url = self.tree_base + 'ancestry?person=' + pid
         if person:
@@ -21,7 +21,7 @@ class Pedigree:
         response = self._fs2py(response, 'persons')
         return response
     
-    def descendancy(self, pid, person=False, spouse=None, marriage=False,
+    def get_descendancy(self, pid, person=False, spouse=None, marriage=False,
                     generations=None):
         url = self.tree_base + 'descendancy?person=' + pid
         if person:

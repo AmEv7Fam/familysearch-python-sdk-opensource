@@ -17,7 +17,7 @@ class Notes:
         response = self._fs2py(response)
         return response
     
-    def read_person_note(self, nid, data):
+    def read_person_note(self, pid, nid):
         url = person_base + pid + "/notes/" + nid
         response = self._request(url)
         response = self._fs2py(response)

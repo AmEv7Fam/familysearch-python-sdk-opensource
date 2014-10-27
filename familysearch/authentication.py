@@ -107,20 +107,19 @@ class Authentication(object):
         self.cookies.clear()
         self.fix_discovery()
 
-    def session(self):
-        """
-        Keep the current session in an active state by sending an empty request.
-
-        Calling this method is an easy way to turn a sessionId query parameter
-        into a cookie without doing anything else.
-
-        """
+    #def session(self):
+        #"""
+        #Keep the current session in an active state by sending an empty request.
+        #
+        #Calling this method is an easy way to turn a sessionId query parameter
+        #into a cookie without doing anything else.
+        #
+        #"""
         # TODO: What is the new equivalent?
         #url = self.identity_base + 'session'
         #self.session_id = identity.parse(self._request(url)).session.id
         #self.logged_in = True
         #return self.session_id
-        pass
     
 class getter(server.BaseHTTPRequestHandler):
     def do_GET(self):

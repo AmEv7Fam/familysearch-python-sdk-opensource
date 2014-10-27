@@ -11,7 +11,7 @@ class Spouses:
         response = self._request(url, data)
         return dict(response.info())
     
-    def read_couple_relationship(self, cpid):
+    def get_couple_relationship(self, cpid):
         url = self.couple_base + cpid
         response = self._request(url)
         response = self._fs2py(response)

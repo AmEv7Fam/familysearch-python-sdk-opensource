@@ -187,16 +187,15 @@ class FamilySearch(object):
         return urlunsplit((parts[0], parts[1], parts[2], query, parts[4]))
 
 
-    def _fs2py(self, response, type=None):
+    def _fs2py(self, response, nojson=False):
         """
         Take JSON from FamilySearch response, and allow Python to handle it.
         """
         if hasattr(response, "read"):
             response = response.read()
             response = response.decode("utf-8")
-        response = json.loads(response)
-        if type:
-            response = response[type]
+        if not nojson:
+            response = json.loads(response)
         return response
 
 
@@ -214,8 +213,8 @@ class FamilySearch(object):
         else:
             return arg
         
-    def get(self, url):
-        return self._fs2py(self._request(url))
+    def get(self, url, data=None, headers={}, method=None, nojson=False):
+        return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
 
 # FamilySearch imports
 
