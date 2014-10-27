@@ -30,6 +30,5 @@ while fs.logged_in is not True:
         fs.login(input("Username: "), getpass())
     except HTTPError:
         print("Not logged in. Try again.")
-        raise
 
 print("Welcome, "+ fs.get_current_user()['users'][0]['displayName']+"!")
