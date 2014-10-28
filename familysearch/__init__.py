@@ -158,6 +158,7 @@ class FamilySearch(object):
         except HTTPError as error:
             if error.code == 401:
                 self.logged_in = False
+            raise
     
     def _add_subpath(self, url, subpath):
         """
