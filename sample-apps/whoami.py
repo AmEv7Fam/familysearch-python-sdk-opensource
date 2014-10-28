@@ -1,5 +1,6 @@
 from __future__ import print_function
 import os
+import sys
 
 try:
     # Python 3
@@ -15,7 +16,7 @@ from getpass import getpass
 
 from familysearch import FamilySearch
 
-config_path = os.path.dirname(os.path.abspath(__file__)) + "/config.ini"
+config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/config.ini"
 
 config = configparser.ConfigParser()
 config.read(config_path)
