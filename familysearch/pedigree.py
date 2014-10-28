@@ -18,7 +18,7 @@ class Pedigree:
         if generations:
          url = url + '&generations' + str(generations)
         response = self._request(url)
-        response = self._fs2py(response, 'persons')
+        response = self._fs2py(response)
         return response
     
     def get_descendancy(self, pid, person=False, spouse=None, marriage=False,
@@ -33,7 +33,7 @@ class Pedigree:
         if generations:
          url = url + '&generations' + str(generations)
         response = self._request(url)
-        response = self._fs2py(response, 'persons')
+        response = self._fs2py(response)
         return response
 
 # FamilySearch imports
