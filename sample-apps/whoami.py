@@ -1,6 +1,5 @@
 from __future__ import print_function
 import os
-import sys
 
 try:
     # Python 3
@@ -13,7 +12,6 @@ except ImportError as ex:
 
 from getpass import getpass
 
-sys.path.append("..")
 from familysearch import FamilySearch
 
 config_path = os.path.dirname(os.path.abspath(__file__)) + "/config.ini"
