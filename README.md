@@ -1,4 +1,4 @@
-familysearch-python-sdk-unofficial
+familysearch-python-sdk-opensource
 ==================================
 This is a reboot/spinoff of https://github.com/familysearch-devnet/python-fs-stack.
 
