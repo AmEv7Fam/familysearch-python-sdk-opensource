@@ -50,7 +50,7 @@ except ImportError:
 
 import json
 
-__version__ = '0.3pre'
+__version__ = '0.5'
 
 class Request(BaseRequest):
     """Add ability to the Request object to allow it to handle additional methods.
