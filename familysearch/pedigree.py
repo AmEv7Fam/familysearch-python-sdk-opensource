@@ -6,35 +6,13 @@ class Pedigree:
     def __init__(self):
         pass
         
-    def get_ancestry(self, pid, person=False, spouse=None, marriage=False,
-                 generations=None):
-        url = self.tree_base + 'ancestry?person=' + pid
-        if person:
-            url = url + "&personDetails="
-        if marriage:
-            url = url + "&marriageDetails="
-        if spouse is not None:
-            url = url + '&spouse=' + spouse
-        if generations:
-         url = url + '&generations' + str(generations)
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+    def get_ancestry(self, pid, query, **kwargs):
+        return self.get(self._add_query_params(
+            self.tree_base + 'ancestry?person=' + pid), query, **kwargs)
     
-    def get_descendancy(self, pid, person=False, spouse=None, marriage=False,
-                    generations=None):
-        url = self.tree_base + 'descendancy?person=' + pid
-        if person:
-            url = url + "&personDetails="
-        if marriage:
-            url = url + "&marriageDetails="
-        if spouse is not None:
-            url = url + '&spouse=' + spouse
-        if generations:
-         url = url + '&generations' + str(generations)
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+    def get_descendancy(self, pid, query, **kwargs):
+        return self.get(self._add_query_params(
+            self.tree_base + 'descendancy?person=' + pid), query, **kwargs)
 
 # FamilySearch imports
 

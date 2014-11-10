@@ -47,10 +47,7 @@ class Discussions:
         return dict(response.info())
         
     def read_discussion_reference(self, pid):
-        url = self.person_base + pid + "/discussion-references"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/discussion-references")
     
     def delete_discussion_reference(self, drid):
         url = self.person_base + "/discussion-references/" + drid

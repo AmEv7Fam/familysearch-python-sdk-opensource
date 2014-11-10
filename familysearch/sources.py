@@ -32,10 +32,7 @@ class Sources:
         return dict(response.info())
     
     def get_spouse_relatioship_sources(self, crid):
-        url = self.tree_base + 'couple-relationships/' + crid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + 'couple-relationships/' + crid)
     
     def create_person_source_reference(self, pid, data):
         url = self.person_base + pid + "/source-references"
@@ -43,10 +40,7 @@ class Sources:
         return dict(response.info())
     
     def get_person_source_reference(self, pid, srid):
-        url = self.person_base + pid + "/source-references/" + srid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/source-references/" + srid)
     
     def delete_person_source_reference(self, pid, srid, reason=""):
         url = self.person_base + pid + "/source-references/" + srid
@@ -54,16 +48,10 @@ class Sources:
         return dict(response.info())
     
     def get_person_sources(self, pid):
-        url = self.person_base + pid + "/sources"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/sources")
     
     def get_spouse_relatioship_sources(self, crid):
-        url = self.tree_base + 'couple-relationships/' + crid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return fs.get(self.tree_base + 'couple-relationships/' + crid)
     
     def create_spouse_relationship_source_reference(self, crid, data):
         url = self.tree_base + 'ccouple-relationships/' + crid\
@@ -72,11 +60,8 @@ class Sources:
         return dict(response.info())
     
     def get_spouse_relationship_source_reference(self, crid, srid):
-        url = self.tree_base + 'couple-relationships/' + crid\
-              + "/source-references/" + srid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + 'couple-relationships/' + crid\
+              + "/source-references/" + srid)
     
     def delete_spouse_relationship_source_reference(self, crid, srid, reason=""):
         url = self.tree_base + 'couple-relationships/' + crid\
@@ -85,10 +70,7 @@ class Sources:
         return dict(response.info())
     
     def get_child_relatioship_sources(self, crid):
-        url = self.tree_base + 'child-and-parents-relationships/' + crid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + 'child-and-parents-relationships/' + crid)
     
     def create_child_relationship_source_reference(self, crid, data):
         url = self.tree_base + 'child-and-parents-relationships/' + crid\
@@ -97,11 +79,8 @@ class Sources:
         return dict(response.info())
     
     def get_child_relationship_source_reference(self, crid, srid):
-        url = self.tree_base + 'child-and-parents-relationships/' + crid\
-              + "/source-references/" + srid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + 'child-and-parents-relationships/' + crid\
+              + "/source-references/" + srid)
     
     def delete_child_relationship_source_reference(self, crid, srid, reason=""):
         url = self.tree_base + 'child-and-parents-relationships/' + crid\
@@ -110,10 +89,7 @@ class Sources:
         return dict(response.info())
     
     def get_source_references(self, srid):
-        url = self.tree_base + "source-references?source=" + srid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + "source-references?source=" + srid)
 
 # FamilySearch imports
 

@@ -12,10 +12,7 @@ class Person:
         return dict(response.info())
     
     def get_person(self, pid):
-        url = self.person_base + pid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid)
     
     def delete_person(self, pid, reason):
         url = self.person_base + pid
@@ -28,64 +25,34 @@ class Person:
         return dict(response.info())
     
     def get_parents(self, pid):
-        url = self.person_base + pid + "/parents"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/parents")
     
     def get_spouses(self, pid):
-        url = self.person_base + pid + "/spouses"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/spouses")
     
     def get_children(self, pid):
-        url = self.person_base + pid + "/children"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/children")
     
     def get_memories_query(self, pid):
-        url = self.person_base + pid + '/memories'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + '/memories')
     
     def get_person_portrait(self, pid):
-        url = self.person_base + pid + '/portrait'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + '/portrait')
         
     def get_person_portraits(self, pid):
-        url = self.person_base + pid + '/portraits'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + '/portraits')
     
     def get_spouse_relationships(self, pid):
-        url = self.person_base + pid + '/spouse-relationships'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + '/spouse-relationships')
     
     def get_child_relationships(self, pid):
-        url = self.person_base + pid + '/child-relationships'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + '/child-relationships')
     
     def get_parent_relationships(self, pid):
-        url = self.person_base + pid + '/parent_relationships'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + '/parent_relationships')
     
     def get_person_with_relationships(self):
-        url = self.tree_base + "persons-with-relationships?person=" + pid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + "persons-with-relationships?person=" + pid)
     
     def get_person_conclusion(self, pid, data):
         url = self.person_base + pid
@@ -93,10 +60,7 @@ class Person:
         return dict(response.info())
     
     def get_merge_constraint(self, pid, dpid):
-        url = self.person_base + pid + "/merges/" + dpid
-        response = self._request(url)
-        response = self._fs2py(request)
-        return response
+        return self.get(self.person_base + pid + "/merges/" + dpid)
     
     def options_merge_constraint(self, pid, dpid):
         url = self.person_base + pid + "/merges/" + dpid
@@ -109,10 +73,7 @@ class Person:
         return dict(response.info())
     
     def get_person_change_summary(self, pid):
-        url = tree_base + "persons/" + pid + '/change-summary'
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(tree_base + "persons/" + pid + '/change-summary')
     
     def read_preferred_spouse_relationship(self, pid):
         url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \

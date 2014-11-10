@@ -15,10 +15,7 @@ class User(object):
                         ['current-user-person']['href'])
     
     def get_agent(self, uid):
-        url = self.user_base + "agents/" + uid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response[0]
+        return self.get(self.user_base + "agents/" + uid)
     
     def get_current_user_history(self):
         return self.get(self.family_tree['collections'][0]['links']

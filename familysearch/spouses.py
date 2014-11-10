@@ -12,10 +12,7 @@ class Spouses:
         return dict(response.info())
     
     def get_couple_relationship(self, cpid):
-        url = self.couple_base + cpid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.couple_base + cpid)
     
     def couple_relationship_conclusion(self, cpid, data):
         url = self.couple_base + cpid

@@ -7,23 +7,14 @@ class ChangeHistory:
         pass
         
     def get_person_change_history(self, pid):
-        url = self.tree_base + "persons/" + pid + "/changes"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + "persons/" + pid + "/changes")
     
     def get_child_change_history(self, caprid):
-        url = self.tree_base + "child-and-parents-relationships/"\
-              + caprid + "/changes"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + "child-and-parents-relationships/"\
+              + caprid + "/changes")
     
     def get_read_couple_change_history(self, crid):
-        url = self.tree_base + "couple-relationships/" + crid + "/changes"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.tree_base + "couple-relationships/" + crid + "/changes")
     
     def restore_change(self, chid):
         url = self.tree_base + "changes/" + chid + "/restore"

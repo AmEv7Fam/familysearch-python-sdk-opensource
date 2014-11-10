@@ -6,16 +6,8 @@ class ParentsAndChildren:
     def __init__(self):
         self.child_base = self.tree_base + "child-and-parents-relationships/"
 
-    def create_child_relationship(self, data):
-        url = self.tree_base + 'relationships'
-        response = self._request(url, data)
-        return dict(response.info())
-    
     def get_child_relationship(self, crid):
-        url = self.child_base + crid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.child_base + crid)
     
     def delete_child_relationship_parent(self, crid, parent):
         url = self.child_base + crid + "/" + parent

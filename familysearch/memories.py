@@ -15,10 +15,7 @@ class Memories:
         return dict(response.info())
     
     def read_memory(self, mid):
-        url = self.memories_base + mid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.memories_base + mid)
         
     def update_memory_description(self, mid, data):
         url = self.memories_base + mid
@@ -36,16 +33,10 @@ class Memories:
         return dict(response.info())
     
     def get_memory_personas(self, mid):
-        url = self.memories_base + mid + "/personas"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.memories_base + mid + "/personas")
     
     def get_memory_persona(self, mid, pid):
-        url = self.memories_base + mid + "/personas/"+ pid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.memories_base + mid + "/personas/"+ pid)
     
     def update_memory_persona(self, mid, pid):
         url = self.memories_base + mid + "/personas/"+ pid
@@ -63,10 +54,7 @@ class Memories:
         return dict(response.info())
     
     def read_user_memories_reference(self, pid):
-        url = self.person_base + pid + "/memory-references"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.person_base + pid + "/memory-references")
     
     def delete_user_memories_reference(self, pid, erid):
         url = self.person_base + pid + "/memory-references/" + erid
@@ -79,10 +67,7 @@ class Memories:
         return dict(response.info())
     
     def read_memory_comments(self, mid):
-        url = self.memories_base + mid + "/comments"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.memories_base + mid + "/comments")
     
     def update_memory_comment(self, mid, data):
         url = self.memories_base + mid + "/comments"

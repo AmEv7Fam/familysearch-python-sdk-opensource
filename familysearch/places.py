@@ -16,45 +16,25 @@ class Places:
         url = self.places_base + "description/" + pdid
         if children:
             url = url + "/chilrdren"
-        response = self._request(url)
-        response = self._fs2py(response)
         return response
     
     def get_place_group(self, pgid):
-        url = self.places_base + "gropus/" + pgid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + "gropus/" + pgid)
     
     def get_place(self, pid):
-        url = self.places_base + str(pid)
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + str(pid))
      
     def get_place_type(self, ptid):
-        url = self.places_base + "types/" + ptid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + "types/" + ptid)
     
     def get_place_type_group(self, ptgid):
-        url = self.places_base + "type-gropus/" + ptgid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + "type-gropus/" + ptgid)
     
     def get_place_types(self):
-        url = self.places_base + "types"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + "types")
     
     def get_place_type_groups(self):
-        url = self.places_base + "type-groups"
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + "type-groups")
 
 # FamilySearch imports
 
