@@ -30,9 +30,9 @@ class Discovery(object):
         
     def fix_discovery(self):
         try:
-            self.uid = self.get_current_user()['users'][0]['treeUserId']
+            self.user = self.get_current_user()['users'][0]
         except KeyError:
-            self.uid = ""
+            self.user = ""
     
     
 # FamilySearch hookup
