@@ -82,33 +82,33 @@ class Person:
         return dict(response.info())
     
     def update_preferred_spouse_relationship(self, pid, crid):
-        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-spouse-relationships/" + pid
         response = self._request(url, headers={"Location": self.tree_base + \
             "/couple-relationships/" + crid}, method="PUT")
         return dict(response.info())
     
     def delete_preferred_spouse_relationship(self, uid, pid):
-        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-spouse-relationships/" + pid
         response = self._request(url, method="DELETE")
         return dict(response.info())
     
     def read_preferred_parent_relationship(self, pid):
-        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
+        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-parent-relationships/" + pid
         response = self._request(url)
         return dict(response.info())
     
     def update_preferred_parent_relationship(self, pid, crid):
-        url = self.tree_base + "/users/" + self.uid + \
+        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-parent-relationships/" + pid
         response = self._request(url, headers={"Location": self.tree_base + \
             "/couple-relationships/" + crid}, method="PUT")
         return dict(response.info())
     
     def delete_preferred_parent_relationship(self, uid, pid):
-        url = self.tree_base + "/users/" + self.uid + \
+        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-parent-relationships/" + pid
         response = self._request(url, method="DELETE")
         return dict(response.info())
