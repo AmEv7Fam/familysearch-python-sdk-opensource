@@ -1,11 +1,5 @@
 # Python imports
 
-"""
-A module implementing the Identity version 2 API module
-
-Main class: Authentication, meant to be mixed-in to the FamilySearch class
-"""
-
 try:
     # Python 3
     from urllib.request import(build_opener, HTTPCookieProcessor)
@@ -60,11 +54,14 @@ class Authentication(object):
         self.logged_in = True
         self.fix_discovery()
         
-    def oauth_login(self):
+    def oauth_desktop_login(self):
         """
         Log into FamilySearch using OAuth2 Authentication.
         
-        This mechanism is required for browser-based applications.
+        This is primarily a convenience function for destop apps.
+        
+        Not normally intended for production apps, but should
+        work while waiting for approval for password login.
         """
         self.logged_in = False
         self.cookies.clear()
@@ -79,10 +76,16 @@ class Authentication(object):
         server.HTTPServer(('', 63342), getter).handle_request()
         
         # Now that we have the authentication token, grab the access token.
+        self.oauth_code(qs)
         
+    def oauth_code_login(self, code)
+        """
+        Convenience function for Web servers to log into Familysearch
+        with the token code Familysearch hands you.
+        """
         url = self.token
         credentials = urlencode({'grant_type': 'authorization_code',
-                                 'code': qs,
+                                 'code': code,
                                  'client_id': self.key
                                   })
         credentials = credentials.encode("utf-8")
@@ -93,6 +96,29 @@ class Authentication(object):
         self.logged_in = True
         self.fix_discovery()
         
+    def unauthenticated_login(self, ip_address)
+    
+    """
+    Log into FamilySearch without authenticating.
+    
+    Has very limited read-only access.
+    Not intended for general use.
+    
+    """
+    self.logged_in = False
+        self.cookies.clear()
+        url = self.token
+        credentials = urlencode({'ip_address': ip_address, #TODO: make IP address generiation automatic
+                                 'client_id': self.key,
+                                 'grant_type': 'unauthenticated_session'
+                                 })
+        credentials = credentials.encode("utf-8")
+        response = self._request(url, credentials,
+                                 {"Content-Type": "application/x-www-form-urlencoded",
+                                 "Accept": "application/json"}, nojson=True)
+        self.session_id = self._fs2py(response)['access_token']
+        self.logged_in = True
+        self.fix_discovery()
 
     def logout(self):
         """
