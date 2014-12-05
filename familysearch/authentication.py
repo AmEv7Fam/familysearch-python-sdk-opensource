@@ -16,11 +16,6 @@ import webbrowser
 # Magic
 
 class Authentication(object):
-
-    """
-    A mix-in implementing the Identity version 2 endpoints
-    """
-
     def __init__(self):
         """
         Set up the URLs for authentication.
