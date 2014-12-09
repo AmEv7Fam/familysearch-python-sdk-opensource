@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <title>Familysearch-python-sdk-opensource by elderamevans</title>
+    <title>FamilySearch Python SDK by elderamevans</title>
   </head>
 
   <body>
 
     <header>
       <div class="container">
-        <h1>Familysearch-python-sdk-opensource</h1>
+        <h1>FamilySearch Python SDK</h1>
         <h2>WIP Python SDK for FamilySearch</h2>
 
         <section id="downloads">
@@ -28,14 +28,35 @@
 
     <div class="container">
       <section id="main_content">
-        <h1>
-<a id="familysearch-python-sdk-opensource" class="anchor" href="#familysearch-python-sdk-opensource" aria-hidden="true"><span class="octicon octicon-link"></span></a>familysearch-python-sdk-opensource</h1>
+        <h2>
+<a id="so-you-want-to-know-how-to-use-this-sdk" class="anchor" href="#so-you-want-to-know-how-to-use-this-sdk" aria-hidden="true"><span class="octicon octicon-link"></span></a>So, you want to know how to use this SDK?</h2>
 
-<p>This is a reboot/spinoff of <a href="https://github.com/familysearch-devnet/python-fs-stack">https://github.com/familysearch-devnet/python-fs-stack</a>.</p>
+<p>Here is some sample documentation for basic usage.
+These sample lines should work from either the interactive interpreter or a script.</p>
 
-<p>It is unfinished, but most of the functions have been instated. That being said, the working functions <em>shouldn't</em> have their names or expected outputs changed, but because this is almost public alpha, there are no guarantees.</p>
+<p>Initial setup</p>
 
-<p>It is designed for Python 3 and 2.7. Python 2.6 is the earliest supported version, but bugfixes are low-priority. 2.5 and earlier are not guaranteed to work, or supported, and are considered legacy.</p>
+<div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">from</span> familysearch <span class="pl-k">import</span> FamilySearch
+<span class="pl-k">&gt;&gt;&gt;</span> app_key <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>MY-MAGIC-DEV-KEY-THAT-ALLOWS-FAMILY-SEARCH-ACCESS<span class="pl-pds">"</span></span> <span class="pl-c"># You didn't think I'd give you a free one, now did you?</span>
+<span class="pl-k">&gt;&gt;&gt;</span> user_agent <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>MyApp/VersionNumber<span class="pl-pds">"</span></span>
+<span class="pl-k">&gt;&gt;&gt;</span> fs_address <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>https://sandbox.familysearch.org<span class="pl-pds">"</span></span>
+<span class="pl-k">&gt;&gt;&gt;</span> fs <span class="pl-k">=</span> Familysearch(user_agent, app_key, <span class="pl-vpf">base</span><span class="pl-k">=</span>fs_address)</pre></div>
+
+<p>As a side note: I left the FamilySearch base configurable so that, if there is a need to change it to, say, "<a href="https://deployment.familysearch.org">https://deployment.familysearch.org</a>" (which has happened for temporary sandbox upgrade), it is available.</p>
+
+<h3>
+<a id="logging-in" class="anchor" href="#logging-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging in</h3>
+
+<p>Desktop login</p>
+
+<p>The UN/PW login method is recommended for desktop clients, and is, in fact, required for certification.</p>
+
+<div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">try</span>:
+...     <span class="pl-s3">input</span> <span class="pl-k">=</span> <span class="pl-s3">raw_input</span>
+... <span class="pl-k">except</span>:
+...     <span class="pl-k">pass</span>
+<span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">from</span> getpass <span class="pl-k">import</span> getpass
+<span class="pl-k">&gt;&gt;&gt;</span> fs.login(<span class="pl-s3">input</span>(<span class="pl-s1"><span class="pl-pds">"</span>Username: <span class="pl-pds">"</span></span>), getpass())</pre></div>
       </section>
     </div>
 
