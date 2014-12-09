@@ -31,10 +31,12 @@
         <h2>
 <a id="so-you-want-to-know-how-to-use-this-sdk" class="anchor" href="#so-you-want-to-know-how-to-use-this-sdk" aria-hidden="true"><span class="octicon octicon-link"></span></a>So, you want to know how to use this SDK?</h2>
 
-<p>Here is some sample documentation for basic usage.
-These sample lines should work from either the interactive interpreter or a script.</p>
+<p>Here is some sample documentation for basic usage.</p>
 
-<p>Initial setup</p>
+<p>These sample lines should work from either the interactive interpreter or a script.</p>
+
+<h3>
+<a id="initial-setup" class="anchor" href="#initial-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initial setup</h3>
 
 <div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">from</span> familysearch <span class="pl-k">import</span> FamilySearch
 <span class="pl-k">&gt;&gt;&gt;</span> app_key <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>MY-MAGIC-DEV-KEY-THAT-ALLOWS-FAMILY-SEARCH-ACCESS<span class="pl-pds">"</span></span> <span class="pl-c"># You didn't think I'd give you a free one, now did you?</span>
@@ -42,12 +44,13 @@ These sample lines should work from either the interactive interpreter or a scri
 <span class="pl-k">&gt;&gt;&gt;</span> fs_address <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>https://sandbox.familysearch.org<span class="pl-pds">"</span></span>
 <span class="pl-k">&gt;&gt;&gt;</span> fs <span class="pl-k">=</span> Familysearch(user_agent, app_key, <span class="pl-vpf">base</span><span class="pl-k">=</span>fs_address)</pre></div>
 
-<p>As a side note: I left the FamilySearch base configurable so that, if there is a need to change it to, say, "<a href="https://deployment.familysearch.org">https://deployment.familysearch.org</a>" (which has happened for temporary sandbox upgrade), it is available.</p>
+<p>As a side note: I left the FamilySearch base configurable so that, if there is a need to change it to, say, "<a href="https://deployment.familysearch.org">https://deployment.familysearch.org</a>" (which has happened, and this used to be a temporary sandbox upgrade address), it is available, and won't require any additional tweaking in the SDK itself.</p>
 
 <h3>
 <a id="logging-in" class="anchor" href="#logging-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging in</h3>
 
-<p>Desktop login</p>
+<h4>
+<a id="desktop-login" class="anchor" href="#desktop-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>Desktop login</h4>
 
 <p>The UN/PW login method is recommended for desktop clients, and is, in fact, required for certification.</p>
 
@@ -57,6 +60,331 @@ These sample lines should work from either the interactive interpreter or a scri
 ...     <span class="pl-k">pass</span>
 <span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">from</span> getpass <span class="pl-k">import</span> getpass
 <span class="pl-k">&gt;&gt;&gt;</span> fs.login(<span class="pl-s3">input</span>(<span class="pl-s1"><span class="pl-pds">"</span>Username: <span class="pl-pds">"</span></span>), getpass())</pre></div>
+
+<h4>
+<a id="desktop-oauth-login" class="anchor" href="#desktop-oauth-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>Desktop OAuth login</h4>
+
+<p>Convenience function to log into FamilySearch by opening a Web browser and logging in through OAuth login.
+Not recommended for production applications, as it will not pass certification.</p>
+
+<p>If you still choose to use this method (for testing purposes), the default callback URI is "http://localhost:63342/fslogin".</p>
+
+<div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> fs.oauth_desktop_login()</pre></div>
+
+<h4>
+<a id="oauth-access-code-login" class="anchor" href="#oauth-access-code-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>OAuth access code login</h4>
+
+<p>OAuth is the required login method for Web servers. Now, I'm not going to recommend a (micro)framework here; that's up to you to choose. However, it <em>should</em> work with any framework, even <code>SimpleHTTPServer</code> (or <code>http.server</code> for Pythonthreestas).</p>
+
+<p>``Python
+... various server code to receive and interpret query, but I'll provide an (extremely simplified) example.</p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>token_code = list(query.items())[0][0]
+fs.oauth_code_login(token_code)</p>
+
+<pre><code></code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<h3>
+<a id="now-that-were-logged-in" class="anchor" href="#now-that-were-logged-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Now that we're logged in</h3>
+
+<p>Now, this guide isn't designed to be a comprehensive list as to every function that is available in this SDK, but a basic comprehension of JSON (more specifically, GEDCOMX's JSON, and, even more specifically, the FamilySearch variant) is needed. So, I'll provide two samples: a simple GET function, and a simple POST function</p>
+
+<h3>
+<a id="read-a-person" class="anchor" href="#read-a-person" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read a person</h3>
+
+<div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> fs.get_person(PPPJ<span class="pl-k">-</span>MYZ)
+{
+  <span class="pl-s1"><span class="pl-pds">"</span>persons<span class="pl-pds">"</span></span> : [ {
+    <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>PPPJ-MYZ<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>links<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>spouses<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/spouses<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>ancestry<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/ancestry?person=PPPJ-MYZ<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>person<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>parents<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/parents<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>person-with-relationships<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons-with-relationships?person=PPPJ-MYZ<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>descendancy<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/descendancy?person=PPPJ-MYZ<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>discussion-references<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/discussion-references<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>merge<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>template<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/<span class="pl-c1">{pid}</span>/merges/<span class="pl-c1">{dpid}</span>{?filter,access_token}<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>application/json,application/x-fs-v1+json,application/x-fs-v1+xml,application/xml,text/html<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>accept<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>application/x-fs-v1+json,application/x-fs-v1+xml<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>allow<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>GET,OPTIONS,POST<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>title<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Person Merge<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>change-history<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/changes<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>children<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/children<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>evidence-references<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/memory-references<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>spouse-relationships<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/spouse-relationships<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>child-relationships<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/child-relationships<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>collection<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/collections/tree<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>portrait<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/portrait<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>parent-relationships<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/parent-relationships<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>artifacts<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/memories<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>source-references<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/source-references<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>matches<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/matches<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>non-matches<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/not-a-match<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>portraits<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/portraits<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>notes<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/notes<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>source-descriptions<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/sources<span class="pl-pds">"</span></span>
+      }
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>changeMessage<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>wikipedia knows<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>identifiers<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Persistent<span class="pl-pds">"</span></span> : [ <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/ark:/61903/4:1:PPPJ-MYZ<span class="pl-pds">"</span></span> ]
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>living<span class="pl-pds">"</span></span> : true,
+    <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Male<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>names<span class="pl-pds">"</span></span> : [ {
+      <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>name-id<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>links<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>conclusion<span class="pl-pds">"</span></span> : {
+          <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/conclusions/name-id<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>contributor<span class="pl-pds">"</span></span> : {
+          <span class="pl-s1"><span class="pl-pds">"</span>resource<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>urn:name-attribution<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>resourceId<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>KNCV-RMZ<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/BirthName<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>nameForms<span class="pl-pds">"</span></span> : [ {
+        <span class="pl-s1"><span class="pl-pds">"</span>fullText<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Alex Aleksandrova<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>parts<span class="pl-pds">"</span></span> : [ {
+          <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Given<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Alex<span class="pl-pds">"</span></span>
+        }, {
+          <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Surname<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Aleksandrova<span class="pl-pds">"</span></span>
+        } ]
+      }, {
+        <span class="pl-s1"><span class="pl-pds">"</span>fullText<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Анастасия Александрова<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>parts<span class="pl-pds">"</span></span> : [ {
+          <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Given<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Анастасия<span class="pl-pds">"</span></span>
+        }, {
+          <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Surname<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Александрова<span class="pl-pds">"</span></span>
+        } ]
+      } ],
+      <span class="pl-s1"><span class="pl-pds">"</span>preferred<span class="pl-pds">"</span></span> : true
+    } ],
+    <span class="pl-s1"><span class="pl-pds">"</span>facts<span class="pl-pds">"</span></span> : [ {
+      <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>born<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>links<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>conclusion<span class="pl-pds">"</span></span> : {
+          <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/conclusions/born<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>contributor<span class="pl-pds">"</span></span> : {
+          <span class="pl-s1"><span class="pl-pds">"</span>resource<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>urn:fact-attribution<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>resourceId<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>RMQW-LPK<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Birth<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>3 Apr 1836<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>formal<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>+1836<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>place<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moscow, Russia<span class="pl-pds">"</span></span>
+      }
+    }, {
+      <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>res<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>links<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>conclusion<span class="pl-pds">"</span></span> : {
+          <span class="pl-s1"><span class="pl-pds">"</span>href<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/tree/persons/PPPJ-MYZ/conclusions/res<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>contributor<span class="pl-pds">"</span></span> : {
+          <span class="pl-s1"><span class="pl-pds">"</span>resource<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/users/agents/JNYR-KJP<span class="pl-pds">"</span></span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>resourceId<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>JNYR-KJP<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Residence<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>13 Apr 1836<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>formal<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>+1836-04-13<span class="pl-pds">"</span></span>
+      },
+      <span class="pl-s1"><span class="pl-pds">"</span>place<span class="pl-pds">"</span></span> : {
+        <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moscow, Russia<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>#-1276974106<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>normalized<span class="pl-pds">"</span></span> : [ {
+          <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moskva, Moscow, Russia<span class="pl-pds">"</span></span>
+        } ]
+      }
+    } ],
+    <span class="pl-s1"><span class="pl-pds">"</span>display<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Alex Aleksandrova<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Male<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>lifespan<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>3 Apr 1836 - Dead<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>birthDate<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>3 Apr 1836<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>birthPlace<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moscow, Russia<span class="pl-pds">"</span></span>
+    }
+  } ],
+  <span class="pl-s1"><span class="pl-pds">"</span>sourceDescriptions<span class="pl-pds">"</span></span> : [ {
+    <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>SD-PPPJ-MYZ<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>citations<span class="pl-pds">"</span></span> : [ {
+      <span class="pl-s1"><span class="pl-pds">"</span>lang<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-cce">\"</span>Family Tree,<span class="pl-cce">\"</span> database, &lt;i&gt;FamilySearch&lt;/i&gt; (http://familysearch.org : modified 02 December 2014, 15:57), entry for Alex Aleksandrova(PID https://familysearch.org/ark:/61903/4:1:PPPJ-MYZ); contributed by various users.<span class="pl-pds">"</span></span>
+    } ],
+    <span class="pl-s1"><span class="pl-pds">"</span>about<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>#PPPJ-MYZ<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>componentOf<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/platform/collections/tree<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>titles<span class="pl-pds">"</span></span> : [ {
+      <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Alex Aleksandrova<span class="pl-pds">"</span></span>
+    } ],
+    <span class="pl-s1"><span class="pl-pds">"</span>resourceType<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Person<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>identifiers<span class="pl-pds">"</span></span> : {
+      <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Persistent<span class="pl-pds">"</span></span> : [ <span class="pl-s1"><span class="pl-pds">"</span>https://familysearch.org/ark:/61903/4:1:PPPJ-MYZ<span class="pl-pds">"</span></span> ]
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>modified<span class="pl-pds">"</span></span> : <span class="pl-c1">1417561053000</span>
+  } ],
+  <span class="pl-s1"><span class="pl-pds">"</span>places<span class="pl-pds">"</span></span> : [ {
+    <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>-1276974106<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>names<span class="pl-pds">"</span></span> : [ {
+      <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moskva, Moscow, Russia<span class="pl-pds">"</span></span>
+    } ],
+    <span class="pl-s1"><span class="pl-pds">"</span>latitude<span class="pl-pds">"</span></span> : <span class="pl-c1">37.613983</span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>longitude<span class="pl-pds">"</span></span> : <span class="pl-c1">55.784296</span>
+  } ],
+  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>#SD-PPPJ-MYZ<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<h3>
+<a id="create-a-person" class="anchor" href="#create-a-person" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a person</h3>
+
+<div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> new_guy <span class="pl-k">=</span> 
+... {
+...   <span class="pl-s1"><span class="pl-pds">"</span>persons<span class="pl-pds">"</span></span> : [ {
+...     <span class="pl-s1"><span class="pl-pds">"</span>living<span class="pl-pds">"</span></span> : false,
+...     <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span> : {
+...       <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>changeMessage<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>...change message...<span class="pl-pds">"</span></span>
+...       },
+...       <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Female<span class="pl-pds">"</span></span>
+...     },
+...     <span class="pl-s1"><span class="pl-pds">"</span>names<span class="pl-pds">"</span></span> : [ {
+...       <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>changeMessage<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>...change message...<span class="pl-pds">"</span></span>
+...       },
+...       <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/BirthName<span class="pl-pds">"</span></span>,
+...       <span class="pl-s1"><span class="pl-pds">"</span>nameForms<span class="pl-pds">"</span></span> : [ {
+...         <span class="pl-s1"><span class="pl-pds">"</span>fullText<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Anastasia Aleksandrova<span class="pl-pds">"</span></span>,
+...         <span class="pl-s1"><span class="pl-pds">"</span>parts<span class="pl-pds">"</span></span> : [ {
+...           <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Given<span class="pl-pds">"</span></span>,
+...           <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Anastasia<span class="pl-pds">"</span></span>
+...         }, {
+...           <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Surname<span class="pl-pds">"</span></span>,
+...           <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Aleksandrova<span class="pl-pds">"</span></span>
+...         } ]
+...       }, {
+...         <span class="pl-s1"><span class="pl-pds">"</span>fullText<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Анастасия Александрова<span class="pl-pds">"</span></span>,
+...         <span class="pl-s1"><span class="pl-pds">"</span>parts<span class="pl-pds">"</span></span> : [ {
+...           <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Given<span class="pl-pds">"</span></span>,
+...           <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Анастасия<span class="pl-pds">"</span></span>
+...         }, {
+...           <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Surname<span class="pl-pds">"</span></span>,
+...           <span class="pl-s1"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Александрова<span class="pl-pds">"</span></span>
+...         } ]
+...       } ],
+...       <span class="pl-s1"><span class="pl-pds">"</span>preferred<span class="pl-pds">"</span></span> : true
+...     } ],
+...     <span class="pl-s1"><span class="pl-pds">"</span>facts<span class="pl-pds">"</span></span> : [ {
+...       <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>changeMessage<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>...change message...<span class="pl-pds">"</span></span>
+...       },
+...        <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Birth<span class="pl-pds">"</span></span>,
+...      <span class="pl-s1"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>3 Apr 1836<span class="pl-pds">"</span></span>,
+...         <span class="pl-s1"><span class="pl-pds">"</span>formal<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>+1836<span class="pl-pds">"</span></span>
+...       },
+...       <span class="pl-s1"><span class="pl-pds">"</span>place<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moscow, Russia<span class="pl-pds">"</span></span>
+...       }
+...     }, {
+...       <span class="pl-s1"><span class="pl-pds">"</span>attribution<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>changeMessage<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>...change message...<span class="pl-pds">"</span></span>
+...       },
+...       <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>http://gedcomx.org/Residence<span class="pl-pds">"</span></span>,
+...       <span class="pl-s1"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>13 Apr 1836<span class="pl-pds">"</span></span>,
+...         <span class="pl-s1"><span class="pl-pds">"</span>formal<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>+1836-04-13<span class="pl-pds">"</span></span>
+...       },
+...       <span class="pl-s1"><span class="pl-pds">"</span>place<span class="pl-pds">"</span></span> : {
+...         <span class="pl-s1"><span class="pl-pds">"</span>original<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moscow, Russia<span class="pl-pds">"</span></span>
+...       }
+...     } ],
+...     <span class="pl-s1"><span class="pl-pds">"</span>display<span class="pl-pds">"</span></span> : {
+...       <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Anastasia Aleksandrova<span class="pl-pds">"</span></span>,
+...       <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Female<span class="pl-pds">"</span></span>,
+...       <span class="pl-s1"><span class="pl-pds">"</span>lifespan<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>3 Apr 1836 - Dead<span class="pl-pds">"</span></span>,
+...       <span class="pl-s1"><span class="pl-pds">"</span>birthDate<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>3 Apr 1836<span class="pl-pds">"</span></span>,
+...       <span class="pl-s1"><span class="pl-pds">"</span>birthPlace<span class="pl-pds">"</span></span> : <span class="pl-s1"><span class="pl-pds">"</span>Moscow, Russia<span class="pl-pds">"</span></span>
+...     }
+...   } ]
+... }
+...
+<span class="pl-k">&gt;&gt;&gt;</span> fs.create_person(new_person)
+ (Response headers. Not finalized how I<span class="pl-s1"><span class="pl-pds">'</span>m going to lay them out.)<span class="pl-ii"></span></span></pre></div>
+
+<p>Note: Neither of these may reflect the current layout of FamilySearch JSON. However, the response layout should be the same as the submitting layout.</p>
       </section>
     </div>
 
