@@ -76,19 +76,9 @@ Not recommended for production applications, as it will not pass certification.<
 
 <p>OAuth is the required login method for Web servers. Now, I'm not going to recommend a (micro)framework here; that's up to you to choose. However, it <em>should</em> work with any framework, even <code>SimpleHTTPServer</code> (or <code>http.server</code> for Pythonthreestas).</p>
 
-<p>``Python
-... various server code to receive and interpret query, but I'll provide an (extremely simplified) example.</p>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>token_code = list(query.items())[0][0]
-fs.oauth_code_login(token_code)</p>
-
-<pre><code></code></pre>
-</blockquote>
-</blockquote>
-</blockquote>
+<div class="highlight highlight-Python"><pre>... various server code to receive <span class="pl-k">and</span> interpret query, but I<span class="pl-s1"><span class="pl-pds">'</span>ll provide an (extremely simplified) example.<span class="pl-ii"></span></span>
+<span class="pl-k">&gt;&gt;&gt;</span> token_code <span class="pl-k">=</span> <span class="pl-s3">list</span>(query.items())[<span class="pl-c1">0</span>][<span class="pl-c1">0</span>]
+<span class="pl-k">&gt;&gt;&gt;</span> fs.oauth_code_login(token_code)</pre></div>
 
 <h3>
 <a id="now-that-were-logged-in" class="anchor" href="#now-that-were-logged-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Now that we're logged in</h3>
