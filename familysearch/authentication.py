@@ -92,15 +92,15 @@ class Authentication(object):
         self.fix_discovery()
         
     def unauthenticated_login(self, ip_address)
-    
-    """
-    Log into FamilySearch without authenticating.
-    
-    Has very limited read-only access.
-    Not intended for general use.
-    
-    """
-    self.logged_in = False
+        
+        """
+        Log into FamilySearch without authenticating.
+        
+        Has very limited read-only access.
+        Not intended for general use.
+        
+        """
+        self.logged_in = False
         self.cookies.clear()
         url = self.token
         credentials = urlencode({'ip_address': ip_address, #TODO: make IP address generiation automatic
