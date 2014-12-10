@@ -191,15 +191,17 @@ class FamilySearch(object):
     def _fs2py(self, response, nojson=False):
         """
         Take JSON from FamilySearch response, and allow Python to handle it.
+        Also, inject headers into response.
         """
-        if hasattr(response, "read"):
-            response = response.read()
-            response = response.decode("utf-8")
+        headers = dict(response.info())
+        response = response.read()
+        response = response.decode("utf-8")
         if not nojson:
             response = json.loads(response)
+        response["headers"] = headers
         return response
 
-
+    # I'm not sure... Is _remove_nones() needed any more?
     def _remove_nones(self, arg):
         """
         Remove all None values from a nested dict structure.
