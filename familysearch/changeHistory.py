@@ -17,9 +17,7 @@ class ChangeHistory:
         return self.get(self.tree_base + "couple-relationships/" + crid + "/changes")
     
     def restore_change(self, chid):
-        url = self.tree_base + "changes/" + chid + "/restore"
-        response = self._request(url, method="POST")
-        return dict(response.info())
+        return self.post(self.tree_base + "changes/" + chid + "/restore")
 
 # FamilySearch imports
 

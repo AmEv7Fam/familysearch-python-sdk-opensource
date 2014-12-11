@@ -73,10 +73,10 @@ class FamilySearch(object):
     A FamilySearch API proxy
 
     The constructor must be called with a user-agent string and a developer key.
-    A username, password, session ID, and base URL are all optional.
+    A session ID and base URL are optional.
 
     Public methods:
-    needs to be re-written...
+    ...needs to be re-written...
     """
 
     def __init__(self, agent, key, session=None,
@@ -87,8 +87,6 @@ class FamilySearch(object):
         Keyword arguments:
         agent -- User-agent string to use for requests
         key -- FamilySearch developer key (optional if reusing an existing session ID)
-        username (optional)
-        password (optional)
         session (optional) -- existing session ID to reuse
         base (optional) -- base URL for the API;
                            defaults to 'https://sandbox.familysearch.org'
@@ -173,21 +171,23 @@ class FamilySearch(object):
         return urlunsplit((parts[0], parts[1], path, parts[3], parts[4]))
 
 
-    def _add_query_params(self, url, params={}, **kw_params):
+    def _add_query_params(self, url, params=None, **kw_params):
         """
         Add the specified query parameters to the given URL.
 
         Parameters can be passed either as a dictionary or as keyword arguments.
 
         """
+        if params is None:
+            params = {}
         parts = urlsplit(url)
         query_parts = parse_qs(parts[3])
         query_parts.update(params)
         query_parts.update(kw_params)
         query = urlencode(query_parts, True)
         return urlunsplit((parts[0], parts[1], parts[2], query, parts[4]))
-
-
+    
+    # Considering integrating directly into _request
     def _fs2py(self, response, nojson=False):
         """
         Take JSON from FamilySearch response, and allow Python to handle it.
@@ -216,7 +216,11 @@ class FamilySearch(object):
         else:
             return arg
         
-    def get(self, url, data=None, headers={}, method=None, nojson=False):
+    # These are really just front-ends for _request, with the name matching the method.
+    def get(self, url, data=None, headers={}, method="GET", nojson=False):
+        return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
+    
+    def post(self, url, data=None, headers={}, method="POST", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
 
 # FamilySearch imports

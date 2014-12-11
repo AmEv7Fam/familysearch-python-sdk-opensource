@@ -7,16 +7,10 @@ class Vocabularies:
         self.vocab_base = self.base + "platform/vocab/"
     
     def get_vocabulary_list(self, cvlid):
-        url = self.vocab_base + "lists/" + cvlid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.vocab_base + "lists/" + cvlid)
     
     def get_vocabulary_term(self, cvtid):
-        url = self.vocab_base + "lists/" + cvtid
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.vocab_base + "lists/" + cvtid)
 
 # FamilySearch imports
 

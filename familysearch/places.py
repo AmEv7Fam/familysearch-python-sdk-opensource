@@ -15,7 +15,7 @@ class Places:
     def get_place_description(self, pdid, children=None):
         url = self.places_base + "description/" + pdid
         if children:
-            url = url + "/chilrdren"
+            url = url + "/children"
         return response
     
     def get_place_group(self, pgid):
