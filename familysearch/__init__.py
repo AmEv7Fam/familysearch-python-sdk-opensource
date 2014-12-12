@@ -225,7 +225,10 @@ class FamilySearch(object):
 
 # FamilySearch imports
 
+# Sorted alphabetically, except Discovery, which is the Hypermedia class, which
+#
+
 from . import(discovery, authentication, authorities, changeHistory,
-              discussions, memories, notes, parentsAndChildren, pedigree, 
-              person, places, records,searchAndMatch, sourceBox, sources,
-              spouses, user, utilities, vocabularies)
+              discussions, memories, notes, parentsAndChildren, ordinances, 
+              pedigree, person, places, records,searchAndMatch, sourceBox,
+              sources, spouses, user, utilities, vocabularies)

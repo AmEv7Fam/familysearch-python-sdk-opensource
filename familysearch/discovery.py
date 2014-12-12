@@ -26,12 +26,28 @@ class Discovery(object):
                                          ['links']['self']['href'])
         self.dates_authority = self.get(self.collections['collections'][6]
                                         ['links']['self']['href'])
+        self.vocab = self.get(self.collections['collections'][7]['links']
+                              ['self']['href'])
+        try:
+            self.lds_ordinances = self.get(self.collections['collections'][8]
+                                           ['links']['self']['href'])
+        else:
+            self.lds_user = True
+        except:
+            self.lds_user = False
         try:
             self.user = self.get_current_user()['users'][0]
         except KeyError:
             self.user = ""
         
     def fix_discovery(self):
+        try:
+            self.lds_ordinances = self.get(self.collections['collections'][8]
+                                           ['links']['self']['href'])
+        else:
+            self.lds_user = True
+        except:
+            self.lds_user = False
         try:
             self.user = self.get_current_user()['users'][0]
         except KeyError:
