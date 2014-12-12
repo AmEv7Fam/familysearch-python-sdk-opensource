@@ -126,7 +126,7 @@ class FamilySearch(object):
         if self.session_id in self.oauth_secrets:
             self.logged_in = False
 
-    def _request(self, url, data=None, headers={}, method=None, nojson=False):
+    def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.
 
@@ -136,7 +136,8 @@ class FamilySearch(object):
 
         Returns a file-like object representing the response.
         """
-        
+        if headers is None:
+            headers = {}
         if not nojson:
             if data:
                 data = json.dumps(data)
@@ -154,6 +155,8 @@ class FamilySearch(object):
         try:
             return self.opener.open(request)
         except HTTPError as error:
+            eh = dict(error.headers)
+            print(dict(error.headers))
             if error.code == 401:
                 self.logged_in = False
             raise

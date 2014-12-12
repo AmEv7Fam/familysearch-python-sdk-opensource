@@ -73,7 +73,7 @@ class Authentication(object):
         # Now that we have the authentication token, grab the access token.
         self.oauth_code(qs)
         
-    def oauth_code_login(self, code)
+    def oauth_code_login(self, code):
         """
         Convenience function for Web servers to log into Familysearch
         with the token code Familysearch hands you.
@@ -91,7 +91,7 @@ class Authentication(object):
         self.logged_in = True
         self.fix_discovery()
         
-    def unauthenticated_login(self, ip_address)
+    def unauthenticated_login(self, ip_address):
         
         """
         Log into FamilySearch without authenticating.

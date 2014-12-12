@@ -31,10 +31,11 @@ class Discovery(object):
         try:
             self.lds_ordinances = self.get(self.collections['collections'][8]
                                            ['links']['self']['href'])
-        else:
-            self.lds_user = True
         except:
             self.lds_user = False
+        else:
+            self.lds_user = True
+        
         try:
             self.user = self.get_current_user()['users'][0]
         except KeyError:
@@ -44,10 +45,11 @@ class Discovery(object):
         try:
             self.lds_ordinances = self.get(self.collections['collections'][8]
                                            ['links']['self']['href'])
-        else:
-            self.lds_user = True
         except:
             self.lds_user = False
+        else:
+            self.lds_user = True
+        
         try:
             self.user = self.get_current_user()['users'][0]
         except KeyError:
