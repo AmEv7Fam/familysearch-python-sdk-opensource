@@ -222,6 +222,15 @@ class FamilySearch(object):
     
     def post(self, url, data=None, headers={}, method="POST", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
+    
+    def head(self, url, data=None, headers={}, method="HEAD", nojson=False):
+        return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
+    
+    def options(self, url, data=None, headers={}, method="OPTIONS", nojson=False):
+        return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
+    
+    def delete(self, url, data=None, headers={}, method="DELETE", nojson=False):
+        return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
 
 # FamilySearch imports
 
