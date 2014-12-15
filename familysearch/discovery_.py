@@ -1,8 +1,8 @@
 
 # Python imports
 
-
-
+# FYI: I moved it to top, because I wasn't sure if I needed to import FS class
+# before it could run.
 from . import FamilySearch
 
 # Magic
@@ -29,7 +29,7 @@ class Discovery(object):
         self.vocab = self.get(self.collections['collections'][7]['links']
                               ['self']['href'])
         try:
-            self.lds_ordinances = self.get(self.collections['collections'][8]
+            self.lds_ordinances = self.get(self.collections['collections'][-1]
                                            ['links']['self']['href'])
         except:
             self.lds_user = False
@@ -38,12 +38,12 @@ class Discovery(object):
         
         try:
             self.user = self.get_current_user()['users'][0]
-        except KeyError:
+        except:
             self.user = ""
         
     def fix_discovery(self):
         try:
-            self.lds_ordinances = self.get(self.collections['collections'][8]
+            self.lds_ordinances = self.get(self.collections['collections'][-1]
                                            ['links']['self']['href'])
         except:
             self.lds_user = False
@@ -52,7 +52,7 @@ class Discovery(object):
         
         try:
             self.user = self.get_current_user()['users'][0]
-        except KeyError:
+        except:
             self.user = ""
     
     
