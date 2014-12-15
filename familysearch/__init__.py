@@ -49,6 +49,7 @@ except ImportError:
     from urlparse import(urlsplit, urlunsplit, parse_qs)
 
 import json
+import time
 
 __version__ = '0.5'
 
@@ -99,11 +100,14 @@ class FamilySearch(object):
         self.tree_base = self.base + "/platform/tree/"
         self.opener = build_opener()
         self.logged_in = bool(self.session_id)
+        self.cookies = None
 
         for mixin in self.__class__.__bases__:
             mixin.__init__(self)
 
-
+    # TODO: I understand that we need to do something if we want this
+    # SDK multithreaded, and I think these are the key, but I think
+    # that these are out of date.
     def __getstate__(self):
         """
         Return a tuple containing the state necessary to pickle this instance.
@@ -156,9 +160,11 @@ class FamilySearch(object):
             return self.opener.open(request)
         except HTTPError as error:
             eh = dict(error.headers)
-            print(dict(error.headers))
             if error.code == 401:
                 self.logged_in = False
+            if error.code == 429:
+                time.sleep(eh['Retry-after']/1000)
+                return self._request(url, data, headers, method, nojson)
             raise
     
     def _add_subpath(self, url, subpath):
@@ -220,19 +226,19 @@ class FamilySearch(object):
             return arg
         
     # These are really just front-ends for _request, with the name matching the method.
-    def get(self, url, data=None, headers={}, method="GET", nojson=False):
+    def get(self, url, data=None, headers=None, method=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
     
-    def post(self, url, data=None, headers={}, method="POST", nojson=False):
+    def post(self, url, data=None, headers=None, method="POST", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
     
-    def head(self, url, data=None, headers={}, method="HEAD", nojson=False):
+    def head(self, url, data=None, headers=None, method="HEAD", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
     
-    def options(self, url, data=None, headers={}, method="OPTIONS", nojson=False):
+    def options(self, url, data=None, headers=None, method="OPTIONS", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
     
-    def delete(self, url, data=None, headers={}, method="DELETE", nojson=False):
+    def delete(self, url, data=None, headers=None, method="DELETE", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
 
 # FamilySearch imports
