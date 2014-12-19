@@ -7,16 +7,14 @@ class Places:
         self.places_base = self.base + "/platform/places/"
     
     def get_places_search(self, q):
-        url = self.places_base + "search?q=name:" + q
-        response = self._request(url)
-        response = self._fs2py(response)
-        return response
+        return self.get(self.places_base + "search?q=name:" + q)
+
     
     def get_place_description(self, pdid, children=None):
         url = self.places_base + "description/" + pdid
         if children:
             url = url + "/children"
-        return response
+        return self.get(url)
     
     def get_place_group(self, pgid):
         return self.get(self.places_base + "gropus/" + pgid)

@@ -7,32 +7,22 @@ class Spouses:
         self.couple_base = self.tree_base + 'couple-relationships/'
     
     def create_couple_relationship(self, data):
-        url = self.tree_base + 'relationships'
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(self.tree_base + 'relationships', data)
     
     def get_couple_relationship(self, cpid):
         return self.get(self.couple_base + cpid)
     
-    def couple_relationship_conclusion(self, cpid, data):
-        url = self.couple_base + cpid
-        response = self._request(url, data)
-        return dict(response.info())
+    def update_couple_relationship_conclusion(self, cpid, data):
+        return self.post(self.couple_base + cpid, data)
     
     def delete_couple_relationship_conclusion(self, cpid, cid, reason=None):
-        url = self.couple_base + cpid + '/conclusions/' + cid
-        response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.couple_base + cpid + '/conclusions/' + cid, headers={'X-Reason': reason})
     
     def delete_couple_relationship(self, cpid, reason=None):
-        url = self.couple_base + cpid
-        response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
-        return dict(response.info())
+        return self.delete(self._request(self.couple_base + cpid, headers={'X-Reason': reason}, method="DELETE")
     
     def restore_couple_relationship(self, cpid):
-        url = self.couple_base + cpid + '/restore'
-        response = self._request(url, method="POST", nojson=True)
-        return dict(response.info()) 
+
 # FamilySearch imports
 
 from . import FamilySearch

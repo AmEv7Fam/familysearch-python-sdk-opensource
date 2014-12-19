@@ -10,19 +10,13 @@ class ParentsAndChildren:
         return self.get(self.child_base + crid)
     
     def delete_child_relationship_parent(self, crid, parent):
-        url = self.child_base + crid + "/" + parent
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.child_base + crid + "/" + parent)
     
     def delete_child_relationship_conclusion(self, crid, cid, role):
-        url = self.child_base + crid + "/" + role + "/conclusions/" + cid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.child_base + crid + "/" + role + "/conclusions/" + cid)
     
     def child_relationship_restore(self, crid):
-        url = self.child_base + crid + "/restore"
-        response = self._request(url, method="POST", nojson=True)
-        return dict(response.info())
+        return post(self.child_base + crid + "/restore", method="POST", nojson=True)
 
 # FamilySearch imports
 

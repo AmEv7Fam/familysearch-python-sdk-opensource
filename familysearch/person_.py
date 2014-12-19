@@ -7,22 +7,16 @@ class Person:
         self.person_base = self.tree_base + 'persons/'
         
     def create_person(self, data):
-        url = self.tree_base + 'persons'
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(self.tree_base + 'persons', data)
     
     def get_person(self, pid):
         return self.get(self.person_base + pid)
     
     def delete_person(self, pid, reason):
-        url = self.person_base + pid
-        response = self._request(url, headers={'X-Reason': reason}, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.person_base + pid, headers={'X-Reason': reason})
     
     def restore_person(self, pid):
-        url = self.person_base + pid + "/restore"
-        response = self._request(url, method="POST", nojson=True)
-        return dict(response.info())
+        return self._request(self.person_base + pid + "/restore", method="POST", nojson=True)
     
     def get_parents(self, pid):
         return self.get(self.person_base + pid + "/parents")
@@ -55,63 +49,45 @@ class Person:
         return self.get(self.tree_base + "persons-with-relationships?person=" + pid)
     
     def get_person_conclusion(self, pid, data):
-        url = self.person_base + pid
-        response = self._request(url, data)
-        return dict(response.info())
+        return self._request(self.person_base + pid, data)
     
     def get_merge_constraint(self, pid, dpid):
         return self.get(self.person_base + pid + "/merges/" + dpid)
     
     def options_merge_constraint(self, pid, dpid):
-        url = self.person_base + pid + "/merges/" + dpid
-        response = self._request(url, method="OPTIONS")
-        return dict(response.info())
+        return self.options(self.person_base + pid + "/merges/" + dpid)
     
     def post_merge_duplicate(self, pid, dpid, data):
-        url = self.tree_base + pid + "/merges/" + dpid
-        response = self._request(url, data)
-        return dict(response.info())
+        return self._post(self.tree_base + pid + "/merges/" + dpid, data)
     
     def get_person_change_summary(self, pid):
         return self.get(tree_base + "persons/" + pid + '/change-summary')
     
-    def read_preferred_spouse_relationship(self, pid):
-        url = self.tree_base + "/users/" + self.current_user()['treeUserId'] + \
-            "/preferred-spouse-relationships/" + pid
-        response = self._request(url)
-        return dict(response.info())
+    def get_preferred_spouse_relationship(self, pid):
+        return self.get(self.tree_base + "/users/" + self.user['treeUserId'] + \
+            "/preferred-spouse-relationships/" + pid)
     
     def update_preferred_spouse_relationship(self, pid, crid):
-        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
-            "/preferred-spouse-relationships/" + pid
-        response = self._request(url, headers={"Location": self.tree_base + \
-            "/couple-relationships/" + crid}, method="PUT")
-        return dict(response.info())
+        return self.put(self.tree_base + "/users/" + self.user['treeUserId'] + \
+            "/preferred-spouse-relationships/" + pid, headers={"Location": self.tree_base + \
+            "/couple-relationships/" + crid})
     
     def delete_preferred_spouse_relationship(self, uid, pid):
-        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
-            "/preferred-spouse-relationships/" + pid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.tree_base + "/users/" + self.user['treeUserId'] + \
+            "/preferred-spouse-relationships/" + pid)
     
-    def read_preferred_parent_relationship(self, pid):
-        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
-            "/preferred-parent-relationships/" + pid
-        response = self._request(url)
-        return dict(response.info())
+    def get_preferred_parent_relationship(self, pid):
+        return self.get(self.tree_base + "/users/" + self.user['treeUserId'] + \
+            "/preferred-parent-relationships/" + pid)
     
     def update_preferred_parent_relationship(self, pid, crid):
-        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
-            "/preferred-parent-relationships/" + pid
-        response = self._request(url, headers={"Location": self.tree_base + \
-            "/couple-relationships/" + crid}, method="PUT")
-        return dict(response.info())
+        return self.put(self.tree_base + "/users/" + self.user['treeUserId'] + \
+            "/preferred-parent-relationships/" + pid, headers={"Location": self.tree_base + \
+            "/couple-relationships/" + crid})
     
     def delete_preferred_parent_relationship(self, uid, pid):
-        url = self.tree_base + "/users/" + self.user['treeUserId'] + \
-            "/preferred-parent-relationships/" + pid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.tree_base + "/users/" + self.user['treeUserId'] + \
+            "/preferred-parent-relationships/" + pid)
     
     
 # FamilySearch imports

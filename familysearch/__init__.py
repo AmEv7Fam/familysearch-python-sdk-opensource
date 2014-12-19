@@ -232,6 +232,9 @@ class FamilySearch(object):
     def post(self, url, data=None, headers=None, method="POST", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
     
+    def post(self, url, data=None, headers=None, method="PUT", nojson=False):
+        return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
+    
     def head(self, url, data=None, headers=None, method="HEAD", nojson=False):
         return self._fs2py(self._request(url, data, headers, method, nojson), nojson)
     

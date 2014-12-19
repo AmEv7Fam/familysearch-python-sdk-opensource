@@ -7,9 +7,7 @@ class Notes:
         pass
     
     def create_person_note(self, pid, data):
-        url = person_base + pid + "/notes"
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(person_base + pid + "/notes", data)
     
     def get_list_person_note(self, pid):
         return self.get(person_base + pid + "/notes")
@@ -18,19 +16,13 @@ class Notes:
         return self.get(person_base + pid + "/notes/" + nid)
     
     def update_person_note(self, nid, data):
-        url = person_base + pid + "/notes/" + nid
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(person_base + pid + "/notes/" + nid, data)
     
     def delete_person_note(self, pid, nid):
-        url = person_base + pid + "/notes/" + nid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(person_base + pid + "/notes/" + nid)
     
     def create_couple_note(self, crid, data):
-        url = couple_base + crid + "/notes"
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(couple_base + crid + "/notes", data)
     
     def list_couple_note(self, crid):
         return self.get(couple_base + crid + "/notes")
@@ -39,19 +31,13 @@ class Notes:
         return self.get(couple_base + crid + "/notes/" + nid)
     
     def update_couple_note(self, crid, data):
-        url = couple_base + crid + "/notes/" + nid
-        response = self._request(url, data)
-        return dict(response.info())
+        response = self.post(urlcouple_base + crid + "/notes/" + nid, data)
     
     def delete_couple_note(self, crid, nid):
-        url = couple_base + crid + "/notes/" + nid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(couple_base + crid + "/notes/" + nid)
     
     def create_child_note(self, cprid, data):
-        url = child_base + cprid + "/notes"
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(child_base + cprid + "/notes", data)
     
     def list_child_note(self, cprid):
         return self.get(couple_base + cprid + "/notes")
@@ -60,14 +46,10 @@ class Notes:
         return self.get(person_base + cprid + "/notes/" + nid)
     
     def update_child_note(self, cprid, data):
-        url = couple_base + cprid + "/notes/" + nid
-        response = self._request(url, data)
-        return dict(response.info())
+        response = self.post(couple_base + cprid + "/notes/" + nid, data)
     
     def delete_child_note(self, cprid, nid):
-        url = couple_base + cprid + "/notes/" + nid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(couple_base + cprid + "/notes/" + nid)
 
 # FamilySearch imports
 

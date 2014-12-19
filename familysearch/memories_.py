@@ -6,31 +6,20 @@ class Memories:
     def __init__(self):
         self.memories_base = self.base + "/platform/memories/"
     
-    def post_memory(self, filename, title, filetype, data):
-        url = memories_base[:-1] + "?title=" + title
-        response = self._request(url, data, {"Content-disposition": "attachment",
-                                 "filename": filename,
-                                 "Content-Type": filetype},
-                                 nojson=True)
-        return dict(response.info())
+    def post_memory(self, title, data, headers):
+        return self.post(memories_base[:-1] + "?title=" + title, data, headers, nojson=True)
     
     def read_memory(self, mid):
         return self.get(self.memories_base + mid)
         
     def update_memory_description(self, mid, data):
-        url = self.memories_base + mid
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(self.memories_base + mid, data)
     
     def delete_memory(self, mid):
-        url = self.memories_base + mid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.memories_base + mid)
     
     def post_memory_persona(self, mid, data):
-        url = self.memories_base + mid + "/personas"
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(self.memories_base + mid + "/personas", data)
     
     def get_memory_personas(self, mid):
         return self.get(self.memories_base + mid + "/personas")
@@ -39,45 +28,31 @@ class Memories:
         return self.get(self.memories_base + mid + "/personas/"+ pid)
     
     def update_memory_persona(self, mid, pid):
-        url = self.memories_base + mid + "/personas/"+ pid
-        response = self._request(url)
-        return dict(response.info())
+        return self._request(self.memories_base + mid + "/personas/" + pid)
     
     def delete_memory_persona(self, mid, pid):
-        url = self.memories_base + mid + "/personas/" + pid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.memories_base + mid + "/personas/" + pid)
     
     def create_user_memories_reference(self, pid, data):
-        url = person_base + pid + "/memory-references"
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(person_base + pid + "/memory-references", data)
     
     def read_user_memories_reference(self, pid):
         return self.get(self.person_base + pid + "/memory-references")
     
     def delete_user_memories_reference(self, pid, erid):
-        url = self.person_base + pid + "/memory-references/" + erid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self._request(self.person_base + pid + "/memory-references/" + erid)
         
     def create_memory_comment(self, mid, data):
-        url = self.memories_base + mid + "/comments"
-        response = self._request(url, data)
-        return dict(response.info())
+        return response = self.post(self.memories_base + mid + "/comments", data)
     
     def read_memory_comments(self, mid):
         return self.get(self.memories_base + mid + "/comments")
     
     def update_memory_comment(self, mid, data):
-        url = self.memories_base + mid + "/comments"
-        response = self._request(url, data)
-        return dict(response.info())
+        return self.post(self.memories_base + mid + "/comments", data)
     
     def delete_memory_comment(self, mid, cmid):
-        url = self.memories_base + mid + "/comments/" + cmid
-        response = self._request(url, method="DELETE")
-        return dict(response.info())
+        return self.delete(self.memories_base + mid + "/comments/" + cmid)
 
 # FamilySearch imports
 
