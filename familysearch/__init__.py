@@ -226,7 +226,7 @@ class FamilySearch(object):
             return arg
         
     # These are really just front-ends for _request, with the name matching the method.
-    def get(self, url, data=None, headers=None,, nojson=False):
+    def get(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, None, nojson), nojson)
     
     def post(self, url, data=None, headers=None, nojson=False):
