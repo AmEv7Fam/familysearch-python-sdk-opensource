@@ -43,7 +43,7 @@ class Memories:
         return self._request(self.person_base + pid + "/memory-references/" + erid)
         
     def create_memory_comment(self, mid, data):
-        return response = self.post(self.memories_base + mid + "/comments", data)
+        return self.post(self.memories_base + mid + "/comments", data)
     
     def read_memory_comments(self, mid):
         return self.get(self.memories_base + mid + "/comments")

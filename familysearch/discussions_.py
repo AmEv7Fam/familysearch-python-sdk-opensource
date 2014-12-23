@@ -27,10 +27,10 @@ class Discussions:
         return self.post(self.disuss_base + did + "/comments", data)
     
     def delete_discussion_comment(self, did, num, data):
-        return = self.delete(self.disuss_base + did + "/comments/" + num, data)
+        return self.delete(self.disuss_base + did + "/comments/" + num, data)
     
     def create_discussion_reference(self, pid, data):
-        return = self.post(self.person_base + pid + "/discussion-references", data)
+        return self.post(self.person_base + pid + "/discussion-references", data)
         
     def read_discussion_reference(self, pid):
         return self.get(self.person_base + pid + "/discussion-references")
