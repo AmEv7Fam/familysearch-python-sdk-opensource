@@ -12,44 +12,44 @@ class Discovery(object):
         self.root_collection = self.get(self.base + '/.well-known/collection')
         self.collections = self.get(self.root_collection['collections'][0]
                                     ['links']['subcollections']['href'])
-        self.family_tree = self.get(self.collections['collections'][0]['links']
-                                    ['self']['href'])
-        self.historical_records = self.get(self.collections['collections'][1]
-                                           ['links']['self']['href'])
-        self.user_sources = self.get(self.collections['collections'][2]['links']
-                                     ['self']['href'])
-        self.memories_collection = self.get(self.collections['collections'][3]
-                                            ['links']['self']['href'])
-        self.discussions_collection = self.get(self.collections['collections']
-                                               [4]['links']['self']['href'])
-        self.places_authority = self.get(self.collections['collections'][5]
-                                         ['links']['self']['href'])
-        self.dates_authority = self.get(self.collections['collections'][6]
-                                        ['links']['self']['href'])
-        self.vocab = self.get(self.collections['collections'][7]['links']
-                              ['self']['href'])
-        try:
-            self.lds_ordinances = self.get(self.collections['collections'][-1]
-                                           ['links']['self']['href'])
-        except:
-            self.lds_user = False
-        else:
-            self.lds_user = True
-        
+        for item in self.collections['collections']:
+            if item['id'] == 'FSFT':
+                self.family_tree = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSHRA':
+                self.historical_records = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSUDS':
+                self.user_sources = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSMEM':
+                self.memories_collection = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSDF':
+                self.discussions_collection = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSPA':
+                self.places_authority = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSDA':
+                self.dates_authority = self.get(item['links']['self']['href'])
+            elif item['id'] == 'FSCV':
+                self.vocab = self.get(item['links']['self']['href'])
+            elif item['id'] == 'LDSO':
+                try:
+                 self.lds_ordinances = self.get(['links']['self']['href'])
+                except:
+                    self.lds_user = False
+                else:
+                    self.lds_user = True
         try:
             self.user = self.get_current_user()['users'][0]
         except:
             self.user = ""
         
     def fix_discovery(self):
-        try:
-            self.lds_ordinances = self.get(self.collections['collections'][-1]
-                                           ['links']['self']['href'])
-        except:
-            self.lds_user = False
-        else:
-            self.lds_user = True
-        
+        for item in self.collections['collections']:
+            if item['id'] == 'LDSO':
+                try:
+                    self.lds_ordinances = self.get(item['links']['self']['href'])
+                except:
+                    self.lds_user = False
+                else:
+                    self.lds_user = True
         try:
             self.user = self.get_current_user()['users'][0]
         except:
