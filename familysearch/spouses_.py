@@ -19,9 +19,10 @@ class Spouses:
         return self.delete(self.couple_base + cpid + '/conclusions/' + cid, headers={'X-Reason': reason})
     
     def delete_couple_relationship(self, cpid, reason=None):
-        return self.delete(self._request(self.couple_base + cpid, headers={'X-Reason': reason}, method="DELETE")
+        return self.delete(self.couple_base + cpid, headers={'X-Reason': reason}, method="DELETE")
     
     def restore_couple_relationship(self, cpid):
+        return self.post(self.couple_base + cpid + '/restore', nojson=True)
 
 # FamilySearch imports
 
