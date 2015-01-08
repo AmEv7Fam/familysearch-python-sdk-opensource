@@ -54,13 +54,14 @@ __version__ = '0.5'
 class Request(BaseRequest):
     """Add ability for the Request object to allow it to handle
     additional methods.
-    The Request object has been enhanced to handle PUT, DELETE, OPTIONS,
-    and HEAD request methods."""
+    """
     def __init__(self, *args, **kwargs):
         self._method = kwargs.pop('method', None)
         BaseRequest.__init__(self, *args, **kwargs)
 
     def get_method(self):
+        """The Request object has been enhanced to handle PUT, DELETE, OPTIONS,
+    and HEAD request methods."""
         if self._method:
             return self._method
         else:
@@ -178,39 +179,38 @@ class FamilySearch(object):
         response["headers"] = headers
         return response
 
-    # I'm not sure... Is _remove_nones() needed any more?
-    def _remove_nones(self, arg):
-        """
-        Remove all None values from a nested dict structure.
-        This method exists because the FamilySearch API returns all attributes
-        in a JSON response, with empty values set to null instead of being
-        hidden from the response.
-        """
-        if isinstance(arg, dict):
-            return dict([(k, self._remove_nones(v)) for (k, v) in arg.iteritems() if v is not None])
-        elif isinstance(arg, list):
-            return [self._remove_nones(i) for i in arg if i is not None]
-        else:
-            return arg
         
-    # These are really just front-ends for _request, with the name matching the method.
+    # These are really just front-ends for _request,
+    # with the name matching the method.
     def get(self, url, data=None, headers=None, nojson=False):
-        return self._fs2py(self._request(url, data, headers, None, nojson), nojson)
+        """"""
+        return self._fs2py(self._request(
+    url, data, headers, None, nojson), nojson)
 
     def post(self, url, data=None, headers=None, nojson=False):
-        return self._fs2py(self._request(url, data, headers, "POST", nojson), nojson)
+        """"""
+        return self._fs2py(self._request(
+    url, data, headers, "POST", nojson), nojson)
 
     def put(self, url, data=None, headers=None, nojson=False):
-        return self._fs2py(self._request(url, data, headers, "PUT", nojson), nojson)
+        """"""
+        return self._fs2py(self._request(
+    url, data, headers, "PUT", nojson), nojson)
 
     def head(self, url, data=None, headers=None, nojson=False):
-        return self._fs2py(self._request(url, data, headers, "HEAD", nojson), nojson)
+        """"""
+        return self._fs2py(self._request(
+    url, data, headers, "HEAD", nojson), nojson)
 
     def options(self, url, data=None, headers=None, nojson=False):
-        return self._fs2py(self._request(url, data, headers, "OPTIONS", nojson), nojson)
+        """"""
+        return self._fs2py(self._request(
+    url, data, headers, "OPTIONS", nojson), nojson)
 
     def delete(self, url, data=None, headers=None, nojson=False):
-        return self._fs2py(self._request(url, data, headers, "DELETE", nojson), nojson)
+        """"""
+        return self._fs2py(self._request(
+    url, data, headers, "DELETE", nojson), nojson)
 
 # FamilySearch imports
 
@@ -219,5 +219,5 @@ class FamilySearch(object):
 
 from . import(discovery_, authentication_, authorities_, changeHistory_,
               discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
-              pedigree_, person_, places_, records_,searchAndMatch_, sourceBox_,
-              sources_, spouses_, user_, utilities_, vocabularies_)
+              pedigree_, person_, places_, records_, searchAndMatch_,
+              sourceBox_, sources_, spouses_, user_, utilities_, vocabularies_)

@@ -5,6 +5,7 @@
 
 class Ordinances:
     def __init__(self):
+        """"""
         pass
     
 # FamilySearch imports

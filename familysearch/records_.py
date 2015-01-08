@@ -5,6 +5,7 @@
 
 class Records:
     def __init__(self):
+        """"""
         pass
     
     # There might be a way to reverse-engineer something from the resource,

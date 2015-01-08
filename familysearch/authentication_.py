@@ -120,6 +120,7 @@ class Authentication(object):
     
 class getter(server.BaseHTTPRequestHandler):
     def do_GET(self):
+        """Sample page to get Oauth code, and log in with."""
         self.send_response(code=200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
