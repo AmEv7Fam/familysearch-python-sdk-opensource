@@ -12,20 +12,15 @@ Example usage:
 
 from familysearch import FamilySearch
 
-# Log in in a separate step with Basic Authentication
-fs = FamilySearch('ClientApp/1.0', 'developer_key')
+# Log in with Basic Authentication
+fs = FamilySearch('ClientApp/1.0', 'app')
 fs.login('username', 'password')
 
-# Log in in two steps with Basic Authentication
-fs = FamilySearch('ClientApp/1.0', 'developer_key')
-fs.initialize()
-fs.authenticate('username', 'password')
-
 # Resume a previous session
-fs = FamilySearch('ClientApp/1.0', developer_key, session='session_id')
+fs = FamilySearch('ClientApp/1.0', app_key, session='session_id')
 
 # Use the production system instead of the sandbox system
-fs = FamilySearch('ClientApp/1.0', developer_key, base='https://familysearch.org')
+fs = FamilySearch('ClientApp/1.0', app_key, base='https://familysearch.org')
 
 # Keep current session active
 fs.session()
@@ -54,9 +49,12 @@ import time
 __version__ = '0.5'
 
 class Request(BaseRequest):
-    """Add ability to the Request object to allow it to handle additional methods.
+    """Add ability for the Request object to allow it to handle
+    additional methods.
+    
 
-    The Request object has been enhanced to handle PUT, DELETE, OPTIONS and HEAD request methods."""
+    The Request object has been enhanced to handle PUT, DELETE, OPTIONS,
+    and HEAD request methods."""
     def __init__(self, *args, **kwargs):
         self._method = kwargs.pop('method', None)
         BaseRequest.__init__(self, *args, **kwargs)
@@ -87,7 +85,8 @@ class FamilySearch(object):
 
         Keyword arguments:
         agent -- User-agent string to use for requests
-        key -- FamilySearch developer key (optional if reusing an existing session ID)
+        key -- FamilySearch developer key
+               (optional if reusing an existing session ID)
         session (optional) -- existing session ID to reuse
         base (optional) -- base URL for the API;
                            defaults to 'https://sandbox.familysearch.org'
@@ -104,31 +103,6 @@ class FamilySearch(object):
 
         for mixin in self.__class__.__bases__:
             mixin.__init__(self)
-
-    # TODO: I understand that we need to do something if we want this
-    # SDK multithreaded, and I think these are the key, but I think
-    # that these are out of date.
-    def __getstate__(self):
-        """
-        Return a tuple containing the state necessary to pickle this instance.
-        """
-        return ({'agent': ' '.join(self.agent.split(' ')[:-1]),
-                 'key': self.key,
-                 'session': self.session_id,
-                 'base': self.base},
-                dict([(session, secret)
-                      for (session, secret)
-                      in self.oauth_secrets.items()
-                      if session == self.session_id]))
-
-    def __setstate__(self, state):
-        """
-        Restore the saved state obtained from unpickling this instance.
-        """
-        self.__init__(**state[0])
-        self.oauth_secrets = state[1]
-        if self.session_id in self.oauth_secrets:
-            self.logged_in = False
 
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """

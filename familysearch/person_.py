@@ -72,7 +72,7 @@ class Person:
             "/preferred-spouse-relationships/" + pid, headers={"Location": self.tree_base + \
             "/couple-relationships/" + crid})
     
-    def delete_preferred_spouse_relationship(self, uid, pid):
+    def delete_preferred_spouse_relationship(self, pid):
         return self.delete(self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-spouse-relationships/" + pid)
     
@@ -85,7 +85,7 @@ class Person:
             "/preferred-parent-relationships/" + pid, headers={"Location": self.tree_base + \
             "/couple-relationships/" + crid})
     
-    def delete_preferred_parent_relationship(self, uid, pid):
+    def delete_preferred_parent_relationship(self, pid):
         return self.delete(self.tree_base + "/users/" + self.user['treeUserId'] + \
             "/preferred-parent-relationships/" + pid)
     

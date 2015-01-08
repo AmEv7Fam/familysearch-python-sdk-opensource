@@ -31,7 +31,7 @@ class Notes:
         return self.get(couple_base + crid + "/notes/" + nid)
     
     def update_couple_note(self, crid, data):
-        response = self.post(urlcouple_base + crid + "/notes/" + nid, data)
+        return self.post(urlcouple_base + crid + "/notes/" + nid, data)
     
     def delete_couple_note(self, crid, nid):
         return self.delete(couple_base + crid + "/notes/" + nid)
@@ -46,7 +46,7 @@ class Notes:
         return self.get(person_base + cprid + "/notes/" + nid)
     
     def update_child_note(self, cprid, data):
-        response = self.post(couple_base + cprid + "/notes/" + nid, data)
+        return self.post(couple_base + cprid + "/notes/" + nid, data)
     
     def delete_child_note(self, cprid, nid):
         return self.delete(couple_base + cprid + "/notes/" + nid)

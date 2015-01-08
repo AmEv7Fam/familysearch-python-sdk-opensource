@@ -31,7 +31,7 @@ class Discovery(object):
                 self.vocab = self.get(item['links']['self']['href'])
             elif item['id'] == 'LDSO':
                 try:
-                 self.lds_ordinances = self.get(['links']['self']['href'])
+                    self.lds_ordinances = self.get(['links']['self']['href'])
                 except:
                     self.lds_user = False
                 else:
