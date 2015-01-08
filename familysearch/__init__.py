@@ -54,8 +54,6 @@ __version__ = '0.5'
 class Request(BaseRequest):
     """Add ability for the Request object to allow it to handle
     additional methods.
-    
-
     The Request object has been enhanced to handle PUT, DELETE, OPTIONS,
     and HEAD request methods."""
     def __init__(self, *args, **kwargs):
@@ -70,13 +68,10 @@ class Request(BaseRequest):
 
 class object(object): pass
 class FamilySearch(object):
-
     """
     A FamilySearch API proxy
-
     The constructor must be called with a user-agent string and a developer key.
     A session ID and base URL are optional.
-
     Public methods:
     ...needs to be re-written...
     """
@@ -143,7 +138,7 @@ class FamilySearch(object):
                 time.sleep(eh['Retry-after']/1000)
                 return self._request(url, data, headers, method, nojson)
             raise
-    
+
     def _add_subpath(self, url, subpath):
         """
         Add a subpath to the path component of the given URL.
@@ -156,13 +151,9 @@ class FamilySearch(object):
         path = parts[2] + '/' + subpath
         return urlunsplit((parts[0], parts[1], path, parts[3], parts[4]))
 
-
     def _add_query_params(self, url, params=None, **kw_params):
-        """
-        Add the specified query parameters to the given URL.
-
+        """Add the specified query parameters to the given URL.
         Parameters can be passed either as a dictionary or as keyword arguments.
-
         """
         if params is None:
             params = {}
@@ -172,7 +163,7 @@ class FamilySearch(object):
         query_parts.update(kw_params)
         query = urlencode(query_parts, True)
         return urlunsplit((parts[0], parts[1], parts[2], query, parts[4]))
-    
+
     # Considering integrating directly into _request
     def _fs2py(self, response, nojson=False):
         """
@@ -205,19 +196,19 @@ class FamilySearch(object):
     # These are really just front-ends for _request, with the name matching the method.
     def get(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, None, nojson), nojson)
-    
+
     def post(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, "POST", nojson), nojson)
-    
+
     def put(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, "PUT", nojson), nojson)
-    
+
     def head(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, "HEAD", nojson), nojson)
-    
+
     def options(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, "OPTIONS", nojson), nojson)
-    
+
     def delete(self, url, data=None, headers=None, nojson=False):
         return self._fs2py(self._request(url, data, headers, "DELETE", nojson), nojson)
 

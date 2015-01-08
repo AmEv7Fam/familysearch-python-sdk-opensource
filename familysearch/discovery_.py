@@ -40,7 +40,7 @@ class Discovery(object):
             self.user = self.get_current_user()['users'][0]
         except:
             self.user = ""
-        
+
     def fix_discovery(self):
         for item in self.collections['collections']:
             if item['id'] == 'LDSO':
