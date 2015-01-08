@@ -1,3 +1,6 @@
+# pylint: disable=no-member, cyclic-import, import-error
+# This is so PyLint shuts up about the function import system,
+# and dual Python 2/3 compatibility.
 r"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API. Based heavily on the official
 JavaScript SDK
