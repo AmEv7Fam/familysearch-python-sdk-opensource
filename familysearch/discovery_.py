@@ -1,4 +1,4 @@
-# pylint: disable=no-member, cyclic-import, import-error
+"""FamilySearch Discovery submodule"""
 # Python imports
 
 # FYI: I moved it to top, because I wasn't sure if I needed to import FS class

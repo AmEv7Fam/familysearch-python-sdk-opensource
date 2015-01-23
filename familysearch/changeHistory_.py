@@ -1,4 +1,4 @@
-# pylint: disable=no-member, cyclic-import, import-error
+"""FamilySearch Change History submodule"""
 # Python imports
 
 # Magic
