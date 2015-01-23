@@ -4,7 +4,7 @@
 r"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API. Based heavily on the official
 JavaScript SDK
-Currently designed to support Python 3.4. Backporting to come in the futre.
+Currently designed to support Python 3 and 2.6-7.
 
 A library to interact with the FamilySearch API
 
@@ -24,9 +24,6 @@ fs = FamilySearch('ClientApp/1.0', app_key, session='session_id')
 
 # Use the production system instead of the sandbox system
 fs = FamilySearch('ClientApp/1.0', app_key, base='https://familysearch.org')
-
-# Keep current session active
-fs.session()
 
 # Log out
 fs.logout()
@@ -183,32 +180,32 @@ class FamilySearch(object):
     # These are really just front-ends for _request,
     # with the name matching the method.
     def get(self, url, data=None, headers=None, nojson=False):
-        """"""
+        """HTTP GET request"""
         return self._fs2py(self._request(
     url, data, headers, None, nojson), nojson)
 
     def post(self, url, data=None, headers=None, nojson=False):
-        """"""
+        """HTTP POST request"""
         return self._fs2py(self._request(
     url, data, headers, "POST", nojson), nojson)
 
     def put(self, url, data=None, headers=None, nojson=False):
-        """"""
+        """HTTP PUT request"""
         return self._fs2py(self._request(
     url, data, headers, "PUT", nojson), nojson)
 
     def head(self, url, data=None, headers=None, nojson=False):
-        """"""
+        """HTTP HEAD request"""
         return self._fs2py(self._request(
     url, data, headers, "HEAD", nojson), nojson)
 
     def options(self, url, data=None, headers=None, nojson=False):
-        """"""
+        """HTTP OPTIONS request"""
         return self._fs2py(self._request(
     url, data, headers, "OPTIONS", nojson), nojson)
 
     def delete(self, url, data=None, headers=None, nojson=False):
-        """"""
+        """HTTP DELETE request"""
         return self._fs2py(self._request(
     url, data, headers, "DELETE", nojson), nojson)
 
