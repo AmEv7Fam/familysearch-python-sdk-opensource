@@ -20,7 +20,7 @@ class Discovery(object):
                 self.family_tree = self.get(
                   item['links']['self']['href'])
             elif item['id'] == 'FSHRA':
-                https://familysearch.org/developers/docs/api/records/FamilySearch_Historical_Records_Archive_resource
+                #https://familysearch.org/developers/docs/api/records/FamilySearch_Historical_Records_Archive_resource
                 self.historical_records = self.get(
                   item['links']['self']['href'])
             elif item['id'] == 'FSUDS':

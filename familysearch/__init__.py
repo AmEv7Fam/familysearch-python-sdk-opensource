@@ -1,4 +1,5 @@
-# pylint: disable=no-member, cyclic-import, import-error
+# For PyLint users:
+# pylint familysearch disable=no-member, cyclic-import, import-error
 # This is so PyLint shuts up about the function import system,
 # and dual Python 2/3 compatibility.
 r"""This is a WIP, unofficial SDK for accessing
@@ -42,7 +43,7 @@ except ImportError:
     from urllib2 import Request as BaseRequest
     from urllib2 import(build_opener, HTTPError, urlopen)
     from urlparse import(urlsplit, urlunsplit, parse_qs)
-
+    
 import json
 import time
 
@@ -58,16 +59,15 @@ class Request(BaseRequest):
 
     def get_method(self):
         """The Request object has been enhanced to handle PUT, DELETE, OPTIONS,
-    and HEAD request methods."""
+        and HEAD request methods.
+        """
         if self._method:
             return self._method
         else:
             return BaseRequest.get_method(self)
 
-class object(object): pass
 class FamilySearch(object):
-    """
-    A FamilySearch API proxy
+    """A FamilySearch API proxy
     The constructor must be called with a user-agent string and a developer key.
     A session ID and base URL are optional.
     Public methods:
@@ -76,8 +76,7 @@ class FamilySearch(object):
 
     def __init__(self, agent, key, session=None,
                  base='https://sandbox.familysearch.org'):
-        """
-        Instantiate a FamilySearch proxy object.
+        """Instantiate a FamilySearch proxy object.
 
         Keyword arguments:
         agent -- User-agent string to use for requests
