@@ -5,6 +5,7 @@
 
 class Pedigree:
     def __init__(self):
+        """https://familysearch.org/developers/docs/api/resources#pedigree"""
         pass
 
     def get_ancestry(self, pid, query="", **kwargs):

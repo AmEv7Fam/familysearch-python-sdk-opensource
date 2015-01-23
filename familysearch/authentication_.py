@@ -11,14 +11,14 @@ except ImportError:
     from urllib import urlencode
     from urllib2 import(build_opener, HTTPCookieProcessor)
     import BaseHTTPServer as server
-    
+
 import webbrowser
 
 # Magic
 
 class Authentication(object):
     def __init__(self):
-        """
+        """https://familysearch.org/developers/docs/api/resources#authentication
         Set up the URLs for authentication.
         """
         self.token = self.root_collection['collections'][0]['links']\
@@ -117,7 +117,6 @@ class Authentication(object):
         self.cookies.clear()
         self.fix_discovery()
 
-    
 class getter(server.BaseHTTPRequestHandler):
     def do_GET(self):
         """Sample page to get Oauth code, and log in with."""
@@ -137,8 +136,6 @@ class getter(server.BaseHTTPRequestHandler):
         self.wfile.write(b"<p>You can safely close this page.</p>")
         self.wfile.write(b"</body")
         self.wfile.write(b"</html>")
-        
-        
 
 # FamilySearch imports
 

@@ -5,7 +5,7 @@
 
 class Memories:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#memories"""
         self.memories_base = self.base + "/platform/memories/"
 
     def post_memory(self, title, data, headers):

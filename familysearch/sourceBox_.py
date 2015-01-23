@@ -5,7 +5,7 @@
 
 class SourceBox:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#source-box"""
         self.source_base = self.base + "/platform/sources/"
 
     def read_specific_user_collections(self, uid):

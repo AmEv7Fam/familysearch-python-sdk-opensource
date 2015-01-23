@@ -5,7 +5,7 @@
 
 class Notes:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#notes"""
         pass
 
     def create_person_note(self, pid, data):

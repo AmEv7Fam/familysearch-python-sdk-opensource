@@ -5,7 +5,7 @@
 
 class ParentsAndChildren:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#parents-and-children"""
         self.child_base = self.tree_base + "child-and-parents-relationships/"
 
     def get_child_relationship(self, crid):

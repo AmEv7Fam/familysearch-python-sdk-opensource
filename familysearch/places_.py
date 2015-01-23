@@ -5,7 +5,7 @@
 
 class Places:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#places"""
         self.places_base = self.base + "/platform/places/"
 
     def get_places_search(self, q):

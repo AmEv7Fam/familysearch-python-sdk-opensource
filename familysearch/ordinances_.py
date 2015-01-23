@@ -5,7 +5,7 @@
 
 class Ordinances:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#ordinances"""
         pass
     
 # FamilySearch imports

@@ -5,7 +5,7 @@
 
 class ChangeHistory:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#change-history"""
         pass
 
     def get_person_change_history(self, pid):

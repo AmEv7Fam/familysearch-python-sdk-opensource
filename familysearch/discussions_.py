@@ -5,7 +5,7 @@
 
 class Discussions:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#discussions"""
         self.discuss_base = self.base + "/platform/discussions/discussions/"
 
     def create_discussion(self, data):

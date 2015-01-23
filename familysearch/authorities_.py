@@ -5,7 +5,7 @@
 
 class Authorities():
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#authorities"""
         self.authorities_base = self.base + '/authorities'
 
     def get_dates(self, dateX):

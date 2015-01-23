@@ -5,7 +5,7 @@
 
 class Person:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#person"""
         self.person_base = self.tree_base + 'persons/'
 
     def create_person(self, data):

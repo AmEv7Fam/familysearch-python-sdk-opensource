@@ -43,7 +43,7 @@ except ImportError:
     from urllib2 import Request as BaseRequest
     from urllib2 import(build_opener, HTTPError, urlopen)
     from urlparse import(urlsplit, urlunsplit, parse_qs)
-    
+
 import json
 import time
 
@@ -175,7 +175,6 @@ class FamilySearch(object):
         response["headers"] = headers
         return response
 
-        
     # These are really just front-ends for _request,
     # with the name matching the method.
     def get(self, url, data=None, headers=None, nojson=False):

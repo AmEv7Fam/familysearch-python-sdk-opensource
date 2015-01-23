@@ -5,6 +5,7 @@
 
 class SearchAndMatch:
     def __init__(self):
+        """https://familysearch.org/developers/docs/api/resources#search-and-match"""
         pass
 
     def get_person_search(self, query, **kwargs):

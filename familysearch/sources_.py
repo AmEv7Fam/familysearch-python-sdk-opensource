@@ -5,7 +5,7 @@
 
 class Sources:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#sources"""
         self.source_base = self.base + "/platform/sources/"
 
     # OK, these next two functions hit the same endpoint... do we need both?

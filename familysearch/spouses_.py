@@ -5,7 +5,7 @@
 
 class Spouses:
     def __init__(self):
-        """"""
+        """https://familysearch.org/developers/docs/api/resources#spouses"""
         self.couple_base = self.tree_base + 'couple-relationships/'
 
     def create_couple_relationship(self, data):
