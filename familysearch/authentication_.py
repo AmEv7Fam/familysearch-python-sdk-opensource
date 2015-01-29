@@ -9,6 +9,7 @@ try:
 except ImportError:
     # Python 2
     from urllib import urlencode
+    from urlparse import parse_qs
     from urllib2 import(build_opener, HTTPCookieProcessor)
     import BaseHTTPServer as server
 
@@ -65,7 +66,7 @@ class Authentication(object):
         webbrowser.open(url)
         server.HTTPServer(('', 63342), getter).handle_request()
         # Now that we have the authentication token, grab the access token.
-        self.oauth_code(qs)
+        self.oauth_code_login(qs)
 
     def oauth_code_login(self, code):
         """
