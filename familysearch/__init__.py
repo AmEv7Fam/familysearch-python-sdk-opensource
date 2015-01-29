@@ -66,7 +66,8 @@ class Request(BaseRequest):
         else:
             return BaseRequest.get_method(self)
 
-class FamilySearch(object):
+class FSBase(object): pass
+class FamilySearch(FSBase):
     """A FamilySearch API proxy
     The constructor must be called with a user-agent string and a developer key.
     A session ID and base URL are optional.
