@@ -5,11 +5,11 @@
 
 class Authorities():
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#authorities"""
+        """Obsolete."""
         self.authorities_base = self.base + '/authorities'
 
     def get_dates(self, dateX):
-        """"""
+        """Obsolete."""
         return self.get(self.base + '/platform/dates?date=' + dateX)
 
 # FamilySearch imports

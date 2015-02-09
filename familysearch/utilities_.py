@@ -9,12 +9,12 @@ class Utilities:
         pass
 
     def get_pending_modifications(self):
-        """https://familysearch.org/developers/docs/api/tree/Pending_Modifications_resource"""
+        """Obsolete."""
         return self.get(self.root_collection['collections'][0]['links']\
                         ['pending-modifications']['href'])
 
     def redirect(self, params, **kwargs):
-        """https://familysearch.org/developers/docs/api/tree/Redirect_resource"""
+        """Obsolete."""
         params = self._add_query_params({access_token: session_id}, **params)
         return self._add_query_params(
           self.base + "platform/redirect", params, **kwargs)

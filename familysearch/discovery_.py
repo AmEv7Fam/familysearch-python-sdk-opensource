@@ -10,6 +10,8 @@ from . import FamilySearch
 class Discovery(object):
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#discovery"""
+        # TODO: Set it up so that it doesn't need to call the sumbodules
+        # until absolutely necessary...
         self.root_collection = self.get(self.base + '/.well-known/collection')
         self.collections = self.get(self.root_collection['collections'][0]
                                     ['links']['subcollections']['href'])
