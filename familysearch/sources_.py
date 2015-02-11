@@ -4,97 +4,41 @@
 # Magic
 
 class Sources:
+    """https://familysearch.org/developers/docs/api/resources#sources"""
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#sources"""
+        """https://familysearch.org/developers/docs/api/examples#sources"""
         self.source_base = self.base + "/platform/sources/"
         from familysearch import FamilySearch
         FamilySearch.__bases__ += (Sources,)
 
-    # OK, these next two functions hit the same endpoint... do we need both?
-    def create_source_description(self, data):
-        """Obsolete."""
-        return self.post(source_base + "/descriptions", data)
+    def source_descriptions(self):
+        """https://familysearch.org/developers/docs/api/sources/Source_Descriptions_resource"""
+        return self.source_base + "descriptions"
 
-    def create_user_source(self, data):
-        """Obsolete."""
-        return self.post(source_base + "/descriptions", data)
+    def source_description(self, sdid):
+        """https://familysearch.org/developers/docs/api/sources/Source_Description_resource"""
+        return self.source_base + "descriptions/" + sdid
 
-    def read_source_description(self, sid):
-        """Obsolete."""
-        return self.get(self.source_base + "descriptions/" + sid)
+    def source_folders(self):
+        """https://familysearch.org/developers/docs/api/sources/Source_Folders_resource"""
+        return self.source_base + "collections"
 
-    def update_source_description(self, sid, data):
-        """Obsolete."""
-        return self._request(self.source_base + "descriptions/" + sid, data)
+    def source_folder(self, udcid):
+        """https://familysearch.org/developers/docs/api/sources/Source_Folder_resource"""
+        return self.source_base + "collections/" + udcid
 
-    def delete_source_description(self, sid, reason):
-        """Obsolete."""
-        return self.delete(
-         self.source_base + "descriptions/" + sid, headers={"X-Reason": reason})
+    def source_folder_source_descriptions(self, udcid):
+        """https://familysearch.org/developers/docs/api/sources/Source_Folder_Source_Descriptions_resource"""
+        return self.source_base + "collections/" + udcid + "/descriptions"
 
-    def get_spouse_relatioship_sources(self, crid):
-        """Obsolete."""
-        return self.get(self.tree_base + 'couple-relationships/' + crid)
+    def user_source_folders(self):
+        """https://familysearch.org/developers/docs/api/sources/User_Source_Folders_resource"""
+        return self.source_base + self.user['personId'] + "/collections"
 
-    def create_person_source_reference(self, pid, data):
-        """Obsolete."""
-        return self.post(self.person_base + pid + "/source-references", data)
+    def user_source_descriptions(self):
+        """https://familysearch.org/developers/docs/api/sources/User_Source_Descriptions_resource"""
+        return self.source_base + self.user['personId'] + "/collections"
 
-    def get_person_source_reference(self, pid, srid):
-        """Obsolete."""
-        return self.get(self.person_base + pid + "/source-references/" + srid)
-
-    def delete_person_source_reference(self, pid, srid, reason=""):
-        """Obsolete."""
-        return self.delete(self.person_base + pid + "/source-references/" + srid, headers={"X-Reason": reason})
-
-    def get_person_sources(self, pid):
-        """Obsolete."""
-        return self.get(self.person_base + pid + "/sources")
-
-    def get_spouse_relatioship_sources(self, crid):
-        """Obsolete."""
-        return fs.get(self.tree_base + 'couple-relationships/' + crid)
-
-    def create_spouse_relationship_source_reference(self, crid, data):
-        """Obsolete."""
-        return self._request(
-       self.tree_base+'ccouple-relationships/'+crid+"/source-references/", data)
-
-    def get_spouse_relationship_source_reference(self, crid, srid):
-        """Obsolete."""
-        return self.get(
-       self.tree_base+'couple-relationships/'+crid+"/source-references/" + srid)
-
-    def delete_spouse_relationship_source_reference(
-          self, crid, srid, reason=""):
-        """Obsolete."""
-        return self.delete(
-         self.tree_base+'couple-relationships/'+crid+"/source-references/"+srid,
-         headers={"X-Reason": reason})
-
-    def get_child_relatioship_sources(self, crid):
-        """Obsolete."""
-        return self.get(self.tree_base+'child-and-parents-relationships/'+crid)
-
-    def create_child_relationship_source_reference(self, crid, data):
-        """Obsolete."""
-        return self.post(
-          self.tree_base+'child-and-parents-relationships/'+crid+
-          "/source-references/",data)
-
-    def get_child_relationship_source_reference(self, crid, srid):
-        """Obsolete."""
-        return self.get(
-          self.tree_base+'child-and-parents-relationships/'+crid+
-          "/source-references/"+srid)
-
-    def delete_child_relationship_source_reference(self, crid, srid, reason=""):
-        """Obsolete."""
-        return self.delete(
-         self.tree_base+'child-and-parents-relationships/'+crid+
-          "/source-references/"+srid,headers={"X-Reason":reason})
-
-    def get_source_references(self, srid):
-        """Obsolete."""
-        return self.get(self.tree_base + "source-references?source=" + srid)
+    def source_references_query(self):
+        """https://familysearch.org/developers/docs/api/tree/Source_References_Query_resource"""
+        return self.tree_base + "source_references"
