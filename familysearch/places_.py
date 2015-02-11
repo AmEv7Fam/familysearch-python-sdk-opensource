@@ -7,6 +7,8 @@ class Places:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#places"""
         self.places_base = self.base + "/platform/places/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Places,)
 
     def get_places_search(self, q):
         """Obsolete."""
@@ -42,8 +44,3 @@ class Places:
     def get_place_type_groups(self):
         """Obsolete."""
         return self.get(self.places_base + "type-groups")
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Places,)

@@ -32,10 +32,6 @@ fs.logout()
 
 # Python imports
 
-from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
-              pedigree_, person_, places_, records_, searchAndMatch_,
-              sources_, spouses_, user_, utilities_, vocabularies_)
 
 try:
     # Python 3
@@ -213,3 +209,12 @@ class FamilySearch(FSBase):
         """HTTP DELETE request"""
         return self._fs2py(self._request(
     url, data, headers, "DELETE", nojson), nojson)
+    
+    #FamilySearch hookup
+    # I'd like to have this on the top, but it doesn't seem to work when it's
+    # on the top...
+    
+    from . import(discovery_, authentication_, authorities_, changeHistory_,
+              discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
+              pedigree_, person_, places_, records_, searchAndMatch_,
+              sources_, spouses_, user_, utilities_, vocabularies_)

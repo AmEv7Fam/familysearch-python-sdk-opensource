@@ -6,7 +6,8 @@
 class Pedigree:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#pedigree"""
-        pass
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Pedigree,)
 
     def get_ancestry(self, pid, query="", **kwargs):
         """Obsolete."""
@@ -17,8 +18,3 @@ class Pedigree:
         """Obsolete."""
         return self.get(self._add_query_params(
             self.tree_base + 'descendancy?person=' + pid, query, **kwargs))
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Pedigree,)

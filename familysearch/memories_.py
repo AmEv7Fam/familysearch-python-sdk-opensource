@@ -1,8 +1,6 @@
 """FamilySearch Memories submodule"""
 # Python imports
 
-from . import FamilySearch
-
 # Magic
 
 class Memories:
@@ -10,6 +8,8 @@ class Memories:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#memories"""
         self.memory_base = self.tree_base + "/platform/memories/memories/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Memories,)
 
     def memories(self):
         """https://familysearch.org/developers/docs/api/memories/Memories_resource."""
@@ -38,7 +38,3 @@ class Memories:
     def memories_comment(self, mid, cmid):
         """https://familysearch.org/developers/docs/api/memories/Memories_Comment_resource"""
         return self.memory_base + mid + "comments/" + cmid
-
-# FamilySearch hookup
-
-FamilySearch.__bases__ += (Memories,)

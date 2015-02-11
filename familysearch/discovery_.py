@@ -1,8 +1,6 @@
 """FamilySearch Discovery submodule"""
 # Python imports
 
-from familysearch import FamilySearch
-
 # Magic
 
 class Discovery(object):
@@ -11,6 +9,8 @@ class Discovery(object):
         """https://familysearch.org/developers/docs/api/resources#discovery"""
         # TODO: Set it up so that it doesn't need to call the sumbodules
         # until absolutely necessary...
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Discovery,)
         self.root_collection = self.get(self.base + '/.well-known/collection')
         self.collections = self.get(self.root_collection['collections'][0]
                                     ['links']['subcollections']['href'])
@@ -37,8 +37,3 @@ class Discovery(object):
             self.user = self.get_current_user()['users'][0]
         except:
             self.user = ""
-    
-    
-# FamilySearch hookup
-
-FamilySearch.__bases__ += (Discovery,)

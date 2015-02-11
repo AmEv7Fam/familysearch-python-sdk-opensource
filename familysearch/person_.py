@@ -7,6 +7,8 @@ class Person:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#person"""
         self.person_base = self.tree_base + 'persons/'
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Person,)
 
     def create_person(self, data):
         """Obsolete."""
@@ -121,9 +123,3 @@ class Person:
         return self.delete(
           self.tree_base+"/users/"+self.user['treeUserId']+
           "/preferred-parent-relationships/"+pid)
-    
-    
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Person,)

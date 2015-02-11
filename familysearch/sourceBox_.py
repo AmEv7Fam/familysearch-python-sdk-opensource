@@ -9,6 +9,8 @@ class SourceBox:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#source-box"""
         self.source_base = self.base + "/platform/sources/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (SourceBox,)
 
     def read_specific_user_collections(self, uid):
         """Obsolete."""
@@ -34,8 +36,3 @@ class SourceBox:
     def ud_collections_source_descriptions_user(self):
         """Obsolete."""
         pass # TODO https://familysearch.org/developers/docs/api/sources/User-Defined_Collections_Source_Descriptions_for_a_User_resource
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (SourceBox,)

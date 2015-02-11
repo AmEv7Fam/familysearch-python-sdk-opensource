@@ -22,6 +22,8 @@ class Authentication(object):
         """https://familysearch.org/developers/docs/api/resources#authentication
         Set up the URLs for authentication.
         """
+        from . import FamilySearch
+        FamilySearch.__bases__ += (Authentication,)
         self.token = self.root_collection['collections'][0]['links']\
         ['http://oauth.net/core/2.0/endpoint/token']['href']
         cookie_handler = HTTPCookieProcessor()
@@ -137,8 +139,3 @@ class getter(server.BaseHTTPRequestHandler):
         self.wfile.write(b"<p>You can safely close this page.</p>")
         self.wfile.write(b"</body")
         self.wfile.write(b"</html>")
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Authentication,)

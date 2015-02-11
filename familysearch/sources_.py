@@ -7,6 +7,8 @@ class Sources:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#sources"""
         self.source_base = self.base + "/platform/sources/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Sources,)
 
     # OK, these next two functions hit the same endpoint... do we need both?
     def create_source_description(self, data):
@@ -96,8 +98,3 @@ class Sources:
     def get_source_references(self, srid):
         """Obsolete."""
         return self.get(self.tree_base + "source-references?source=" + srid)
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Sources,)

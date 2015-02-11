@@ -7,6 +7,8 @@ class ParentsAndChildren:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#parents-and-children"""
         self.child_base = self.tree_base + "child-and-parents-relationships/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (ParentsAndChildren,)
 
     def get_child_relationship(self, crid):
         """Obsolete."""
@@ -23,8 +25,3 @@ class ParentsAndChildren:
     def child_relationship_restore(self, crid):
         """Obsolete."""
         return post(self.child_base + crid + "/restore", method="POST", nojson=True)
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (ParentsAndChildren,)

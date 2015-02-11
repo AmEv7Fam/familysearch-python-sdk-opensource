@@ -6,7 +6,8 @@
 class ChangeHistory:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#change-history"""
-        pass
+        from . import FamilySearch
+        FamilySearch.__bases__ += (ChangeHistory,)
 
     def get_person_change_history(self, pid):
         """Obsolete."""
@@ -27,5 +28,3 @@ class ChangeHistory:
 
 # FamilySearch imports
 
-from . import FamilySearch
-FamilySearch.__bases__ += (ChangeHistory,)

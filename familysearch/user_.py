@@ -1,14 +1,15 @@
 """FamilySearch User submodule"""
 # Python imports
 
-from . import FamilySearch
+
 
 # Magic
 
 class User(object):
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#user"""
-        pass
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (User,)
 
     def current_user(self):
         """https://familysearch.org/developers/docs/api/users/Current_User_resource"""
@@ -28,7 +29,3 @@ class User(object):
         """https://familysearch.org/developers/docs/api/users/Current_User_History_resource."""
         return self.family_tree['collections'][0]['links']\
         ['current-user-history']['href']
-
-# FamilySearch hookup
-
-FamilySearch.__bases__ += (User,)

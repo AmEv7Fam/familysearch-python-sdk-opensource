@@ -6,7 +6,8 @@
 class SearchAndMatch:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#search-and-match"""
-        pass
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (SearchAndMatch,)
 
     def get_person_search(self, query, **kwargs):
         """Obsolete."""
@@ -35,8 +36,3 @@ class SearchAndMatch:
         """Obsolete."""
         return self.delete(
           person_base+pid+"/not-a-match/"+dpid, headers={"x-Reason":reason})
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (SearchAndMatch,)
