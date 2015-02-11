@@ -1,7 +1,5 @@
 # For PyLint users:
-# pylint familysearch disable=no-member, cyclic-import, import-error
-# This is so PyLint shuts up about the function import system,
-# and dual Python 2/3 compatibility.
+# I'll get back to you to the recommeneded command.
 r"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API. Based heavily on the official
 JavaScript SDK
@@ -215,6 +213,6 @@ class FamilySearch(FSBase):
     # on the top...
     
     from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
+              discussions_, memories_,s parentsAndChildren_, ordinances_, 
               pedigree_, person_, places_, records_, searchAndMatch_,
               sources_, spouses_, user_, utilities_, vocabularies_)
