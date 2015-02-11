@@ -1,7 +1,7 @@
 """FamilySearch Discovery submodule"""
 # Python imports
 
-from . import FamilySearch
+from familysearch import FamilySearch
 
 # Magic
 

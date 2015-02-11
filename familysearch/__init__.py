@@ -31,6 +31,12 @@ fs.logout()
 """
 
 # Python imports
+
+from . import(discovery_, authentication_, authorities_, changeHistory_,
+              discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
+              pedigree_, person_, places_, records_, searchAndMatch_,
+              sources_, spouses_, user_, utilities_, vocabularies_)
+
 try:
     # Python 3
     from urllib.request import Request as BaseRequest
@@ -207,13 +213,3 @@ class FamilySearch(FSBase):
         """HTTP DELETE request"""
         return self._fs2py(self._request(
     url, data, headers, "DELETE", nojson), nojson)
-
-# FamilySearch imports
-
-# Sorted alphabetically, except Discovery, which is the Hypermedia class, which
-# all other classes depend on.
-
-from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
-              pedigree_, person_, places_, records_, searchAndMatch_,
-              sourceBox_, sources_, spouses_, user_, utilities_, vocabularies_)
