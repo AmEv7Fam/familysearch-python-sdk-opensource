@@ -1,9 +1,8 @@
 # For PyLint users:
 # I'll get back to you to the recommeneded command.
 r"""This is a WIP, unofficial SDK for accessing
-the FamilySearch API. Based heavily on the official
-JavaScript SDK
-Currently designed to support Python 3 and 2.6-7.
+the FamilySearch API.
+Currently designed to support Python 3.2+ and 2.6+.
 
 A library to interact with the FamilySearch API
 
@@ -87,7 +86,7 @@ class FamilySearch(FSBase):
         base (optional) -- base URL for the API;
                            defaults to 'https://sandbox.familysearch.org'
         """
-        self.agent = '%s Python-FS-Stack/%s' % (agent, __version__)
+        self.agent = '%s FSPySDK/%s' % (agent, __version__)
         self.key = key
         self.session_id = session
         self.base = base
@@ -112,13 +111,13 @@ class FamilySearch(FSBase):
         """
         if headers is None:
             headers = {}
-        if not nojson:
-            if data:
+        if data:
+            if not nojson:
                 data = json.dumps(data)
-                data = data.encode('utf-8')
+            data = data.encode('utf-8')
         request = Request(url, data, headers, method=method)
         if not nojson:
-            if data or method:
+            if method is not "GET":
                 request.add_header('Content-Type', 'application/x-fs-v1+json')
             else:
                 request.add_header('Accept', 'application/json')
@@ -171,7 +170,7 @@ class FamilySearch(FSBase):
         headers = dict(response.info())
         response = response.read()
         response = response.decode("utf-8")
-        if not nojson:
+        if response and not nojson:
             response = json.loads(response)
         response["headers"] = headers
         return response
