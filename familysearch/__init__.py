@@ -47,7 +47,7 @@ except ImportError:
 import json
 import time
 
-__version__ = '0.5'
+__version__ = '0.75'
 
 class Request(BaseRequest):
     """Add ability for the Request object to allow it to handle

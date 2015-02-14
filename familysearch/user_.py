@@ -27,5 +27,4 @@ class User(object):
 
     def current_user_history(self):
         """https://familysearch.org/developers/docs/api/users/Current_User_History_resource."""
-        return self.family_tree['collections'][0]['links']\
-        ['current-user-history']['href']
+        return self.user_base + "current/history"

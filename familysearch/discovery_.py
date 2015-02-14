@@ -26,7 +26,7 @@ class Discovery(object):
         for item in self.collections['collections']:
             if item['id'] == 'LDSO':
                 try:
-                    self.collections['LDSO'] = ['links']['self']['href']
+                    self.collections['LDSO'] = self.get(['links']['self']['href'])
                 except:
                     self.lds_user = False
                 else:
