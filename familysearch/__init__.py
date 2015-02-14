@@ -1,7 +1,5 @@
 # For PyLint users:
-# pylint familysearch disable=no-member, cyclic-import, import-error
-# This is so PyLint shuts up about the function import system,
-# and dual Python 2/3 compatibility.
+# I'll get back to you to the recommeneded command.
 r"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API. Based heavily on the official
 JavaScript SDK
@@ -31,6 +29,8 @@ fs.logout()
 """
 
 # Python imports
+
+
 try:
     # Python 3
     from urllib.request import Request as BaseRequest
@@ -207,13 +207,12 @@ class FamilySearch(FSBase):
         """HTTP DELETE request"""
         return self._fs2py(self._request(
     url, data, headers, "DELETE", nojson), nojson)
-
-# FamilySearch imports
-
-# Sorted alphabetically, except Discovery, which is the Hypermedia class, which
-# all other classes depend on.
-
-from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_, notes_, parentsAndChildren_, ordinances_, 
+    
+    #FamilySearch hookup
+    # I'd like to have this on the top, but it doesn't seem to work when it's
+    # on the top...
+    
+    from . import(discovery_, authentication_, authorities_, changeHistory_,
+              discussions_, memories_,s parentsAndChildren_, ordinances_, 
               pedigree_, person_, places_, records_, searchAndMatch_,
-              sourceBox_, sources_, spouses_, user_, utilities_, vocabularies_)
+              sources_, spouses_, user_, utilities_, vocabularies_)

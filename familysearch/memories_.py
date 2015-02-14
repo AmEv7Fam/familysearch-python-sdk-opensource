@@ -4,76 +4,37 @@
 # Magic
 
 class Memories:
+    """https://familysearch.org/developers/docs/api/resources#memories"""
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#memories"""
-        self.memories_base = self.base + "/platform/memories/"
+        """https://familysearch.org/developers/docs/api/examples#memories"""
+        self.memory_base = self.tree_base + "/platform/memories/memories/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Memories,)
 
-    def post_memory(self, title, data, headers):
-        """Obsolete."""
-        return self.post(
-          memories_base[:-1] + "?title=" + title, data, headers, nojson=True)
+    def memories(self):
+        """https://familysearch.org/developers/docs/api/memories/Memories_resource."""
+        return self.memory_base[::-1]
 
-    def read_memory(self, mid):
-        """Obsolete."""
-        return self.get(self.memories_base + mid)
+    def memory(self, mid):
+        """https://familysearch.org/developers/docs/api/memories/Memory_resource"""
+        return self.memory_base + mid
 
-    def update_memory_description(self, mid, data):
-        """Obsolete."""
-        return self.post(self.memories_base + mid, data)
+    def user_memories(self):
+        """https://familysearch.org/developers/docs/api/memories/User_Memories_resource"""
+        return self.memory_base + "users/" + self.user['userId'] + "/memories"
 
-    def delete_memory(self, mid):
-        """Obsolete."""
-        return self.delete(self.memories_base + mid)
+    def memory_personas(self, mid):
+        """https://familysearch.org/developers/docs/api/memories/Memory_Personas_resource"""
+        return self.memory_base + mid + "personas"
+    
+    def memory_persona(self, mid, pid):
+        """https://familysearch.org/developers/docs/api/memories/Memories_Persona_resource"""
+        return self.memory_base + mid + "personas/" + pid
+    
+    def memory_comments(self, mid):
+        """https://familysearch.org/developers/docs/api/memories/Memory_Comments_resource"""
+        return self.memory_base + mid + "comments"
 
-    def post_memory_persona(self, mid, data):
-        """Obsolete."""
-        return self.post(self.memories_base + mid + "/personas", data)
-
-    def get_memory_personas(self, mid):
-        """Obsolete."""
-        return self.get(self.memories_base + mid + "/personas")
-
-    def get_memory_persona(self, mid, pid):
-        """Obsolete."""
-        return self.get(self.memories_base + mid + "/personas/"+ pid)
-
-    def update_memory_persona(self, mid, pid):
-        """Obsolete."""
-        return self._request(self.memories_base + mid + "/personas/" + pid)
-
-    def delete_memory_persona(self, mid, pid):
-        """Obsolete."""
-        return self.delete(self.memories_base + mid + "/personas/" + pid)
-
-    def create_user_memories_reference(self, pid, data):
-        """Obsolete."""
-        return self.post(person_base + pid + "/memory-references", data)
-
-    def read_user_memories_reference(self, pid):
-        """Obsolete."""
-        return self.get(self.person_base + pid + "/memory-references")
-
-    def delete_user_memories_reference(self, pid, erid):
-        """Obsolete."""
-        return self._request(self.person_base + pid + "/memory-references/" + erid)
-
-    def create_memory_comment(self, mid, data):
-        """Obsolete."""
-        return self.post(self.memories_base + mid + "/comments", data)
-
-    def read_memory_comments(self, mid):
-        """Obsolete."""
-        return self.get(self.memories_base + mid + "/comments")
-
-    def update_memory_comment(self, mid, data):
-        """Obsolete."""
-        return self.post(self.memories_base + mid + "/comments", data)
-
-    def delete_memory_comment(self, mid, cmid):
-        """Obsolete."""
-        return self.delete(self.memories_base + mid + "/comments/" + cmid)
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Memories,)
+    def memories_comment(self, mid, cmid):
+        """https://familysearch.org/developers/docs/api/memories/Memories_Comment_resource"""
+        return self.memory_base + mid + "comments/" + cmid

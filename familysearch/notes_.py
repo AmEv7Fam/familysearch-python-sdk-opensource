@@ -6,7 +6,8 @@
 class Notes:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#notes"""
-        pass
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Notes,)
 
     def create_person_note(self, pid, data):
         """Obsolete."""
@@ -67,8 +68,3 @@ class Notes:
     def delete_child_note(self, cprid, nid):
         """Obsolete."""
         return self.delete(couple_base + cprid + "/notes/" + nid)
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Notes,)

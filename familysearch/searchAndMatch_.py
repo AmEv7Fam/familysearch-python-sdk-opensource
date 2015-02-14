@@ -4,39 +4,24 @@
 # Magic
 
 class SearchAndMatch:
+    """https://familysearch.org/developers/docs/api/resources#search-and-match"""
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#search-and-match"""
-        pass
+        """https://familysearch.org/developers/docs/api/examples#search-and-match"""
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (SearchAndMatch,)
 
-    def get_person_search(self, query, **kwargs):
-        """Obsolete."""
-        return self.get(self._add_query_params(
-          self.tree_base+"search", query, **kwargs))
+    def person_search(self):
+        """https://familysearch.org/developers/docs/api/tree/Person_Search_resource"""
+        return self.tree_base + "search"
 
-    def get_person_matches(self, pid, query, **kwargs):
-        """Obsolete."""
-        return self.get(self._add_query_params(
-          self.person_base+pid+"/matches", query, **kwargs))
+    def person_matches(self, pid):
+        """https://familysearch.org/developers/docs/api/tree/Person_Matches_resource"""
+        return self.tree_base + "persons/" + pid + "/matches"
 
-    def get_person_matches_query(self, query, **kwargs):
-        """Obsolete."""
-        return self.get(self._add_query_params(
-            self.tree_base + "matches", query, **kwargs))
+    def person_not_a_match_list(self, pid):
+        """https://familysearch.org/developers/docs/api/tree/Person_Not_A_Match_List_resource"""
+        return self.tree_base + "persons/" + pid + "/not-a-match"
 
-    def get_person_not_a_match(self, pid):
-        """Obsolete."""
-        return self.get(self.person_base+pid+"/not-a-match")
-
-    def update_person_not_a_match(self, data):
-        """Obsolete."""
-        return self.post(person_base+pid+"/not-a-match", data)
-
-    def delete_person_not_a_match(self, pid, dpid, reason=None):
-        """Obsolete."""
-        return self.delete(
-          person_base+pid+"/not-a-match/"+dpid, headers={"x-Reason":reason})
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (SearchAndMatch,)
+    def person_matches_query(self):
+        """https://familysearch.org/developers/docs/api/tree/Person_Matches_Query_resource"""
+        return self.tree_base + "matches"

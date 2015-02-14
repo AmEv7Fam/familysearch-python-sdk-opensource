@@ -4,46 +4,45 @@
 # Magic
 
 class Places:
+    """https://familysearch.org/developers/docs/api/resources#places"""
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#places"""
+        """https://familysearch.org/developers/docs/api/examples#places"""
         self.places_base = self.base + "/platform/places/"
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Places,)
 
-    def get_places_search(self, q):
-        """Obsolete."""
-        return self.get(self.places_base + "search?q=name:" + q)
+    def places_search(self):
+        """https://familysearch.org/developers/docs/api/places/Places_Search_resource"""
+        return self.places_base + "search"
 
-    def get_place_description(self, pdid, children=None):
-        """Obsolete."""
-        url = self.places_base + "description/" + pdid
-        if children:
-            url = url + "/children"
-        return self.get(url)
+    def place_description(self, pdid):
+        """https://familysearch.org/developers/docs/api/places/Place_Description_resource"""
+        return self.places_base + "description/" + pdid
 
-    def get_place_group(self, pgid):
-        """Obsolete."""
-        return self.get(self.places_base + "gropus/" + pgid)
+    def place_group(self, pgid):
+        """https://familysearch.org/developers/docs/api/places/Place_Group_resource"""
+        return self.places_base + "gropus/" + pgid
 
-    def get_place(self, pid):
-        """Obsolete."""
-        return self.get(self.places_base + str(pid))
+    def place(self, pid):
+        """https://familysearch.org/developers/docs/api/places/Place_resource"""
+        return self.places_base + pid
 
-    def get_place_type(self, ptid):
-        """Obsolete."""
-        return self.get(self.places_base + "types/" + ptid)
+    def place_description_children(self):
+        """https://familysearch.org/developers/docs/api/places/Place_Description_Children_resource"""
+        return self.places_base + "description/" + pdid + "/children"
 
-    def get_place_type_group(self, ptgid):
-        """Obsolete."""
-        return self.get(self.places_base + "type-gropus/" + ptgid)
+    def place_type(self, ptid):
+        """https://familysearch.org/developers/docs/api/places/Place_Type_resource"""
+        return self.places_base + "types/" + ptid
 
-    def get_place_types(self):
-        """Obsolete."""
-        return self.get(self.places_base + "types")
+    def place_type_group(self, ptgid):
+        """https://familysearch.org/developers/docs/api/places/Place_Type_Group_resource"""
+        return self.places_base + "type-gropus/" + ptgid
 
-    def get_place_type_groups(self):
-        """Obsolete."""
-        return self.get(self.places_base + "type-groups")
+    def place_types(self):
+        """https://familysearch.org/developers/docs/api/places/Place_Types_resource."""
+        return self.places_base + "types"
 
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Places,)
+    def place_type_groups(self):
+        """https://familysearch.org/developers/docs/api/places/Place_Type_Groups_resource"""
+        return self.places_base + "type-groups"

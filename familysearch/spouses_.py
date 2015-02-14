@@ -4,37 +4,25 @@
 # Magic
 
 class Spouses:
+    """https://familysearch.org/developers/docs/api/resources#spouses"""
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#spouses"""
+        """https://familysearch.org/developers/docs/api/examples#spouses"""
         self.couple_base = self.tree_base + 'couple-relationships/'
+        from familysearch import FamilySearch
+        FamilySearch.__bases__ += (Spouses,)
+   
+    def relationship(self):
+        """https://familysearch.org/developers/docs/api/tree/Relationships_resource"""
+        return self.tree_base + "relationships"
 
-    def create_couple_relationship(self, data):
-        """Obsolete."""
-        return self.post(self.tree_base + 'relationships', data)
+    def couple_relationship(self, cpid):
+        """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_resource"""
+        return self.couple_base + cpid
 
-    def get_couple_relationship(self, cpid):
-        """Obsolete."""
-        return self.get(self.couple_base + cpid)
+    def couple_relationship_conclusion(self, cpid, cid):
+        """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Conclusion_resource"""
+        return self.couple_base + cpid + '/conclusions/' + cid
 
-    def update_couple_relationship_conclusion(self, cpid, data):
-        """Obsolete."""
-        return self.post(self.couple_base + cpid, data)
-
-    def delete_couple_relationship_conclusion(self, cpid, cid, reason=None):
-        """Obsolete."""
-        return self.delete(
-  self.couple_base + cpid + '/conclusions/' + cid, headers={'X-Reason': reason})
-
-    def delete_couple_relationship(self, cpid, reason=None):
-        """Obsolete."""
-        return self.delete(
-         self.couple_base + cpid, headers={'X-Reason': reason}, method="DELETE")
-
-    def restore_couple_relationship(self, cpid):
-        """Obsolete."""
-        return self.post(self.couple_base + cpid + '/restore', nojson=True)
-
-# FamilySearch imports
-
-from . import FamilySearch
-FamilySearch.__bases__ += (Spouses,)
+    def couple_relationship_restore(self, cpid):
+        """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Restore_resource"""
+        return self.couple_base + cpid + '/restore'
