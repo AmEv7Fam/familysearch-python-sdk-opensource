@@ -212,6 +212,6 @@ class FamilySearch(FSBase):
     # on the top...
     
     from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_,s parentsAndChildren_, ordinances_, 
+              discussions_, memories_,parentsAndChildren_, ordinances_, 
               pedigree_, person_, places_, records_, searchAndMatch_,
               sources_, spouses_, user_, utilities_, vocabularies_)
