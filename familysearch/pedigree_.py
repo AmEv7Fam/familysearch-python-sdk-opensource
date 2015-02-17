@@ -10,8 +10,8 @@ class Pedigree:
 
     def ancestry(self, pid, query="", **kwargs):
         """Obsolete."""
-        return self.get(self._add_query_params(
-            self.tree_base + 'ancestry?person=' + pid, kwargs))
+        return self._add_query_params(
+            self.tree_base + 'ancestry?person=' + pid, kwargs)
 
     def descendancy(self, pid, **kwargs):
         """Obsolete."""
