@@ -84,7 +84,7 @@ class Authentication(object):
         response = self._request(url, credentials,
                                  {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}, nojson=True)
-        self.session_id = self._fs2py(response)['access_token']
+        self.session_id = self._fs2py(response)['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -105,7 +105,7 @@ class Authentication(object):
         response = self._request(url, credentials,
                                  {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}, nojson=True)
-        self.session_id = self._fs2py(response)['access_token']
+        self.session_id = self._fs2py(response)['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
