@@ -180,7 +180,7 @@ class FamilySearch(FSBase):
     def get(self, url, data=None, headers=None, nojson=False):
         """HTTP GET request"""
         return self._fs2py(self._request(
-    url, data, headers, None, nojson), nojson)
+    url, data, headers, "GET", nojson), nojson)
 
     def post(self, url, data=None, headers=None, nojson=False):
         """HTTP POST request"""
@@ -212,6 +212,6 @@ class FamilySearch(FSBase):
     # on the top...
     
     from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_,s parentsAndChildren_, ordinances_, 
+              discussions_, memories_,parentsAndChildren_, ordinances_, 
               pedigree_, person_, places_, records_, searchAndMatch_,
               sources_, spouses_, user_, utilities_, vocabularies_)
