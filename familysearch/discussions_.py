@@ -8,8 +8,7 @@ class Discussions:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#discussions"""
         self.discuss_base = self.base + "/platform/discussions/discussions/"
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (Discussions,)
+        pass
 
     def discussions(self):
         """https://familysearch.org/developers/docs/api/discussions/Discussions_resource"""
@@ -26,3 +25,6 @@ class Discussions:
     def discussion_comment(self, did, cmid):
         """https://familysearch.org/developers/docs/api/discussions/Comment_resource"""
         return self.discuss_base + did + "/comments/" + cmid
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Discussions,)

@@ -7,8 +7,6 @@ class ParentsAndChildren:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#parents-and-children"""
         self.child_base = self.tree_base + "child-and-parents-relationships/"
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (ParentsAndChildren,)
 
     def get_child_relationship(self, crid):
         """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_resource"""
@@ -34,3 +32,6 @@ class ParentsAndChildren:
     def child_relationship_restore(self, crid):
         """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_Restore_resource"""
         return self.child_base + crid + "/restore"
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (ParentsAndChildren,)

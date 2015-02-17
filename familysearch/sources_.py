@@ -8,8 +8,6 @@ class Sources:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#sources"""
         self.source_base = self.base + "/platform/sources/"
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (Sources,)
 
     def source_descriptions(self):
         """https://familysearch.org/developers/docs/api/sources/Source_Descriptions_resource"""
@@ -42,3 +40,6 @@ class Sources:
     def source_references_query(self):
         """https://familysearch.org/developers/docs/api/tree/Source_References_Query_resource"""
         return self.tree_base + "source_references"
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Sources,)

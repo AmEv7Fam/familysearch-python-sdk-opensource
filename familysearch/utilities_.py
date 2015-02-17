@@ -6,8 +6,7 @@
 class Utilities:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#utilities"""
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (Utilities,)
+        pass
 
     def get_pending_modifications(self):
         """Obsolete."""
@@ -19,3 +18,6 @@ class Utilities:
         params = self._add_query_params({access_token: session_id}, **params)
         return self._add_query_params(
           self.base + "platform/redirect", params, **kwargs)
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Utilities,)

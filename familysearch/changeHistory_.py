@@ -7,8 +7,7 @@ class ChangeHistory:
     """https://familysearch.org/developers/docs/api/resources#authorities"""
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#change-history"""
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (ChangeHistory,)
+        pass
 
     def person_change_history(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Change_History_resource"""
@@ -29,3 +28,5 @@ class ChangeHistory:
 
 # FamilySearch imports
 
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (ChangeHistory,)

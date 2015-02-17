@@ -7,8 +7,6 @@ class Person:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#person"""
         self.person_base = self.tree_base + 'persons/'
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (Person,)
 
     def persons(self, data):
         """https://familysearch.org/developers/docs/api/tree/Persons_resource"""
@@ -78,7 +76,7 @@ class Person:
         """https://familysearch.org/developers/docs/api/tree/Person_Merge_resource"""
         return self.person_base + pid + "/merges/" + dpid
 
-    def person_change_summary(pid):
+    def person_change_summary(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Merge_resource"""
         return self.person_base + pid + "/change-summary"
 
@@ -119,4 +117,6 @@ class Person:
     def person_portraits(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Portraits_resource"""
         return self.person_base + "/portrait"
-        
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Person,)

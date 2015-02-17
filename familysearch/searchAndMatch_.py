@@ -7,8 +7,7 @@ class SearchAndMatch:
     """https://familysearch.org/developers/docs/api/resources#search-and-match"""
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#search-and-match"""
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (SearchAndMatch,)
+        
 
     def person_search(self):
         """https://familysearch.org/developers/docs/api/tree/Person_Search_resource"""
@@ -25,3 +24,6 @@ class SearchAndMatch:
     def person_matches_query(self):
         """https://familysearch.org/developers/docs/api/tree/Person_Matches_Query_resource"""
         return self.tree_base + "matches"
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (SearchAndMatch,)

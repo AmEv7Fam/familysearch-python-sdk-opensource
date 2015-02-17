@@ -8,9 +8,7 @@ class Spouses:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#spouses"""
         self.couple_base = self.tree_base + 'couple-relationships/'
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (Spouses,)
-   
+
     def relationship(self):
         """https://familysearch.org/developers/docs/api/tree/Relationships_resource"""
         return self.tree_base + "relationships"
@@ -34,3 +32,6 @@ class Spouses:
     def couple_relationship_restore(self, cpid):
         """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Restore_resource"""
         return self.couple_base + cpid + '/restore'
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Spouses,)

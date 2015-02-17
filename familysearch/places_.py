@@ -8,8 +8,6 @@ class Places:
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#places"""
         self.places_base = self.base + "/platform/places/"
-        from familysearch import FamilySearch
-        FamilySearch.__bases__ += (Places,)
 
     def places_search(self):
         """https://familysearch.org/developers/docs/api/places/Places_Search_resource"""
@@ -46,3 +44,6 @@ class Places:
     def place_type_groups(self):
         """https://familysearch.org/developers/docs/api/places/Place_Type_Groups_resource"""
         return self.places_base + "type-groups"
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Places,)

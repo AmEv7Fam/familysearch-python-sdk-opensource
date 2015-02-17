@@ -172,7 +172,7 @@ class FamilySearch(FSBase):
         response = response.decode("utf-8")
         if response and not nojson:
             response = json.loads(response)
-        return {"response": response, headers}
+        return {"response": response, "headers": headers}
 
     # These are really just front-ends for _request,
     # with the name matching the method.
@@ -205,12 +205,12 @@ class FamilySearch(FSBase):
         """HTTP DELETE request"""
         return self._fs2py(self._request(
     url, data, headers, "DELETE", nojson), nojson)
-    
-    #FamilySearch hookup
-    # I'd like to have this on the top, but it doesn't seem to work when it's
-    # on the top...
-    
-    from . import(discovery_, authentication_, authorities_, changeHistory_,
+
+#FamilySearch hookup
+# I'd like to have this on the top, but it doesn't seem to work when it's
+# on the top...
+
+from . import(discovery_, authentication_, authorities_, changeHistory_,
               discussions_, memories_,parentsAndChildren_, ordinances_, 
               pedigree_, person_, places_, records_, searchAndMatch_,
               sources_, spouses_, user_, utilities_, vocabularies_)
