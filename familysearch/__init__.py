@@ -172,8 +172,7 @@ class FamilySearch(FSBase):
         response = response.decode("utf-8")
         if response and not nojson:
             response = json.loads(response)
-        response["headers"] = headers
-        return response
+        return {"response": response, headers}
 
     # These are really just front-ends for _request,
     # with the name matching the method.
