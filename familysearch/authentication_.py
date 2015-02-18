@@ -139,3 +139,6 @@ class getter(server.BaseHTTPRequestHandler):
         self.wfile.write(b"<p>You can safely close this page.</p>")
         self.wfile.write(b"</body")
         self.wfile.write(b"</html>")
+
+from familysearch import FamilySearch
+FamilySearch.__bases__ += (Authentication,)
