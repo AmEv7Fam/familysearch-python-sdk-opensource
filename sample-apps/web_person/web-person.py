@@ -55,68 +55,57 @@ class getter(server.BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         
-        top = "<!DOCTYPE html>\n"\
-              "<html>\n"\
-              "<head>\n"\
-              "<title>FSPySDK Sample App</title>\n"
-        middle = "</head>\n"\
-                 "<body>\n"
-        bottom = "</body>\n"\
-                 "</html>\n"
+        top = "<!DOCTYPE html><html><head><title>FSPySDK Sample App</title>"
+        middle = "</head><body>"
+        bottom = "</body></html>"
         if path.startswith(ruri):
-            qs = parse_qs(path)
-            qs = list(qs.values())[0][0]
-            url = fs.token
-            credentials = urlencode({'grant_type': 'authorization_code',
-                                     'code': qs,
-                                     'client_id': fs.key
-                                      })
-            credentials = credentials.encode("utf-8")
-            response = fs._request(url, credentials,
-                                   {"Content-Type": "application/x-www-form-urlencoded",
-                                    "Accept": "application/json"}, nojson=True)
-            fs.session_id = fs._fs2py(response)['access_token']
-            fs.logged_in = True
-            fs.fix_discovery()
-            fs.own_pid = fs.get_current_user()['users'][0]['personId']
-            body = top + middle + '<script>\nwindow.opener.location.reload();\n'\
-                                  'window.close()</script>\n' + bottom
+            bottom = self.get_code(path) + bottom
         else:
             if fs.logged_in:
-                middle = middle + 'Search given FamilySearch PID (default is '\
-                                  'your own)\n'\
-                                  '<form>\n<input type="text" name="pid" '\
-                                  'value='+ fs.own_pid +'><br />\n'\
-                                  '<input type="submit" value="Submit\n">'\
-                                  '</form>\n'
-                print(path)
+                middle += logged_in()
                 if path.startswith("/?pid="):
                     pid = parse_qs(path)["/?pid"][0]
                     person = fs.get_person(pid)
-                    middle = middle + \
-                             'This is ' + person['persons'][0]['names'][0]\
-                             ['nameForms'][0]['fullText'] + '. <br />\n'+ \
-                             ('He' if person['persons'][0]['display']['gender']\
-                             == "Male" else 'She') + " is " + \
-                             ('living' if person['persons'][0]['living']\
-                             else 'deceased') + ".<br />\n" + ('His' if \
-                             person['persons'][0]['display']['gender'] == "Male"\
-                             else "Her") + ' lifespan is "' + person['persons']\
-                             [0]['display']['lifespan'] + '".<br />\n'
-                                
+                    middle += has_pid(person)
             else:
-                top = top + '<script>function openWin()\n{window.open("' +\
-                            fslogin + '","fsWindow","width=320,height=615");'\
-                            '}</script>\n'
-                
+                middle = self.not_logged_in() + middle
                 middle = middle + '<button onclick=openWin()>'\
-                                  'Sign in to FamilySearch</button>\n'
+                                  'Sign in to FamilySearch</button>'
 
             body = top + middle + bottom
         
         self.wfile.write(body.encode("utf-8"))
-        
-        
+
+    def not_logged_in(self):
+        string = '<script>function openWin(){window.open("' + fslogin
+        string += '","fsWindow","width=320,height=615");}</script>'
+        return string
+    def logged_in(self):
+        string = 'Search given FamilySearch PID (default is your own)<form>'
+        string +='<input type="text" name="pid" value='+ fs.user['personId']
+        string +='><br />input type="submit" value="Submit"></form>'
+        return string
+
+    def has_pid(self, person):
+        name = person['response']['persons'][0]['names'][0]['nameForms'][0]['fullText']
+        string = 'This is ' + name + '. <br />'
+        string += 'He' if person['response']['persons'][0]['display']['gender']\
+                    == "Male" else 'She'
+        string += " is "
+        string += 'living' if person['persons'][0]['living']\
+                    else 'deceased'
+        string += ".<br />"
+        string += 'His' if person['response']['persons'][0]['display']\
+                    ['gender'] == "Male" else "Her"
+        string +=' lifespan is "' + person['persons'][0]['display']['lifespan']\
+                    + '".<br />'
+        return string
+
+    def get_code(self, path):
+        qs = parse_qs(path)
+        qs = list(qs.values())[0][0]
+        fs.oauth_code_login(qs)
+        return '<script>window.opener.location.reload();window.close()</script>'
 
 webbrowser.open(url)
 server.HTTPServer(('', 63342), getter).serve_forever()

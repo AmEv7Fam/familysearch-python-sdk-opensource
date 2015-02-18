@@ -71,8 +71,8 @@ class Authentication(object):
 
     def oauth_code_login(self, code):
         """
-        Convenience function for Web servers to log into Familysearch
-        with the token code Familysearch hands you.
+        Convenience function for Web servers to log into FamilySearch
+        with the token code FamilySearch hands you.
         """
         url = self.token
         credentials = urlencode({'grant_type': 'authorization_code',
@@ -96,7 +96,8 @@ class Authentication(object):
         self.logged_in = False
         self.cookies.clear()
         url = self.token
-        credentials = urlencode({'ip_address': ip_address, #TODO: make IP address generiation automatic
+        credentials = urlencode({'ip_address': ip_address,
+                                 #TODO: make IP address generiation automatic
                                  'client_id': self.key,
                                  'grant_type': 'unauthenticated_session'
                                  })
