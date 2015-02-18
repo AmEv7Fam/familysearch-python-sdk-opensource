@@ -10,7 +10,7 @@ class Utilities:
 
     def get_pending_modifications(self):
         """Obsolete."""
-        return self.get(self.root_collection['collections'][0]['links']\
+        return self.get(self.root_collection['response']['collections'][0]['links']\
                         ['pending-modifications']['href'])
 
     def redirect(self, **kwargs):

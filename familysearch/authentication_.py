@@ -14,6 +14,7 @@ except ImportError:
     import BaseHTTPServer as server
 
 import webbrowser
+import pprint
 
 # Magic
 
@@ -22,9 +23,7 @@ class Authentication(object):
         """https://familysearch.org/developers/docs/api/resources#authentication
         Set up the URLs for authentication.
         """
-        from . import FamilySearch
-        FamilySearch.__bases__ += (Authentication,)
-        self.token = self.root_collection['collections'][0]['links']\
+        self.token = self.root_collection['response']['collections'][0]['links']\
         ['http://oauth.net/core/2.0/endpoint/token']['href']
         cookie_handler = HTTPCookieProcessor()
         self.cookies = cookie_handler.cookiejar
@@ -59,7 +58,7 @@ class Authentication(object):
         """
         self.logged_in = False
         self.cookies.clear()
-        url = self.root_collection['collections'][0]['links']\
+        url = self.root_collection['response']['collections'][0]['links']\
         ['http://oauth.net/core/2.0/endpoint/authorize']['href']
         url = self._add_query_params(url, {'response_type': 'code',
                                      'client_id': self.key,
