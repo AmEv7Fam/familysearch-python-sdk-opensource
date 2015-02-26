@@ -7,7 +7,7 @@ setup(
   packages = ['familysearch-python-sdk-opensource'],
   version = familysearch.__version__,
   description = 'A Python SDK for FamilySearch.org',
-  long_description=open('README.md').read(),
+  long_description=open('README.rst').read(),
   author = 'Elder Evans',
   author_email = 'elderamevans@gmail.com',
   url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource',
