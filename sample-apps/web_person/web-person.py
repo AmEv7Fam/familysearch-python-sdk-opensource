@@ -6,12 +6,11 @@ try:
     # Python 3
     import configparser
     from http import server
-    from urllib.parse import(urlencode, parse_qs)
+    from urllib.parse import parse_qs
 except ImportError:
     # Python 2
     import ConfigParser as configparser
     import BaseHTTPServer as server
-    from urllib import urlencode
     from urlparse import parse_qs
     
 from familysearch import FamilySearch
@@ -69,8 +68,7 @@ class getter(server.BaseHTTPRequestHandler):
                     middle += has_pid(person)
             else:
                 middle = self.not_logged_in() + middle
-                middle = middle + '<button onclick=openWin()>'\
-                                  'Sign in to FamilySearch</button>'
+                middle = self.not_logged_in()
 
             body = top + middle + bottom
         
@@ -79,6 +77,8 @@ class getter(server.BaseHTTPRequestHandler):
     def not_logged_in(self):
         string = '<script>function openWin(){window.open("' + fslogin
         string += '","fsWindow","width=320,height=615");}</script>'
+        string += "</head><body>"
+        string += "<button onclick=openWin()>Sign in to FamilySearch</button>"
         return string
     def logged_in(self):
         string = 'Search given FamilySearch PID (default is your own)<form>'
@@ -87,18 +87,26 @@ class getter(server.BaseHTTPRequestHandler):
         return string
 
     def has_pid(self, person):
-        name = person['response']['persons'][0]['names'][0]['nameForms'][0]['fullText']
+        name = person['response']['persons'][0]['names'][0]['nameForms'][0]\
+            ['fullText']
         string = 'This is ' + name + '. <br />'
-        string += 'He' if person['response']['persons'][0]['display']['gender']\
-                    == "Male" else 'She'
+        if person['response']['persons'][0]['display']['gender'] == "Male":
+            string += 'He' 
+        else: 
+            string += 'She'
         string += " is "
-        string += 'living' if person['persons'][0]['living']\
-                    else 'deceased'
+        if person['persons'][0]['living']:
+            string += 'living'
+        else:
+            string += 'deceased'
         string += ".<br />"
-        string += 'His' if person['response']['persons'][0]['display']\
-                    ['gender'] == "Male" else "Her"
-        string +=' lifespan is "' + person['persons'][0]['display']['lifespan']\
-                    + '".<br />'
+        if person['response']['persons'][0]['display']['gender'] == "Male":
+            string += 'His'
+        else:
+            string +="Her"
+        string +=' lifespan is "'
+        string += person['persons'][0]['display']['lifespan']
+        string += '".<br />'
         return string
 
     def get_code(self, path):
