@@ -7,12 +7,12 @@ setup(
   packages = ['familysearch-python-sdk-opensource'],
   version = familysearch.__version__,
   description = 'A Python SDK for FamilySearch.org',
-  long_description=open('README.md').read()
+  long_description=open('README.md').read(),
   author = 'Elder Evans',
   author_email = 'elderamevans@gmail.com',
   url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource',
   download_url = 'https://github.com/peterldowns/mypackage/tarball/0.1', 
-  keywords = ['FamilySearch', 'API', 'REST', 'family history', 'geneaolgy', 'JSON'] #
+  keywords = ['FamilySearch', 'API', 'REST', 'family history', 'geneaolgy', 'JSON'],
   classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
