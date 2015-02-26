@@ -1,6 +1,8 @@
+# Python imports
 from __future__ import print_function
 import os
 import sys
+from getpass import getpass
 
 try:
     # Python 3
@@ -12,9 +14,9 @@ except ImportError:
     from urllib2 import HTTPError
     input = raw_input
 
-from getpass import getpass
-
 from familysearch import FamilySearch
+
+# Get app key from config.ini
 
 config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/config.ini"
 
@@ -27,6 +29,8 @@ except AttributeError:
     app_key = config.get("fskey", "devkey")
     base = config.get("fskey", "base")
 
+# Sign into FamilySearch, and keep on trying until successful.
+
 fs = FamilySearch("FSPySDK/SampleApps", app_key, base=base)
 print("Please sign in to FamilySearch.")
 while fs.logged_in is not True:
@@ -35,4 +39,5 @@ while fs.logged_in is not True:
     except HTTPError:
         print("Not logged in. Try again.")
 
-print("Welcome, "+ fs.get_current_user()['users'][0]['displayName']+"!")
+me = fs.get_current_user()['response']['users'][0]['displayName']
+print("Welcome, " + me + "!")
