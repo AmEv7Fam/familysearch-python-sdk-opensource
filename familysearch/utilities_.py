@@ -11,8 +11,8 @@ class Utilities:
 
     def pending_modifications(self):
         """https://familysearch.org/developers/docs/api/tree/Pending_Modifications_resource"""
-        return self.get(self.root_collection['response']['collections'][0]['links']\
-                        ['pending-modifications']['href'])
+        return self.root_collection['response']['collections'][0]['links']\
+            ['pending-modifications']['href']
 
     def redirect(self, **kwargs):
         """https://familysearch.org/developers/docs/api/tree/Redirect_resource"""
