@@ -38,47 +38,78 @@
                 <h3>
                     <a id="initial-setup" class="anchor" href="#initial-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initial setup</h3>
 
-                <div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">from</span> familysearch <span class="pl-k">import</span> FamilySearch
-<span class="pl-k">&gt;&gt;&gt;</span> app_key <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>MY-MAGIC-DEV-KEY-THAT-ALLOWS-FAMILY-SEARCH-ACCESS<span class="pl-pds">"</span></span> <span class="pl-c"># You didn't think I'd give you a free one, now did you?</span>
-<span class="pl-k">&gt;&gt;&gt;</span> user_agent <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>MyApp/VersionNumber<span class="pl-pds">"</span></span>
-<span class="pl-k">&gt;&gt;&gt;</span> fs_address <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>https://sandbox.familysearch.org<span class="pl-pds">"</span></span>
-<span class="pl-k">&gt;&gt;&gt;</span> fs <span class="pl-k">=</span> Familysearch(user_agent, app_key, <span class="pl-vpf">base</span><span class="pl-k">=</span>fs_address)</pre></div>
+                <div class="highlight highlight-Python">
+                    <pre>
+&gt;&gt;&gt; from familysearch import FamilySearch
+&gt;&gt;&gt; app_key = "MY-MAGIC-DEV-KEY-THAT-ALLOWS-FAMILY-SEARCH-ACCESS" # You didn't think I'd give you a free one, now did you?
+&gt;&gt;&gt; user_agent = "MyApp/VersionNumber"
+&gt;&gt;&gt; = "https://sandbox.familysearch.org"
+&gt;&gt;&gt; fs = Familysearch(user_agent, app_key, base=fs_address)</pre>
+                </div>
 
                 <p>As a side note: I left the FamilySearch base configurable so that, if there is a need to change it to, say, "<a href="https://deployment.familysearch.org">https://deployment.familysearch.org</a>" (which has happened, and this used to be a temporary sandbox upgrade address), it is available, and won't require any additional tweaking in the SDK itself.</p>
 
                 <h3>
-                    <a id="logging-in" class="anchor" href="#logging-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging in</h3>
+                    <a id="logging-in" class="anchor" href="#logging-in" aria-hidden="true">
+                        <span class="octicon octicon-link">
+                        </span>
+                    </a>
+                    Logging in
+                </h3>
 
                 <h4>
-                    <a id="desktop-login" class="anchor" href="#desktop-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>Desktop login</h4>
+                    <a id="desktop-login" class="anchor" href="#desktop-login" aria-hidden="true">
+                        <span class="octicon octicon-link">
+                        </span>
+                    </a>
+                    Desktop login
+                </h4>
 
                 <p>The UN/PW login method is recommended for desktop clients.</p>
 
-                <div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">try</span>:
-...     <span class="pl-s3">input</span> <span class="pl-k">=</span> <span class="pl-s3">raw_input</span>
-... <span class="pl-k">except</span>:
-...     <span class="pl-k">pass</span>
-<span class="pl-k">&gt;&gt;&gt;</span> <span class="pl-k">from</span> getpass <span class="pl-k">import</span> getpass
-<span class="pl-k">&gt;&gt;&gt;</span> fs.login(<span class="pl-s3">input</span>(<span class="pl-s1"><span class="pl-pds">"</span>Username: <span class="pl-pds">"</span></span>), getpass())</pre></div>
-
+                <div class="highlight highlight-Python">
+                    <pre>
+&gt;&gt;&gt; try:
+...     input = raw_input
+... except NameError:
+...     pass
+&gt;&gt;&gt; from getpass import getpass
+&gt;&gt;&gt; fs.login(input("Username: "), getpass())</pre>
                 <h4>
-                    <a id="desktop-oauth-login" class="anchor" href="#desktop-oauth-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>Desktop OAuth login</h4>
+                    <a id="desktop-oauth-login" class="anchor" href="#desktop-oauth-login" aria-hidden="true">
+                        <span class="octicon octicon-link">
+                        </span>
+                    </a>
+                    Desktop OAuth login
+                </h4>
 
                 <p>Convenience function to log into FamilySearch by opening a Web browser and logging in through OAuth login.
-                    Not recommended for production applications, as it opens a Web browser..</p>
+                    Not recommended for production applications, as it opens a Web browser.</p>
 
                 <p>If you still choose to use this method (for testing purposes), the default callback URI is "http://localhost:63342/fslogin".</p>
 
-                <div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> fs.oauth_desktop_login()</pre></div>
+                <div class="highlight highlight-Python">
+                    <pre>
+&gt;&gt;&gt; fs.oauth_desktop_login()</pre>
+                </div>
 
                 <h4>
-                    <a id="oauth-access-code-login" class="anchor" href="#oauth-access-code-login" aria-hidden="true"><span class="octicon octicon-link"></span></a>OAuth access code login</h4>
+                    <a id="oauth-access-code-login" class="anchor" href="#oauth-access-code-login" aria-hidden="true">
+                        <span class="octicon octicon-link">
+                        </span>
+                    </a>
+                    OAuth access code login
+                </h4>
 
                 <p>OAuth is the required login method for Web servers. Now, I'm not going to recommend a (micro)framework here; that's up to you to choose. However, it <em>should</em> work with any framework, even <code>SimpleHTTPServer</code> (or <code>http.server</code> for Pythonthreestas).</p>
 
-                <div class="highlight highlight-Python"><pre>... various server code to receive <span class="pl-k">and</span> interpret query, but I<span class="pl-s1"><span class="pl-pds">'</span>ll provide an (extremely simplified) example.<span class="pl-ii"></span></span>
-<span class="pl-k">&gt;&gt;&gt;</span> token_code <span class="pl-k">=</span> <span class="pl-s3">list</span>(query.items())[<span class="pl-c1">0</span>][<span class="pl-c1">0</span>]
-<span class="pl-k">&gt;&gt;&gt;</span> fs.oauth_code_login(token_code)</pre></div>
+                <div class="highlight highlight-Python">
+                    <pre>
+... various server code to receive and interpret query, but I'll provide an (extremely simplified) example.
+&gt;&gt;&gt; token_code = list<(query.items())[<span class="pl-c1">0</span>][<span class="pl-c1">0</span>]
+&gt;&gt;&gt; fs.oauth_code_login(token_code)
+                    </pre>
+                </div>
 
                 <h3>
                     <a id="now-that-were-logged-in" class="anchor" href="#now-that-were-logged-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Now that we're logged in</h3>
@@ -88,17 +119,27 @@
                 <h3>
                     <a id="read-a-person" class="anchor" href="#read-a-person" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read a person</h3>
 
-                <div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> fs.get_person(<span class="pl-s1"><span class="pl-pds">"</span>PPPJ-MYZ<span class="pl-pds">"</span></span>)
-{}</pre></div>
+                <div class="highlight highlight-Python">
+                    <pre>
+&gt;&gt;&gt; fs.get_person("PPPJ-MYZ")
+{data}</pre>
+                </div>
 
                 <h3>
-                    <a id="create-a-person" class="anchor" href="#create-a-person" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a person</h3>
+                    <a id="create-a-person" class="anchor" href="#create-a-person" aria-hidden="true">
+                        <span class="octicon octicon-link">
+                        </span>
+                    </a>
+                    Create a person
+                </h3>
 
-                <div class="highlight highlight-Python"><pre><span class="pl-k">&gt;&gt;&gt;</span> new_guy <span class="pl-k">=</span>{data}
+                <div class="highlight highlight-Python">
+                    <pre>
+&gt;&gt;&gt; new_guy ={data}
 
-<span class="pl-k">&gt;&gt;&gt;</span> fs.create_person(new_person)
- (Response headers. Not finalized how I<span class="pl-s1"><span class="pl-pds">'</span>m going to lay them out.)<span class="pl-ii"></span></span></pre></div>
-
+&gt;&gt;&gt; fs.create_person(new_person)
+{data}</pre>
+                </div>
             </section>
         </div>
 
