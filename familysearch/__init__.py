@@ -89,7 +89,7 @@ class Request(BaseRequest):
         else:
             return BaseRequest.get_method(self)
 
-class FamilySearch(Authentication, Authorities,ChangeHistory, Discovery,
+class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
                    Discussions, Memories, Ordinances, ParentsAndChildren,
                    Pedigree, Person, Places, Records, SearchAndMatch,
                    Sources, Spouses, User, Utilities, Vocabularies):
@@ -102,6 +102,7 @@ class FamilySearch(Authentication, Authorities,ChangeHistory, Discovery,
 
     def __init__(self, agent, key, session=None,
                  base='https://sandbox.familysearch.org'):
+
         """Instantiate a FamilySearch proxy object.
 
         Keyword arguments:
@@ -112,6 +113,26 @@ class FamilySearch(Authentication, Authorities,ChangeHistory, Discovery,
         base (optional) -- base URL for the API;
                            defaults to 'https://sandbox.familysearch.org'
         """
+
+        Authentication.__init__()
+        Authorities.__init__()
+        ChangeHistory.__init__()
+        Discovery.__init__()
+        Discussions.__init__()
+        Memories.__init__()
+        Ordinances.__init__()
+        ParentsAndChildren.__init__()
+        Pedigree.__init__()
+        Person.__init__()
+        Places.__init__()
+        Records.__init__()
+        SearchAndMatch.__init__()
+        Sources.__init__()
+        Spouses.__init__()
+        User.__init__()
+        Utilities.__init__()
+        Vocabularies.__init__()
+
         self.agent = '%s FSPySDK/%s' % (agent, __version__)
         self.key = key
         self.session_id = session
@@ -120,8 +141,6 @@ class FamilySearch(Authentication, Authorities,ChangeHistory, Discovery,
         self.tree_base = self.base + "/platform/tree/"
         self.opener = build_opener()
         self.logged_in = bool(self.session_id)
-        self.cookies = None
-
 
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
@@ -203,29 +222,29 @@ class FamilySearch(Authentication, Authorities,ChangeHistory, Discovery,
     def get(self, url, data=None, headers=None, nojson=False):
         """HTTP GET request"""
         return self._fs2py(self._request(
-    url, data, headers, "GET", nojson), nojson)
+            url, data, headers, "GET", nojson), nojson)
 
     def post(self, url, data=None, headers=None, nojson=False):
         """HTTP POST request"""
         return self._fs2py(self._request(
-    url, data, headers, "POST", nojson), nojson)
+            url, data, headers, "POST", nojson), nojson)
 
     def put(self, url, data=None, headers=None, nojson=False):
         """HTTP PUT request"""
         return self._fs2py(self._request(
-    url, data, headers, "PUT", nojson), nojson)
+            url, data, headers, "PUT", nojson), nojson)
 
     def head(self, url, data=None, headers=None, nojson=False):
         """HTTP HEAD request"""
         return self._fs2py(self._request(
-    url, data, headers, "HEAD", nojson), nojson)
+            url, data, headers, "HEAD", nojson), nojson)
 
     def options(self, url, data=None, headers=None, nojson=False):
         """HTTP OPTIONS request"""
         return self._fs2py(self._request(
-    url, data, headers, "OPTIONS", nojson), nojson)
+            url, data, headers, "OPTIONS", nojson), nojson)
 
     def delete(self, url, data=None, headers=None, nojson=False):
         """HTTP DELETE request"""
         return self._fs2py(self._request(
-    url, data, headers, "DELETE", nojson), nojson)
+            url, data, headers, "DELETE", nojson), nojson)
