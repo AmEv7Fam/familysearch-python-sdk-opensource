@@ -25,8 +25,3 @@ class ChangeHistory:
     def restore_change(self, chid):
         """Obsolete."""
         return self.tree_base + "changes/" + chid + "/restore"
-
-# FamilySearch imports
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (ChangeHistory,)

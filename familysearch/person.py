@@ -117,6 +117,3 @@ class Person:
     def person_portraits(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Portraits_resource"""
         return self.person_base + "/portrait"
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Person,)

@@ -36,6 +36,3 @@ class Memories:
     def memories_comment(self, mid, cmid):
         """https://familysearch.org/developers/docs/api/memories/Memories_Comment_resource"""
         return self.memory_base + mid + "comments/" + cmid
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Memories,)

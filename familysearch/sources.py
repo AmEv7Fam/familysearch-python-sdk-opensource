@@ -40,6 +40,3 @@ class Sources:
     def source_references_query(self):
         """https://familysearch.org/developers/docs/api/tree/Source_References_Query_resource"""
         return self.tree_base + "source_references"
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Sources,)

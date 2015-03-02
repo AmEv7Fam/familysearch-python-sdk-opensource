@@ -23,6 +23,3 @@ class Utilities:
         """https://familysearch.org/developers/docs/api/discovery/OEmbed_resource"""
         return self._add_query_params(
             self.base + "platform/oembed", kwargs)
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Utilities,)

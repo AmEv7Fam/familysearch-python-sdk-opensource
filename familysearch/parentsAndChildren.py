@@ -32,6 +32,3 @@ class ParentsAndChildren:
     def child_relationship_restore(self, crid):
         """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_Restore_resource"""
         return self.child_base + crid + "/restore"
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (ParentsAndChildren,)

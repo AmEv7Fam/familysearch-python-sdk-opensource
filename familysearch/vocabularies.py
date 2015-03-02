@@ -16,6 +16,3 @@ class Vocabularies:
     def vocabulary_term(self, cvtid):
         """https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_Term_resource"""
         return self.vocab_base + "lists/" + cvtid
-    
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Vocabularies,)

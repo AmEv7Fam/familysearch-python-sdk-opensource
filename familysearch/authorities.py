@@ -12,6 +12,3 @@ class Authorities():
     def dates(self, date):
         """https://familysearch.org/developers/docs/api/dates/Date_resource."""
         return self.base + '/platform/dates?date=' + date
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Authorities,)   

@@ -25,6 +25,3 @@ class Discussions:
     def discussion_comment(self, did, cmid):
         """https://familysearch.org/developers/docs/api/discussions/Comment_resource"""
         return self.discuss_base + did + "/comments/" + cmid
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Discussions,)

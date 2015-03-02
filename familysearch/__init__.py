@@ -46,6 +46,30 @@ except ImportError:
 import json
 import time
 
+
+# FamilySearch imports
+
+from .authentication import Authentication
+from .authorities import Authorities
+from .changeHistory import ChangeHistory
+from .discovery import Discovery
+from .discussions import Discussions
+from .memories import Memories
+from .ordinances import Ordinances
+from .parentsAndChildren import ParentsAndChildren
+from .pedigree import Pedigree
+from .person import Person
+from .places import Places
+from .records import Records
+from .searchAndMatch import SearchAndMatch
+from .sources import Sources
+from .spouses import Spouses
+from .user import User
+from .utilities import Utilities
+from .vocabularies import Vocabularies
+
+# Magic
+
 __version__ = '0.75'
 
 class Request(BaseRequest):
@@ -65,8 +89,10 @@ class Request(BaseRequest):
         else:
             return BaseRequest.get_method(self)
 
-class FSBase(object): pass
-class FamilySearch(FSBase):
+class FamilySearch(Authentication, Authorities,ChangeHistory, Discovery,
+                   Discussions, Memories, Ordinances, ParentsAndChildren,
+                   Pedigree, Person, Places, Records, SearchAndMatch,
+                   Sources, Spouses, User, Utilities, Vocabularies):
     """A FamilySearch API proxy
     The constructor must be called with a user-agent string and a developer key.
     A session ID and base URL are optional.
@@ -96,8 +122,6 @@ class FamilySearch(FSBase):
         self.logged_in = bool(self.session_id)
         self.cookies = None
 
-        for mixin in self.__class__.__bases__:
-            mixin.__init__(self)
 
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
@@ -205,12 +229,3 @@ class FamilySearch(FSBase):
         """HTTP DELETE request"""
         return self._fs2py(self._request(
     url, data, headers, "DELETE", nojson), nojson)
-
-#FamilySearch hookup
-# I'd like to have this on the top, but it doesn't seem to work when it's
-# on the top...
-
-from . import(discovery_, authentication_, authorities_, changeHistory_,
-              discussions_, memories_,parentsAndChildren_, ordinances_, 
-              pedigree_, person_, places_, records_, searchAndMatch_,
-              sources_, spouses_, user_, utilities_, vocabularies_)

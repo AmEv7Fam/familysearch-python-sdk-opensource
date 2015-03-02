@@ -32,6 +32,3 @@ class Spouses:
     def couple_relationship_restore(self, cpid):
         """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Restore_resource"""
         return self.couple_base + cpid + '/restore'
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Spouses,)

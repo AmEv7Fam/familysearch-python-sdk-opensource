@@ -44,6 +44,3 @@ class Places:
     def place_type_groups(self):
         """https://familysearch.org/developers/docs/api/places/Place_Type_Groups_resource"""
         return self.places_base + "type-groups"
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Places,)

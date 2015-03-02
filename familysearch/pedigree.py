@@ -17,6 +17,3 @@ class Pedigree:
         """Obsolete."""
         return self._add_query_params(
             self.tree_base + 'descendancy?person=' + pid, kwargs)
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Pedigree,)

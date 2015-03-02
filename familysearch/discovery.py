@@ -36,6 +36,3 @@ class Discovery(object):
             self.user = self.get_current_user()['response']['users'][0]
         except:
             self.user = ""
-
-from familysearch import FamilySearch
-FamilySearch.__bases__ += (Discovery,)
