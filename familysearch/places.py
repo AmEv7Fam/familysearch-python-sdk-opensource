@@ -19,7 +19,7 @@ class Places:
 
     def place_group(self, pgid):
         """https://familysearch.org/developers/docs/api/places/Place_Group_resource"""
-        return self.places_base + "gropus/" + pgid
+        return self.places_base + "groups/" + pgid
 
     def place(self, pid):
         """https://familysearch.org/developers/docs/api/places/Place_resource"""
@@ -35,7 +35,7 @@ class Places:
 
     def place_type_group(self, ptgid):
         """https://familysearch.org/developers/docs/api/places/Place_Type_Group_resource"""
-        return self.places_base + "type-gropus/" + ptgid
+        return self.places_base + "type-groups/" + ptgid
 
     def place_types(self):
         """https://familysearch.org/developers/docs/api/places/Place_Types_resource."""
