@@ -114,10 +114,22 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
                            defaults to 'https://sandbox.familysearch.org'
         """
 
+        self.agent = '%s FSPySDK/%s' % (agent, __version__)
+        self.key = key
+        self.session_id = session
+        self.base = base
+        self.user_base = self.base + "/platform/users/"
+        self.tree_base = self.base + "/platform/tree/"
+        self.opener = build_opener()
+        self.logged_in = bool(self.session_id)
+
+        # Sorted alphabetically, except for Discovery, which is the Hypermedia
+        # class, which needs to be on top for everything else to work.
+
+        Discovery.__init__(self)
         Authentication.__init__(self)
         Authorities.__init__(self)
         ChangeHistory.__init__(self)
-        Discovery.__init__(self)
         Discussions.__init__(self)
         Memories.__init__(self)
         Ordinances.__init__(self)
@@ -132,15 +144,6 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         User.__init__(self)
         Utilities.__init__(self)
         Vocabularies.__init__(self)
-
-        self.agent = '%s FSPySDK/%s' % (agent, __version__)
-        self.key = key
-        self.session_id = session
-        self.base = base
-        self.user_base = self.base + "/platform/users/"
-        self.tree_base = self.base + "/platform/tree/"
-        self.opener = build_opener()
-        self.logged_in = bool(self.session_id)
 
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
