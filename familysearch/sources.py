@@ -25,18 +25,21 @@ class Sources:
         """https://familysearch.org/developers/docs/api/sources/Source_Folder_resource"""
         return self.source_base + "collections/" + udcid
 
-    def source_folder_source_descriptions(self, udcid):
+    def source_folder_source_descriptions(self, udcid, **kwargs):
         """https://familysearch.org/developers/docs/api/sources/Source_Folder_Source_Descriptions_resource"""
-        return self.source_base + "collections/" + udcid + "/descriptions"
+        return self._add_query_params(
+            self.source_base + "collections/" + udcid + "/descriptions", kwargs)
 
     def user_source_folders(self):
         """https://familysearch.org/developers/docs/api/sources/User_Source_Folders_resource"""
         return self.source_base + self.user['personId'] + "/collections"
 
-    def user_source_descriptions(self):
+    def user_source_descriptions(self, **kwargs):
         """https://familysearch.org/developers/docs/api/sources/User_Source_Descriptions_resource"""
-        return self.source_base + self.user['personId'] + "/collections"
+        return self._add_query_params(
+            self.source_base + self.user['personId'] + "/collections", kwargs)
 
-    def source_references_query(self):
+    def source_references_query(self, **kwargs):
         """https://familysearch.org/developers/docs/api/tree/Source_References_Query_resource"""
-        return self.tree_base + "source_references"
+        return self._add_query_params(
+            self.tree_base + "source_references", kwargs)

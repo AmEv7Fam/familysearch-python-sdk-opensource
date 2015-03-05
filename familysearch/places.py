@@ -9,9 +9,9 @@ class Places:
         """https://familysearch.org/developers/docs/api/examples#places"""
         self.places_base = self.base + "/platform/places/"
 
-    def places_search(self):
+    def places_search(self, **kwargs):
         """https://familysearch.org/developers/docs/api/places/Places_Search_resource"""
-        return self.places_base + "search"
+        return self._add_query_params(self.places_base + "search", kwargs)
 
     def place_description(self, pdid):
         """https://familysearch.org/developers/docs/api/places/Place_Description_resource"""
@@ -38,7 +38,7 @@ class Places:
         return self.places_base + "type-groups/" + ptgid
 
     def place_types(self):
-        """https://familysearch.org/developers/docs/api/places/Place_Types_resource."""
+        """https://familysearch.org/developers/docs/api/places/Place_Types_resource"""
         return self.places_base + "types"
 
     def place_type_groups(self):

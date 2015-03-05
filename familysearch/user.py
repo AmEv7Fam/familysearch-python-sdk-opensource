@@ -6,8 +6,10 @@
 # Magic
 
 class User(object):
+    """https://familysearch.org/developers/docs/api/resources#user"""
     def __init__(self):
-        """https://familysearch.org/developers/docs/api/resources#user"""
+        """https://familysearch.org/developers/docs/api/examples#user"""
+        pass
 
     def current_user(self):
         """https://familysearch.org/developers/docs/api/users/Current_User_resource"""
@@ -23,5 +25,5 @@ class User(object):
         return self.user_base + "agents/" + uid
 
     def current_user_history(self):
-        """https://familysearch.org/developers/docs/api/users/Current_User_History_resource."""
+        """https://familysearch.org/developers/docs/api/users/Current_User_History_resource"""
         return self.user_base + "current/history"
