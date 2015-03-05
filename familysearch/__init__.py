@@ -33,19 +33,18 @@ fs.logout()
 try:
     # Python 3
     from urllib.request import Request as BaseRequest
-    from urllib.request import(build_opener, urlopen)
+    from urllib.request import build_opener
     from urllib.error import HTTPError
     from urllib.parse import(urlsplit, urlunsplit, parse_qs, urlencode)
 except ImportError:
     # Python 2
     from urllib import urlencode
     from urllib2 import Request as BaseRequest
-    from urllib2 import(build_opener, HTTPError, urlopen)
+    from urllib2 import build_opener, HTTPError
     from urlparse import(urlsplit, urlunsplit, parse_qs)
 
 import json
 import time
-
 
 # FamilySearch imports
 
@@ -72,6 +71,7 @@ from .vocabularies import Vocabularies
 
 __version__ = '0.75'
 
+
 class Request(BaseRequest):
     """Add ability for the Request object to allow it to handle
     additional methods.
@@ -88,6 +88,7 @@ class Request(BaseRequest):
             return self._method
         else:
             return BaseRequest.get_method(self)
+
 
 class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
                    Discussions, Memories, Ordinances, ParentsAndChildren,
