@@ -121,7 +121,7 @@
 
                 <div class="highlight highlight-Python">
                     <pre>
-&gt;&gt;&gt; fs.get_person("PPPJ-MYZ")
+&gt;&gt;&gt; fs.get(fs.person("PPPJ-MYZ"))
 {data}</pre>
                 </div>
 
@@ -135,9 +135,9 @@
 
                 <div class="highlight highlight-Python">
                     <pre>
-&gt;&gt;&gt; new_guy ={data}
+&gt;&gt;&gt; new_person = {data}
 
-&gt;&gt;&gt; fs.create_person(new_person)
+&gt;&gt;&gt; fs.post(fs.persons(), new_person)
 {data}</pre>
                 </div>
             </section>
