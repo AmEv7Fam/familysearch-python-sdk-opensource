@@ -17,9 +17,9 @@ class Utilities:
     def redirect(self, **kwargs):
         """https://familysearch.org/developers/docs/api/tree/Redirect_resource"""
         return self._add_query_params(
-            self.base + "platform/redirect", kwargs)
+            self.base + "/platform/redirect", kwargs)
           
     def oembed(self, **kwargs):
         """https://familysearch.org/developers/docs/api/discovery/OEmbed_resource"""
         return self._add_query_params(
-            self.base + "platform/oembed", kwargs)
+            self.base + "/platform/oembed", kwargs)
