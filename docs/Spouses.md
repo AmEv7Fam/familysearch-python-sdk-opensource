@@ -1,0 +1,7 @@
+* [`relationship()`](https://familysearch.org/developers/docs/api/tree/Relationships_resource)
+* [`couple_relationship(cpid, **kwargs)`](https://familysearch.org/developers/docs/api/tree/Couple_Relationship_resource)
+* [`couple_relationship_conclusion(cpid, cid)`](https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Conclusion_resource)
+* [`couple_relationship_notes(crid)`](https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Notes_resource)
+* [`couple_relationship_note(crid)`](https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Notes_resource)
+* [`couple_relationship_note(crid)`](https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Note_resource)
+* [`couple_relationship_restore(cpid)`](https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Restore_resource)

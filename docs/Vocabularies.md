@@ -1,0 +1,2 @@
+* [`vocabulary_list(cvlid)`](https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_List_resource)
+* [`vocabulary_term(self, cvtid)`](https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_Term_resource)

@@ -1,0 +1,2 @@
+* [`ancestry(pid **kwargs)`](https://familysearch.org/developers/docs/api/tree/Ancestry_resource)
+* [`descendancy(pid, **kwargs)`](https://familysearch.org/developers/docs/api/tree/Descendancy_resource)

@@ -7,7 +7,6 @@ class SearchAndMatch:
     """https://familysearch.org/developers/docs/api/resources#search-and-match"""
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#search-and-match"""
-        
 
     def person_search(self, **kwargs):
         """https://familysearch.org/developers/docs/api/tree/Person_Search_resource"""

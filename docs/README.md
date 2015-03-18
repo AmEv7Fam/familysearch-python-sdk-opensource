@@ -1,1 +1,22 @@
-Initial commit of docs
+Modules are modeled after the layout of [the official FamilySearch API documentation](https://familysearch.org/developers/docs/api/resources).
+If you're not sure which function you need, it's best to use the URL of the FamilySearch Developer documentation, and search in that section for that URL.
+
+* [Main Module](Main_Module)
+* [Authentication](Authentication)
+* [Authorities](Authorities)
+* [Change History](Change_History)
+* [Discovery](Discovery)
+* [Discussions](Discussions)
+* [Memories](Memories)
+* [Ordinances](Ordinances)
+* [Parents and Children](Parents_and_Children)
+* [Pedigree](Pedigree)
+* [Person](Person)
+* [Places](Places)
+* [Records](Records)
+* [Search and Match](Search_and_Match)
+* [Sources](Sources)
+* [Spouses](Spouses)
+* [User](User)
+* [Utilities](Utilities)
+* [Vocabularies](Vocabularies)
