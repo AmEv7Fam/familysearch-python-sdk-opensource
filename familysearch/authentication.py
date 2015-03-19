@@ -42,9 +42,9 @@ class Authentication(object):
                                  'grant_type': 'password'
                                  })
         credentials = credentials.encode("utf-8")
-        response = self._request(url, credentials,
-                                 {"Content-Type": "application/x-www-form-urlencoded",
-                                 "Accept": "application/json"}, nojson=True)
+        headers = {"Content-Type": "application/x-www-form-urlencoded",
+                                 "Accept": "application/json"}
+        response = self._request(url, credentials, headers, nojson=True)
         self.session_id = self._fs2py(response)['access_token']
         self.logged_in = True
         self.fix_discovery()
@@ -65,7 +65,7 @@ class Authentication(object):
                                      'redirect_uri': "http://localhost:63342/fslogin"
                                      })
         webbrowser.open(url)
-        server.HTTPServer(('', 63342), getter).handle_request()
+        server.HTTPServer(('', 63342), Getter).handle_request()
         # Now that we have the authentication token, grab the access token.
         self.oauth_code_login(qs)
 
@@ -80,10 +80,10 @@ class Authentication(object):
                                  'client_id': self.key
                                   })
         credentials = credentials.encode("utf-8")
-        response = self._request(url, credentials,
-                                 {"Content-Type": "application/x-www-form-urlencoded",
-                                 "Accept": "application/json"}, nojson=True)
-        self.session_id = self._fs2py(response)['response']['access_token']
+        headers = {"Content-Type": "application/x-www-form-urlencoded",
+                   "Accept": "application/json"}
+        response = self.post(url, credentials ,headers, nojson=True)
+        self.session_id = response['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -120,7 +120,8 @@ class Authentication(object):
         self.cookies.clear()
         self.fix_discovery()
 
-class getter(server.BaseHTTPRequestHandler):
+class Getter(server.BaseHTTPRequestHandler):
+    """Sample login page, mostly for oauth_desktop_login."""
     def do_GET(self):
         """Sample page to get Oauth code, and log in with."""
         self.send_response(code=200)
@@ -130,12 +131,9 @@ class getter(server.BaseHTTPRequestHandler):
         global qs
         qs = parse_qs(path)
         qs = list(qs.values())[0][0]
-        self.wfile.write(b"<html>")
-        self.wfile.write(b"<head>")
-        self.wfile.write(b"<title>FSPySDKLogin</title>")
-        self.wfile.write(b"</head")
-        self.wfile.write(b"<body>")
-        self.wfile.write(b"<p>This page is intended for log-in purposes only.</p>")
-        self.wfile.write(b"<p>You can safely close this page.</p>")
-        self.wfile.write(b"</body")
-        self.wfile.write(b"</html>")
+        sendme = "<html><head><title>FSPySDKLogin</title></head><body>"
+        sendme += "<p>This page is intended for log-in purposes only.</p>"
+        sendme += "<p>You can safely close this page.</p></body></html>"
+        sendme = sendme.encode("UTF-8")
+        self.wfile.write(sendme)
+        
