@@ -1,3 +1,7 @@
+.. image:: https://readthedocs.org/projects/familysearch-python-sdk-opensource/badge/?version=latest
+:target: https://readthedocs.org/projects/familysearch-python-sdk-opensource/?badge=latest
+:alt: Documentation Status
+
 familysearch-python-sdk-opensource
 ==================================
 This is a reboot/spinoff of https://github.com/familysearch-devnet/python-fs-stack.
