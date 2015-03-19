@@ -161,7 +161,11 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         if data:
             if not nojson:
                 data = json.dumps(data)
-            data = data.encode('utf-8')
+            try:
+                data = data.encode('utf-8')
+            except AttributeError:
+                #Some things are not JSON, and need to be sent as bytes!
+                pass
         request = Request(url, data, headers, method=method)
         if not nojson:
             if method is not "GET":
