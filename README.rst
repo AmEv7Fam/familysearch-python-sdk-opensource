@@ -1,6 +1,9 @@
-.. image:: https://readthedocs.org/projects/familysearch-python-sdk-opensource/badge/?version=latest
-:target: https://readthedocs.org/projects/familysearch-python-sdk-opensource/?badge=latest
-:alt: Documentation Status
+|RTD|_
+
+.. |RTD| image:: https://readthedocs.org/projects/familysearch-python-sdk-opensource/badge/?version=latest
+
+.. _RTD: https://readthedocs.org/projects/familysearch-python-sdk-opensource/?badge=latest
+.. |RTD| alt:: Documentation Status
 
 familysearch-python-sdk-opensource
 ==================================
