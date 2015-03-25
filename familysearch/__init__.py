@@ -48,24 +48,24 @@ import time
 
 # FamilySearch imports
 
-from .authentication import Authentication
-from .authorities import Authorities
-from .changeHistory import ChangeHistory
-from .discovery import Discovery
-from .discussions import Discussions
-from .memories import Memories
-from .ordinances import Ordinances
-from .parentsAndChildren import ParentsAndChildren
-from .pedigree import Pedigree
-from .person import Person
-from .places import Places
-from .records import Records
-from .searchAndMatch import SearchAndMatch
-from .sources import Sources
-from .spouses import Spouses
-from .user import User
-from .utilities import Utilities
-from .vocabularies import Vocabularies
+from familysearch.authentication import Authentication
+from familysearch.authorities import Authorities
+from familysearch.changeHistory import ChangeHistory
+from familysearch.discovery import Discovery
+from familysearch.discussions import Discussions
+from familysearch.memories import Memories
+from familysearch.ordinances import Ordinances
+from familysearch.parentsAndChildren import ParentsAndChildren
+from familysearch.pedigree import Pedigree
+from familysearch.person import Person
+from familysearch.places import Places
+from familysearch.records import Records
+from familysearch.searchAndMatch import SearchAndMatch
+from familysearch.sources import Sources
+from familysearch.spouses import Spouses
+from familysearch.user import User
+from familysearch.utilities import Utilities
+from familysearch.vocabularies import Vocabularies
 
 # Magic
 
