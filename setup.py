@@ -4,7 +4,7 @@ import familysearch
 
 setup(
   name = 'familysearch-python-sdk-opensource',
-  packages = ['familysearch-python-sdk-opensource'],
+  packages = ['familysearch'],
   version = familysearch.__version__,
   description = 'A Python SDK for FamilySearch.org',
   long_description=open('README.rst').read(),
