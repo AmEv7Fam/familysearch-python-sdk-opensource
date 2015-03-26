@@ -18,7 +18,7 @@ fs = FamilySearch('ClientApp/1.0', 'app')
 fs.login('username', 'password')
 
 # Resume a previous session
-fs = FamilySearch('ClientApp/1.0', app_key, session='session_id')
+fs = FamilySearch('ClientApp/1.0', app_key, session='access_token')
 
 # Use the production system instead of the sandbox system
 fs = FamilySearch('ClientApp/1.0', app_key, base='https://familysearch.org')
@@ -117,12 +117,12 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
 
         self.agent = '%s FSPySDK/%s' % (agent, __version__)
         self.key = key
-        self.session_id = session
+        self.access_token = session
         self.base = base
         self.user_base = self.base + "/platform/users/"
         self.tree_base = self.base + "/platform/tree/"
         self.opener = build_opener()
-        self.logged_in = bool(self.session_id)
+        self.logged_in = bool(self.access_token)
 
         # Sorted alphabetically, except for Discovery, which is the Hypermedia
         # class, which needs to be on top for everything else to work.
@@ -173,7 +173,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
             request.add_header('Accept', 'application/json')
         if self.logged_in and not self.cookies:
             # Add sessionId parameter to url if cookie is not set
-            request.add_header('Authorization', 'Bearer ' + self.session_id)
+            request.add_header('Authorization', 'Bearer ' + self.access_token)
         request.add_header('User-Agent', self.agent)
         try:
             return self.opener.open(request)

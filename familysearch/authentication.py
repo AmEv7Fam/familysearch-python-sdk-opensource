@@ -45,7 +45,7 @@ class Authentication(object):
         headers = {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}
         response = self._request(url, credentials, headers, nojson=True)
-        self.session_id = self._fs2py(response)['access_token']
+        self.access_token = self._fs2py(response)['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -83,7 +83,7 @@ class Authentication(object):
         headers = {"Content-Type": "application/x-www-form-urlencoded",
                    "Accept": "application/json"}
         response = self.post(url, credentials ,headers, nojson=True)
-        self.session_id = response['response']['access_token']
+        self.access_token = response['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -105,7 +105,7 @@ class Authentication(object):
         response = self._request(url, credentials,
                                  {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}, nojson=True)
-        self.session_id = self._fs2py(response)['response']['access_token']
+        self.access_token = self._fs2py(response)['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -114,9 +114,9 @@ class Authentication(object):
         Log the current session out of FamilySearch.
         """
         self.logged_in = False
-        url = self.token + "?access_token=" + self.session_id
+        url = self.token + "?access_token=" + self.access_token
         self._request(url, method="DELETE")
-        self.session_id = None
+        self.access_token = None
         self.cookies.clear()
         self.fix_discovery()
 
