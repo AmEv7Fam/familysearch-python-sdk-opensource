@@ -4,11 +4,6 @@ r"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API.
 Currently designed to support Python 3.2+ and 2.6+.
 
-A library to interact with the FamilySearch API
-
-Licensed under the FamilySearch API License Agreement;
-see the included LICENSE file for details.
-
 Example usage:
 
 from familysearch import FamilySearch
