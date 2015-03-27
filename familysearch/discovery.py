@@ -17,22 +17,23 @@ class Discovery(object):
         self.fix_discovery()
 
     def update_collection(self, collection):
-            self.collections[collection] = self.get(collection)
+            response = self.get(self.collections[collection]['url'])['response']
+            self.collections[collection]['response'] = response
 
     def fix_discovery(self):
         """The Hypermedia items are semi-permanent. Some things change
         based on who's logged in (or out).
         """
         for item in self.subcollections['response']['collections']:
+            self.collections[item['id']] = {}
+            self.collections[item['id']]['url'] = item['links']['self']['href']
             if item['id'] == 'LDSO':
                 try:
-                    self.collections['LDSO'] = self.get(['links']['self']['href'])
+                    self.update_collection("LDSO")
                 except:
                     self.lds_user = False
                 else:
                     self.lds_user = True
-            else:
-                self.collections[item['id']] = item['links']['self']['href']
         try:
             self.user = self.get_current_user()['response']['users'][0]
         except:
