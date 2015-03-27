@@ -14,7 +14,6 @@ except ImportError:
     import BaseHTTPServer as server
 
 import webbrowser
-import pprint
 
 # Magic
 
@@ -44,8 +43,8 @@ class Authentication(object):
         credentials = credentials.encode("utf-8")
         headers = {"Content-Type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}
-        response = self._request(url, credentials, headers, nojson=True)
-        self.access_token = self._fs2py(response)['access_token']
+        response = self.post(url, credentials, headers)
+        self.access_token = response['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -101,11 +100,11 @@ class Authentication(object):
                                  'client_id': self.key,
                                  'grant_type': 'unauthenticated_session'
                                  })
+        headers = {"Content-Type": "application/x-www-form-urlencoded",
+                   "Accept": "application/json"}
         credentials = credentials.encode("utf-8")
-        response = self._request(url, credentials,
-                                 {"Content-Type": "application/x-www-form-urlencoded",
-                                 "Accept": "application/json"}, nojson=True)
-        self.access_token = self._fs2py(response)['response']['access_token']
+        response = self.post(url, credentials, headers)
+        self.access_token = response['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
 
@@ -115,7 +114,7 @@ class Authentication(object):
         """
         self.logged_in = False
         url = self.token + "?access_token=" + self.access_token
-        self._request(url, method="DELETE")
+        self.delete(url)
         self.access_token = None
         self.cookies.clear()
         self.fix_discovery()
