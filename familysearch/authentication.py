@@ -48,20 +48,24 @@ class Authentication(object):
         self.logged_in = True
         self.fix_discovery()
 
-    def oauth_desktop_login(self):
+    def oauth_desktop_login(self, ruri=None):
         """
         Log into FamilySearch using OAuth2 Authentication.
         This is primarily a convenience function for destop apps.
         Not normally intended for production apps, but should
         work while waiting for approval for password login.
+        Default Redirect URI is "http://localhost:63342/fslogin",
+        but you can set your own as a paramater.
         """
+        if ruri is None:
+            ruri = "http://localhost:63342/fslogin"
         self.logged_in = False
         self.cookies.clear()
         url = self.root_collection['response']['collections'][0]['links']\
         ['http://oauth.net/core/2.0/endpoint/authorize']['href']
         url = self._add_query_params(url, {'response_type': 'code',
                                      'client_id': self.key,
-                                     'redirect_uri': "http://localhost:63342/fslogin"
+                                     'redirect_uri': ruri
                                      })
         webbrowser.open(url)
         server.HTTPServer(('', 63342), Getter).handle_request()
