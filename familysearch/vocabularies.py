@@ -11,7 +11,6 @@ class Vocabularies:
 
     def vocabulary_list(self, cvlid):
         """https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_List_resource"""
-        #return self.vocab_base + "lists/" + cvlid
         try:
             url = self.collections["FSCV"]["response"]['collections'][
                 0]['links']['vocab-list']['template']
@@ -26,4 +25,16 @@ class Vocabularies:
 
     def vocabulary_term(self, cvtid):
         """https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_Term_resource"""
-        return self.vocab_base + "lists/" + cvtid
+        #return self.vocab_base + "lists/" + cvtid
+        """https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_List_resource"""
+        try:
+            url = self.collections["FSCV"]["response"]['collections'][
+                0]['links']['vocab-term']['template']
+        except KeyError:
+            self.update_collection("FSCV")
+            url = self.collections["FSCV"]["response"]['collections'][
+                0]['links']['vocab-term']['template']
+        shim = {}
+        shim["?access_token"] = ""
+        shim["cvtid"] = cvtid
+        return url.format(**shim)
