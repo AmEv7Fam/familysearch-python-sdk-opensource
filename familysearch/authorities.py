@@ -9,6 +9,7 @@ class Authorities():
         """https://familysearch.org/developers/docs/api/examples#authorities."""
         pass
 
-    def dates(self, date):
+    def dates(self, **kwargs):
         """https://familysearch.org/developers/docs/api/dates/Date_resource."""
-        return self.base + '/platform/dates?date=' + date
+        return self._add_query_params(
+            self.base + '/platform/dates', kwargs)
