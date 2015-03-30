@@ -13,12 +13,20 @@ class User(object):
 
     def current_user(self):
         """https://familysearch.org/developers/docs/api/users/Current_User_resource"""
-        return self.root_collection['response']['collections'][0]['links']\
+        url = self.root_collection['response']['collections'][0]['links']\
         ['current-user']['href']
+        return url
         
     def current_user_person(self):
         """https://familysearch.org/developers/docs/api/tree/Current_Tree_Person_resource"""
-        return self.tree_base + "/current_person"
+        try:
+            url = self.collections["FSFT"]["response"]["collections"][0][
+            "links"]["current-user-person"]["href"]
+        except KeyError:
+            self.update_collection("FSFT")
+            url = self.collections["FSFT"]["response"]["collections"][0][
+            "links"]["current-user-person"]["href"]
+        return url
 
     def agent(self, uid):
         """https://familysearch.org/developers/docs/api/users/Agent_resource"""
@@ -26,4 +34,11 @@ class User(object):
 
     def current_user_history(self):
         """https://familysearch.org/developers/docs/api/users/Current_User_History_resource"""
-        return self.user_base + "current/history"
+        try:
+            url = self.collections["FSFT"]["response"]["collections"][0][
+            "links"]["current-user-history"]["href"]
+        except KeyError:
+            self.update_collection("FSFT")
+            url = self.collections["FSFT"]["response"]["collections"][0][
+            "links"]["current-user-history"]["href"]
+        return url
