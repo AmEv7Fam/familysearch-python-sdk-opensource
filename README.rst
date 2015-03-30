@@ -3,6 +3,10 @@ familysearch-python-sdk-opensource
 
 ..  image:: https://readthedocs.org/projects/familysearch-python-sdk-opensource/badge/?version=latest
     :target: https://readthedocs.org/projects/familysearch-python-sdk-opensource/?badge=latest
+    :alt: Documentation Status
+..  image:: https://www.codacy.com/project/badge/4875862e69c54164be173a94def06f09
+    :target: https://www.codacy.com/app/elderamevans/familysearch-python-sdk-opensource
+    :alt: Codacy Badge
 
 This is a reboot/spinoff of https://github.com/familysearch-devnet/python-fs-stack.
 
