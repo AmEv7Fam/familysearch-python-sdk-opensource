@@ -26,8 +26,8 @@ class ParentsAndChildren:
         """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_Notes_resource"""
         return self.child_base + crid + "/notes"
     
-    def child_relationship_notes(self, crid, nid):
-        """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_Notes_resource"""
+    def child_relationship_note(self, crid, nid):
+        """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_Note_resource"""
         return self.child_base + crid + "/notes/" + nid
 
     def child_relationship_restore(self, crid):
