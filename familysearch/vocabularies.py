@@ -22,6 +22,17 @@ class Vocabularies:
         shim["?access_token"] = ""
         shim["cvlid"] = cvlid
         return url.format(**shim)
+    
+    def vocabulary_lists(self):
+        """https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_List_resource"""
+        try:
+            url = self.collections["FSCV"]["response"]['collections'][
+                0]['links']['vocab-lists']['href']
+        except KeyError:
+            self.update_collection("FSCV")
+            url = self.collections["FSCV"]["response"]['collections'][
+                0]['links']['vocab-lists']['href']
+        return url
 
     def vocabulary_term(self, cvtid):
         """https://familysearch.org/developers/docs/api/cv/Controlled_Vocabulary_Term_resource"""
