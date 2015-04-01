@@ -155,7 +155,10 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
             headers = {}
         if data:
             if not nojson:
-                data = json.dumps(data)
+                try:
+                    data = json.dumps(data)
+                except TypeError:
+                    pass
             try:
                 data = data.encode('utf-8')
             except AttributeError:
