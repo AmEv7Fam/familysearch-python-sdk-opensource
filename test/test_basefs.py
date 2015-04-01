@@ -25,11 +25,8 @@ class TestFamilySearch(util.FSTemplateTest):
 
     def test_base_fs_creation(self):
         fs = familysearch.FamilySearch(self.agent, self.devkey)
-        self.assertTrue(fs.agent == 'ClientApp/1.0 Python-FS-Stack/0.3pre')
         self.assertTrue(fs.base == 'https://sandbox.familysearch.org')
         self.assertTrue(fs.key == self.devkey)
         self.assertTrue(isinstance(fs.opener, urllib.request.OpenerDirector))
         self.assertTrue(fs.session_id == None)
-        self.assertTrue(fs.tree_base == 'https://sandbox.familysearch.org/platform/tree/')
-        self.assertTrue(fs.user_base == 'https://sandbox.familysearch.org/platform/users/')
 
