@@ -16,7 +16,7 @@ sys.path.append(BASE_PATH)
 try:
     # Python 3
     import configparser
-except ImportError as ex:
+except ImportError:
     # Python 2
     import ConfigParser as configparser
 
