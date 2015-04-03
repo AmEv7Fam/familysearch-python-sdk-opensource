@@ -7,10 +7,9 @@ import os
 import sys
 import unittest
 
-MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
-BASE_PATH = os.path.split(MODULE_PATH)[0]
+
 CONFIG = 'config.ini'
-sys.path.append(BASE_PATH)
+
 
 # ConfigParser is renamed in Python 3 to configparser
 try:
@@ -23,7 +22,7 @@ except ImportError:
 
 def get_config():
     """Get the configuration for the test program."""
-    config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/config.ini"
+    config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + CONFIG
     config = configparser.ConfigParser()
     config.read(config_path)
     return config
@@ -38,14 +37,14 @@ class FSTemplateTest(unittest.TestCase):
         self.config = get_config()
         try:
             #Python 2
-            self.user = self.config.get('fskey', 'user')
-            self.password = self.config.get('fskey', 'password')
-            self.devkey = self.config.get('fskey', 'devkey')                
+            self.user = self.config.get('fsTest', 'user')
+            self.password = self.config.get('fsTest', 'password')
+            self.devkey = self.config.get('fsTest', 'devkey')                
         except AttributeError:
             # Python 3
-            self.devkey = config["fskey"]["devkey"]
-            self.username = config["fskey"]["username"]
-            self.username = config["fskey"]["password"]
+            self.devkey = config["fsTest"]["devkey"]
+            self.username = config["fsTest"]["username"]
+            self.username = config["fsTest"]["password"]
 
     # common teardown
     def tearDown(self):
