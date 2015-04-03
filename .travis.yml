@@ -8,4 +8,4 @@ python:
   
 # SDK does not have any external dependencies.
   
-script: python -m test
+script: python -m test.run_tests
