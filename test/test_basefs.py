@@ -14,6 +14,12 @@ import familysearch
 
 class TestFamilySearch(util.FSTemplateTest):
     """Test the base familysearch module contained in __init__.py"""
+    
+    def runTests(self):
+        self.setUp()
+        self.test_base_fs_creation()
+        self.tearDown()
+
     # setup
     def setUp(self):
         util.FSTemplateTest.setUp(self)
@@ -26,7 +32,11 @@ class TestFamilySearch(util.FSTemplateTest):
     def test_base_fs_creation(self):
         fs = familysearch.FamilySearch(self.agent, self.devkey)
         self.assertTrue(fs.base == 'https://sandbox.familysearch.org')
+        print("Base is correct.")
         self.assertTrue(fs.key == self.devkey)
+        print("Key is correct.")
         self.assertTrue(isinstance(fs.opener, urllib.request.OpenerDirector))
+        print("HTTP opener works.")
         self.assertTrue(fs.access_token == None)
+        print("Access token works.")
 
