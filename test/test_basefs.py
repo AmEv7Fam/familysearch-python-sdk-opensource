@@ -15,7 +15,7 @@ import familysearch
 class TestFamilySearch(util.FSTemplateTest):
     """Test the base familysearch module contained in __init__.py"""
     
-    def runTests(self):
+    def runTest(self):
         self.setUp()
         self.test_base_fs_creation()
         self.tearDown()

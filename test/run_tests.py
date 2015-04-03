@@ -6,4 +6,4 @@ fs.runTests()
 
 # Removing until we can get it platform-independent...
 #er = TestEnhancedRequest()
-#er.runTests()
+#er.runTest()
