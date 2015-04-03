@@ -20,7 +20,7 @@ except ImportError:
 from test import util
 
 # import familysearch module
-from familysearch import EnhancedRequest
+from familysearch import Request
 
 BASE_TEST_URL = "http://httpbin.org"
 
