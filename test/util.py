@@ -36,9 +36,16 @@ class FSTemplateTest(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
         self.config = get_config()
-        self.user = self.config.get('user', '')
-        self.password = self.config.get('password', '')
-        self.devkey = self.config.get('devkey', '')
+        try:
+            #Python 2
+            self.user = self.config.get('user', '')
+            self.password = self.config.get('password', '')
+            self.devkey = self.config.get('devkey', '')                
+        except AttributeError:
+            # Python 3
+            self.devkey = config["fskey"]["devkey"]
+            self.username = config["fskey"]["username"]
+            self.username = config["fskey"]["password"]
 
     # common teardown
     def tearDown(self):
