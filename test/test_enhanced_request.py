@@ -55,7 +55,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
             'json': None
         }
         url = self.base_url + '/delete'
-        request = EnhancedRequest(url, method='DELETE')
+        request = Request(url, method='DELETE')
         response = urlopen(request)
         actual = json.loads(response.read().decode('utf-8'))
         self.assertTrue(actual)
