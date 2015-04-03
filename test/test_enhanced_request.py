@@ -78,7 +78,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
             'url': 'http://httpbin.org/get',
         }
         url = self.base_url + '/get'
-        request = EnhancedRequest(url)
+        request = Request(url)
         response = urlopen(request)
         actual = json.loads(response.read().decode('utf-8'))
         self.assertTrue(actual)
@@ -98,7 +98,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
             ('Connection', 'Close')
         ]
         url = self.base_url + '/get'
-        request = EnhancedRequest(url, method='HEAD')
+        request = Request(url, method='HEAD')
         response = urlopen(request)
         actual = response.getheaders()
         expected_fields = [value[0] for value in expected]
@@ -121,7 +121,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
             ('Connection', 'Close')
         ]
         url = self.base_url
-        request = EnhancedRequest(url, method='OPTIONS')
+        request = Request(url, method='OPTIONS')
         response = urlopen(request)
         actual = response.getheaders()
         expected_fields = [value[0] for value in expected]
@@ -153,7 +153,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
         data_dict = {'spam': 1, 'eggs': 2, 'bacon': 3}
         data = urlencode(data_dict)
         data = data.encode('utf-8')
-        request = EnhancedRequest(url, data)
+        request = Request(url, data)
         response = urlopen(request)
         actual = json.loads(response.read().decode('utf-8'))
         self.assertTrue(actual)
@@ -182,7 +182,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
             'json': None
         }
         url = self.base_url + '/put'
-        request = EnhancedRequest(url, method='PUT')
+        request = Request(url, method='PUT')
         response = urlopen(request)
         actual = json.loads(response.read().decode('utf-8'))
         self.assertTrue(actual)
