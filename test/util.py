@@ -21,12 +21,12 @@ except ImportError:
     import ConfigParser as configparser
 
 
-def get_config(section='fsTest'):
+def get_config():
     """Get the configuration for the test program."""
-    config_path = os.path.join(MODULE_PATH, CONFIG)
+    config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/config.ini"
     config = configparser.ConfigParser()
     config.read(config_path)
-    return dict(config[section])
+    return config
 
 
 class FSTemplateTest(unittest.TestCase):
@@ -38,9 +38,9 @@ class FSTemplateTest(unittest.TestCase):
         self.config = get_config()
         try:
             #Python 2
-            self.user = self.config.get('user', '')
-            self.password = self.config.get('password', '')
-            self.devkey = self.config.get('devkey', '')                
+            self.user = self.config.get('fskey', 'user')
+            self.password = self.config.get('fskey', 'password')
+            self.devkey = self.config.get('fskey', 'devkey')                
         except AttributeError:
             # Python 3
             self.devkey = config["fskey"]["devkey"]
