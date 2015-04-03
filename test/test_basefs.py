@@ -28,5 +28,5 @@ class TestFamilySearch(util.FSTemplateTest):
         self.assertTrue(fs.base == 'https://sandbox.familysearch.org')
         self.assertTrue(fs.key == self.devkey)
         self.assertTrue(isinstance(fs.opener, urllib.request.OpenerDirector))
-        self.assertTrue(fs.session_id == None)
+        self.assertTrue(fs.access_token == None)
 
