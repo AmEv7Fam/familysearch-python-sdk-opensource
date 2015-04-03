@@ -7,9 +7,7 @@ import os
 import sys
 import unittest
 
-
 CONFIG = 'config.ini'
-
 
 # ConfigParser is renamed in Python 3 to configparser
 try:
@@ -27,7 +25,6 @@ def get_config():
     config.read(config_path)
     return config
 
-
 class FSTemplateTest(unittest.TestCase):
     """FSTemplateTest is the base class for familysearch tests.
     """
@@ -42,9 +39,9 @@ class FSTemplateTest(unittest.TestCase):
             self.devkey = self.config.get('fsTest', 'devkey')                
         except AttributeError:
             # Python 3
-            self.devkey = config["fsTest"]["devkey"]
-            self.username = config["fsTest"]["username"]
-            self.username = config["fsTest"]["password"]
+            self.devkey = self.config["fsTest"]["devkey"]
+            self.username = self.config["fsTest"]["username"]
+            self.username = self.config["fsTest"]["password"]
 
     # common teardown
     def tearDown(self):
