@@ -10,6 +10,6 @@ install: pip install coveralls
 
 # SDK does not have any external dependencies.
   
-script: coverage run --source=familysearch-python-sdk-opensource setup.py test
+script: coverage run --source=familysearch setup.py test
 
 after_success: coveralls
