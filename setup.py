@@ -1,4 +1,9 @@
-from distutils.core import setup
+try:
+    # Setuptools or Distribute is required to support running `python setup.py test`
+    from setuptools import setup
+except ImportError:
+    # Distutils supports everything else; just run the test suite manually
+    from distutils.core import setup
 
 import familysearch
 
