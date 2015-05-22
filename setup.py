@@ -16,7 +16,7 @@ setup(
   author = 'Elder Evans',
   author_email = 'elderamevans@gmail.com',
   url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource',
-  download_url = 'https://github.com/peterldowns/mypackage/tarball/0.1', 
+  download_url = 'https://github.com/elderamevans/python-familysearch-sdk-opensource/releases/tag/1.0', 
   keywords = ['FamilySearch', 'API', 'REST', 'family history', 'geneaolgy', 'JSON'],
   classifiers = [
     "Development Status :: 4 - Beta",

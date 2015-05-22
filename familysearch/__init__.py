@@ -64,7 +64,7 @@ from familysearch.vocabularies import Vocabularies
 
 # Magic
 
-__version__ = '0.75'
+__version__ = '1.0'
 
 
 class Request(BaseRequest):
