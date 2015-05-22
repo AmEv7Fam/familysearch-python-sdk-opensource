@@ -16,6 +16,13 @@ familysearch-python-sdk-opensource
 .. image:: https://coveralls.io/repos/elderamevans/familysearch-python-sdk-opensource/badge.svg
   :target: https://coveralls.io/r/elderamevans/familysearch-python-sdk-opensource
   :alt: Code Coverage
+  
+.. image:: https://img.shields.io/pypi/v/familysearch-python-sdk-opensource.svg
+  :target: https://pypi.python.org/pypi/familysearch-python-sdk-opensource/1.0.1
+  :alt: PyPI Version
+
+.. image:: https://img.shields.io/pypi/dm/familysearch-python-sdk-opensource.svg
+  :target: https://pypi.python.org/pypi/familysearch-python-sdk-opensource/1.0.1
 
 
 This is a reboot/spinoff of https://github.com/familysearch-devnet/python-fs-stack.
