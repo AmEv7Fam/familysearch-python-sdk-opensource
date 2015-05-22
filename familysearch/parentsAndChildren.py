@@ -9,7 +9,7 @@ class ParentsAndChildren:
         """https://familysearch.org/developers/docs/api/examples#parents-and-children"""
         self.child_base = self.tree_base + "child-and-parents-relationships/"
 
-    def get_child_relationship(self, crid):
+    def child_relationship(self, crid):
         """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_resource"""
         return self.child_base + crid
 
