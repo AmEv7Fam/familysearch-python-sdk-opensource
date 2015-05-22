@@ -94,15 +94,17 @@ class Person:
         """https://familysearch.org/developers/docs/api/tree/Person_Restore_resource"""
         return self.person_base + pid + "/restore"
 
-    def preferred_spouse_relationship(self, pid):
+    def preferred_spouse_relationship(self, pid, uid=None):
         """https://familysearch.org/developers/docs/api/tree/Preferred_Spouse_Relationship_resource"""
-        return self.user_base + self.user['userId'] +\
-            "/preferred-spouse-relationships/" + pid
+        if uid is None:
+            uid = self.user['userId']
+        return self.user_base + uid + "/preferred-spouse-relationships/" + pid
 
     def preferred_parent_relationship(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Preferred_Parent_Relationship_resource"""
-        return self.user_base + self.user['userId'] +\
-            "/preferred-parent-relationships/" + pid
+        if uid is None:
+            uid = self.user['userId']
+        return self.user_base + uid +"/preferred-parent-relationships/" + pid
 
     def person_memories(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Memories_resource"""
