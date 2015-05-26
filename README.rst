@@ -18,16 +18,16 @@ familysearch-python-sdk-opensource
   :alt: Code Coverage
   
 .. image:: https://img.shields.io/pypi/v/familysearch-python-sdk-opensource.svg
-  :target: https://pypi.python.org/pypi/familysearch-python-sdk-opensource/1.0.1
+  :target: https://pypi.python.org/pypi/familysearch-python-sdk-opensource
   :alt: PyPI Version
 
 .. image:: https://img.shields.io/pypi/dm/familysearch-python-sdk-opensource.svg
-  :target: https://pypi.python.org/pypi/familysearch-python-sdk-opensource/1.0.1
+  :target: https://pypi.python.org/pypi/familysearch-python-sdk-opensource
 
 
 This is a reboot/spinoff of https://github.com/familysearch-devnet/python-fs-stack.
 
-It is unfinished, but most of the functions have been instated. That being said, the working functions *shouldn't* have their names or expected outputs changed, but because this is in public beta, there are no guarantees.
+May or may not have all of the latest FamilySearch endpoints in place, but it is flexible enough to allow for additional endpoints
 
 It is designed for Python 3 and 2.7. Python 2.6 is the earliest supported version, but bugfixes are low-priority. 2.5 and earlier are not guaranteed to work, or supported, and are considered legacy.
 

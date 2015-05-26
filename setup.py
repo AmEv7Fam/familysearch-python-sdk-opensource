@@ -7,19 +7,21 @@ except ImportError:
 
 import familysearch
 
+version = familysearch.__version__
+
 setup(
   name = 'familysearch-python-sdk-opensource',
   packages = ['familysearch'],
-  version = familysearch.__version__,
+  version = version,
   description = 'A Python SDK for FamilySearch.org',
   long_description=open('README.rst').read(),
   author = 'Elder Evans',
   author_email = 'elderamevans@gmail.com',
   url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource',
-  download_url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource/releases/tag/v1.0.1', 
+  download_url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource/releases/tag/v' + version, 
   keywords = ['FamilySearch', 'API', 'REST', 'family history', 'geneaolgy', 'JSON'],
   classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Environment :: MacOS X",
     "Environment :: Web Environment",
