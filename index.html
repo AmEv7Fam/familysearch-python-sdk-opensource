@@ -43,8 +43,8 @@
 &gt;&gt;&gt; from familysearch import FamilySearch
 &gt;&gt;&gt; app_key = "MY-MAGIC-DEV-KEY-THAT-ALLOWS-FAMILY-SEARCH-ACCESS" # You didn't think I'd give you a free one, now did you?
 &gt;&gt;&gt; user_agent = "MyApp/VersionNumber"
-&gt;&gt;&gt; = "https://sandbox.familysearch.org"
-&gt;&gt;&gt; fs = Familysearch(user_agent, app_key, base=fs_address)</pre>
+&gt;&gt;&gt; fs_address = "https://sandbox.familysearch.org"
+&gt;&gt;&gt; fs = FamilySearch(user_agent, app_key, base=fs_address)</pre>
                 </div>
 
                 <p>As a side note: I left the FamilySearch base configurable so that, if there is a need to change it to, say, "<a href="https://deployment.familysearch.org">https://deployment.familysearch.org</a>" (which has happened, and this used to be a temporary sandbox upgrade address), it is available, and won't require any additional tweaking in the SDK itself.</p>
