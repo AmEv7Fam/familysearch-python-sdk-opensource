@@ -166,9 +166,10 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
                 pass
         request = Request(url, data, headers, method=method)
         if not nojson:
-            if method is not "GET":
-                request.add_header('Content-Type', 'application/x-fs-v1+json')
-            request.add_header('Accept', 'application/json')
+            if method is not "GET" and "Content-type" not in request.headers:
+                request.add_header('Content-type', 'application/x-fs-v1+json')
+            if 'Accept' not in request.headers:
+                request.add_header('Accept', 'application/json')
         if self.logged_in and not self.cookies:
             # Add sessionId parameter to url if cookie is not set
             request.add_header('Authorization', 'Bearer ' + self.access_token)
