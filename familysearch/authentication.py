@@ -14,6 +14,7 @@ except ImportError:
     import BaseHTTPServer as server
 
 import webbrowser
+import json
 
 # Magic
 
@@ -86,6 +87,7 @@ class Authentication(object):
         headers = {"Content-Type": "application/x-www-form-urlencoded",
                    "Accept": "application/json"}
         response = self.post(url, credentials ,headers, nojson=True)
+        response = json.loads()
         self.access_token = response['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
