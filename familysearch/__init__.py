@@ -64,7 +64,7 @@ from familysearch.vocabularies import Vocabularies
 
 # Magic
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 
 
 class Request(BaseRequest):
@@ -119,28 +119,14 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         self.opener = build_opener()
         self.logged_in = bool(self.access_token)
 
-        # Sorted alphabetically, except for Discovery, which is the Hypermedia
-        # class, which needs to be on top for everything else to work.
-
         Discovery.__init__(self)
-        Authentication.__init__(self)
-        Authorities.__init__(self)
-        ChangeHistory.__init__(self)
-        Discussions.__init__(self)
-        Memories.__init__(self)
-        Ordinances.__init__(self)
-        ParentsAndChildren.__init__(self)
-        Pedigree.__init__(self)
-        Person.__init__(self)
-        Places.__init__(self)
-        Records.__init__(self)
-        SearchAndMatch.__init__(self)
-        Sources.__init__(self)
-        Spouses.__init__(self)
-        User.__init__(self)
-        Utilities.__init__(self)
-        Vocabularies.__init__(self)
+        super().__init__()
+        # Discovery needs to explicitly be first, as it is the hypermedia
+        # engine.
 
+        # There might be a better fix, but it's better than nothing.
+
+        
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.

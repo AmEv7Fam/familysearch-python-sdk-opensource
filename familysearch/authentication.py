@@ -42,7 +42,7 @@ class Authentication(object):
                                  'grant_type': 'password'
                                  })
         credentials = credentials.encode("utf-8")
-        headers = {"Content-Type": "application/x-www-form-urlencoded",
+        headers = {"Content-type": "application/x-www-form-urlencoded",
                                  "Accept": "application/json"}
         response = self.post(url, credentials, headers)
         self.access_token = response['response']['access_token']
@@ -84,7 +84,7 @@ class Authentication(object):
                                  'client_id': self.key
                                   })
         credentials = credentials.encode("utf-8")
-        headers = {"Content-Type": "application/x-www-form-urlencoded",
+        headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "application/json"}
         response = self.post(url, credentials ,headers, nojson=True)
         response = json.loads()
@@ -106,7 +106,7 @@ class Authentication(object):
                                  'client_id': self.key,
                                  'grant_type': 'unauthenticated_session'
                                  })
-        headers = {"Content-Type": "application/x-www-form-urlencoded",
+        headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "application/json"}
         credentials = credentials.encode("utf-8")
         response = self.post(url, credentials, headers)
