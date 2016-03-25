@@ -120,7 +120,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         self.logged_in = bool(self.access_token)
 
         Discovery.__init__(self)
-        super().__init__()
+        super(FamilySearch, self).__init__()
         # Discovery needs to explicitly be first, as it is the hypermedia
         # engine.
 
