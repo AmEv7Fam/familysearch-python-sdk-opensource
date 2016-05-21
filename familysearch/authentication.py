@@ -1,5 +1,6 @@
 """FamilySearch Authentication submodule"""
 # Python imports
+from __future__ import print_function
 
 try:
     # Python 3
@@ -43,7 +44,12 @@ class Authentication(object):
                                  })
         credentials = credentials.encode("utf-8")
         headers = {"Content-type": "application/x-www-form-urlencoded",
-                                 "Accept": "application/json"}
+                                 "Accept": "application/json;charset=ISO-8859-1"}
+        def xprint():
+            print("url:", url)
+            print("credentials:", credentials)
+            print("headers:", headers)
+        xprint()
         response = self.post(url, credentials, headers)
         self.access_token = response['response']['access_token']
         self.logged_in = True
@@ -141,4 +147,3 @@ class Getter(server.BaseHTTPRequestHandler):
         sendme += "<p>You can safely close this page.</p></body></html>"
         sendme = sendme.encode("UTF-8")
         self.wfile.write(sendme)
-        
