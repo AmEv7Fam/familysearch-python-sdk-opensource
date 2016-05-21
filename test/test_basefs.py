@@ -3,6 +3,7 @@
 Test the base familysearch module contained in __init__.py
 """
 # import system modules
+from __future__ import print_function
 import json
 try:
     from urllib import request
@@ -17,7 +18,7 @@ import familysearch
 
 class TestFamilySearch(util.FSTemplateTest):
     """Test the base familysearch module contained in __init__.py"""
-    
+
     def runTest(self):
         self.setUp()
         self.test_base_fs_creation()
@@ -42,4 +43,3 @@ class TestFamilySearch(util.FSTemplateTest):
         print("HTTP opener works.")
         self.assertTrue(fs.access_token == None)
         print("Access token works.")
-
