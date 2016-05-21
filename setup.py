@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 try:
     # Setuptools or Distribute is required to support running `python setup.py test`
     from setuptools import setup
@@ -15,11 +17,11 @@ setup(
   version = version,
   description = 'A Python SDK for FamilySearch.org',
   long_description=open('README.rst').read(),
-  author = 'Elder Evans',
-  author_email = 'elderamevans@gmail.com',
-  url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource',
-  download_url = 'https://github.com/elderamevans/familysearch-python-sdk-opensource/releases/tag/v' + version, 
-  keywords = ['FamilySearch', 'API', 'REST', 'family history', 'geneaolgy', 'JSON'],
+  author = 'Doug Henderson, Elder Evans, Peter Henderson',
+  author_email = 'djhenderson on github.com',
+  url = 'https://github.com/djhenderson/familysearch-python-sdk-opensource',
+  download_url = 'https://github.com/djhenderson/familysearch-python-sdk-opensource/releases/tag/v' + version,
+  keywords = ['FamilySearch', 'API', 'REST', 'family history', 'genealogy', 'JSON'],
   classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -36,6 +38,7 @@ setup(
     "Programming Language :: Python :: 3.2",
     "Programming Language :: Python :: 3.3",
     "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Sociology :: Genealogy",
     "Topic :: Software Development :: Libraries :: Python Modules"
