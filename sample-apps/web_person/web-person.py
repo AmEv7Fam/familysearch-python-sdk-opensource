@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import webbrowser
 import os
 import sys
+import pprint
 
 try:
     # Python 3
@@ -12,7 +16,7 @@ except ImportError:
     import ConfigParser as configparser
     import BaseHTTPServer as server
     from urlparse import parse_qs
-    
+
 from familysearch import FamilySearch
 
 config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/config.ini"
@@ -30,7 +34,7 @@ except AttributeError:
     port = config.get("server", "port")
     redirect = config.get("server", "redirect_uri")
 
-url = "http://localhost" + (":"+ port) if port is not "80" else ""
+url = "http://localhost" + (":" + port) if port is not "80" else ""
 ruri = ""
 for x in redirect[::-1]:
     ruri = x + ruri
@@ -39,8 +43,39 @@ for x in redirect[::-1]:
 
 fs = FamilySearch("FSPySDK/SampleApps", app_key, base=base)
 
-fslogin = fs.root_collection['collections'][0]['links']\
-        ['http://oauth.net/core/2.0/endpoint/authorize']['href']
+try:
+    fslogin = fs.root_collection["response"]['collections'][0]['links']\
+            ['http://oauth.net/core/2.0/endpoint/authorize']['href']
+except KeyError as e:
+    print("KeyError:", str(e))
+    raise
+
+def qshow():
+    def hr(): print("="*80)
+    hr()
+    print("fs.root_collection: ...")
+    pp = pprint.PrettyPrinter(width=120, indent=2)
+    pp.pprint(fs.root_collection)
+    hr()
+    print("""fs.root_collection["response"]: ...""")
+    pp.pprint(fs.root_collection["response"])
+    hr()
+    print("""fs.root_collection["response"]["collections"]: ...""")
+    pp.pprint(fs.root_collection["response"]["collections"])
+    hr()
+    print("""fs.root_collection["response"]["collections"][0]: ...""")
+    pp.pprint(fs.root_collection["response"]["collections"][0])
+    hr()
+    print("""fs.root_collection["response"]["collections"][0]["links"]: ...""")
+    pp.pprint(fs.root_collection["response"]["collections"][0]["links"])
+    hr()
+    print("""fs.root_collection["response"]["collections"][0]["links"]['http://oauth.net/core/2.0/endpoint/authorize']: ...""")
+    pp.pprint(fs.root_collection["response"]["collections"][0]["links"]['http://oauth.net/core/2.0/endpoint/authorize'])
+    hr()
+    print("""fs.root_collection["response"]["collections"][0]["links"]['http://oauth.net/core/2.0/endpoint/authorize']['href']: ...""")
+    pp.pprint(fs.root_collection["response"]["collections"][0]["links"]['http://oauth.net/core/2.0/endpoint/authorize']['href'])
+    hr()
+qshow()
 
 fslogin = fs._add_query_params(fslogin, {'response_type': 'code',
                              'client_id': fs.key,
@@ -53,7 +88,7 @@ class getter(server.BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         path = self.path
-        
+
         top = "<!DOCTYPE html><html><head><title>FSPySDK Sample App</title>"
         middle = "</head><body>"
         bottom = "</body></html>"
@@ -71,15 +106,16 @@ class getter(server.BaseHTTPRequestHandler):
                 middle = self.not_logged_in()
 
             body = top + middle + bottom
-        
+
         self.wfile.write(body.encode("utf-8"))
 
     def not_logged_in(self):
         string = '<script>function openWin(){window.open("' + fslogin
-        string += '","fsWindow","width=320,height=615");}</script>'
+        string += '","fsWindow","width=560,height=632");}</script>'
         string += "</head><body>"
         string += "<button onclick=openWin()>Sign in to FamilySearch</button>"
         return string
+
     def logged_in(self):
         string = 'Search given FamilySearch PID (default is your own)<form>'
         string +='<input type="text" name="pid" value='+ fs.user['personId']
@@ -91,8 +127,8 @@ class getter(server.BaseHTTPRequestHandler):
             ['fullText']
         string = 'This is ' + name + '. <br />'
         if person['response']['persons'][0]['display']['gender'] == "Male":
-            string += 'He' 
-        else: 
+            string += 'He'
+        else:
             string += 'She'
         string += " is "
         if person['persons'][0]['living']:
@@ -116,4 +152,4 @@ class getter(server.BaseHTTPRequestHandler):
         return '<script>window.opener.location.reload();window.close()</script>'
 
 webbrowser.open(url)
-server.HTTPServer(('', 63342), getter).serve_forever()
+server.HTTPServer(('', int(port)), getter).serve_forever()
