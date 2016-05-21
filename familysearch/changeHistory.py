@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Change History submodule"""
+
 # Python imports
 
 # Magic
+
 
 class ChangeHistory:
     """https://familysearch.org/developers/docs/api/resources#authorities"""
@@ -11,7 +15,7 @@ class ChangeHistory:
 
     def person_change_history(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Change_History_resource"""
-        return self.base + "/platform/tree/persons/"+ pid +"/changes"
+        return self.base + "/platform/tree/persons/" + pid + "/changes"
 
     def child_change_history(self, caprid):
         """https://familysearch.org/developers/docs/api/tree/Child-and-Parents_Relationship_Change_History_resource"""

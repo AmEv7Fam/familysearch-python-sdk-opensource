@@ -52,7 +52,7 @@ if user and password:
         fs.login(user, password)
     except HTTPError as e:
         print("HTTPError:", str(e))
-        #print("dir(e):", dir(e))
+        # print("dir(e):", dir(e))
         print("code:", e.code)
         print("hdrs:", str(e.hdrs).replace("\n", "\n\t"))
         print("reason:", e.reason)

@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 # For PyLint users:
 # I'll get back to you to the recommeneded command.
-r"""This is a WIP, unofficial SDK for accessing
+
+"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API.
 Currently designed to support Python 3.2+ and 2.6+.
 
@@ -23,7 +26,6 @@ fs.logout()
 """
 
 # Python imports
-
 
 try:
     # Python 3
@@ -126,7 +128,6 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
 
         # There might be a better fix, but it's better than nothing.
 
-
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.
@@ -148,7 +149,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
             try:
                 data = data.encode('utf-8')
             except AttributeError:
-                #Some things are not JSON, and need to be sent as bytes!
+                # Some things are not JSON, and need to be sent as bytes!
                 pass
         request = Request(url, data, headers, method=method)
         if not nojson:
@@ -167,7 +168,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
             if error.code == 401:
                 self.logged_in = False
             if error.code == 429:
-                time.sleep(eh['Retry-after']/1000)
+                time.sleep(eh['Retry-after'] / 1000)
                 return self._request(url, data, headers, method, nojson)
             raise
 

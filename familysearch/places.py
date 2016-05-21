@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Places submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Places:
     """https://familysearch.org/developers/docs/api/resources#places"""

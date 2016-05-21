@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Search and Match submodule"""
+
 # Python imports
 
 # Magic
+
 
 class SearchAndMatch:
     """https://familysearch.org/developers/docs/api/resources#search-and-match"""

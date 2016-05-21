@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Utilities submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Utilities:
     """https://familysearch.org/developers/docs/api/resources#utilities"""
@@ -18,7 +22,7 @@ class Utilities:
         """https://familysearch.org/developers/docs/api/tree/Redirect_resource"""
         return self._add_query_params(
             self.base + "/platform/redirect", kwargs)
-          
+
     def oembed(self, **kwargs):
         """https://familysearch.org/developers/docs/api/discovery/OEmbed_resource"""
         return self._add_query_params(

@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Spouses submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Spouses:
     """https://familysearch.org/developers/docs/api/resources#spouses"""
@@ -20,7 +24,7 @@ class Spouses:
     def couple_relationship_conclusion(self, cpid, cid):
         """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Conclusion_resource"""
         return self.couple_base + cpid + '/conclusions/' + cid
-    
+
     def couple_relationship_notes(self, crid):
         """https://familysearch.org/developers/docs/api/tree/Couple_Relationship_Notes_resource"""
         return self.couple_base + crid + "/notes"

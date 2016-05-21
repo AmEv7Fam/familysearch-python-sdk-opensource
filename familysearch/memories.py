@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Memories submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Memories:
     """https://familysearch.org/developers/docs/api/resources#memories"""
@@ -26,11 +30,11 @@ class Memories:
     def memory_personas(self, mid):
         """https://familysearch.org/developers/docs/api/memories/Memory_Personas_resource"""
         return self.memory_base + mid + "personas"
-    
+
     def memory_persona(self, mid, pid):
         """https://familysearch.org/developers/docs/api/memories/Memory_Persona_resource"""
         return self.memory_base + mid + "personas/" + pid
-    
+
     def memory_comments(self, mid):
         """https://familysearch.org/developers/docs/api/memories/Memory_Comments_resource"""
         return self.memory_base + mid + "comments"

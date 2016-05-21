@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Pedigree submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Pedigree:
     """https://familysearch.org/developers/docs/api/examples#pedigree"""
@@ -9,7 +13,7 @@ class Pedigree:
         """https://familysearch.org/developers/docs/api/examples#pedigree"""
         pass
 
-    def ancestry(self, pid,**kwargs):
+    def ancestry(self, pid, **kwargs):
         """https://familysearch.org/developers/docs/api/tree/Ancestry_resource"""
         return self._add_query_params(
             self.tree_base + 'ancestry?person=' + pid, kwargs)

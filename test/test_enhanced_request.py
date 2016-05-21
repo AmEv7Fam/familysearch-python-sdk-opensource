@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 """
 Test the EnhancedRequest object contained in __init__.py
 """
+
 # import system modules
 from __future__ import print_function, unicode_literals
 import json
@@ -26,6 +28,7 @@ from familysearch import Request
 
 BASE_TEST_URL = "http://httpbin.org"
 
+
 class TestEnhancedRequest(util.FSTemplateTest):
     """Test the EnhancedRequest object contained in __init__.py"""
 
@@ -44,11 +47,9 @@ class TestEnhancedRequest(util.FSTemplateTest):
         util.FSTemplateTest.setUp(self)
         self.base_url = BASE_TEST_URL
 
-
     # teardown
     def tearDown(self):
         util.FSTemplateTest.tearDown(self)
-
 
     @staticmethod
     def _hr():
@@ -85,7 +86,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
                 'Accept-Encoding': 'identity',
                 'User-Agent': 'Python-urllib/3.5',
                 'Host': 'httpbin.org',
-                #'Connection': 'close',
+                # 'Connection': 'close',
             },
             'data': '',
             'files': {},
@@ -107,19 +108,18 @@ class TestEnhancedRequest(util.FSTemplateTest):
         # self._hr()
         # self._show_in_out(actual.get('headers', {}).keys(), expected['headers'].keys(), "actual[headers]", "expected[headers]")
         self.assertTrue(actual.get('headers', {}).keys() ==
-            expected['headers'].keys())
-
+                        expected['headers'].keys())
 
     def test_get(self):
         expected = {
             'args': {},
             'origin': '192.168.1.70',
             'headers': {
-                #'X-Request-Id': 'e4f0cb78-afc7-4617-aac1-a0c13fa746cc',
+                # 'X-Request-Id': 'e4f0cb78-afc7-4617-aac1-a0c13fa746cc',
                 'Accept-Encoding': 'identity',
                 'User-Agent': 'Python-urllib/3.5',
                 'Host': 'httpbin.org',
-                #'Connection': 'close',
+                # 'Connection': 'close',
             },
             'url': 'http://httpbin.org/get',
         }
@@ -130,8 +130,7 @@ class TestEnhancedRequest(util.FSTemplateTest):
         self.assertTrue(actual)
         self.assertTrue(actual.keys() == expected.keys())
         self.assertTrue(actual.get('headers', {}).keys() ==
-            expected['headers'].keys())
-
+                        expected['headers'].keys())
 
     def test_head(self):
         expected = [
@@ -146,19 +145,18 @@ class TestEnhancedRequest(util.FSTemplateTest):
         url = self.base_url + '/get'
         request = Request(url, method='HEAD')
         response = urlopen(request)
-        #print("dir(response):", dir(response))
-        #print("headers:", type(response.headers), response.headers.__class__)
-        #print(response.headers.__class__, dir(response.headers))
+        # print("dir(response):", dir(response))
+        # print("headers:", type(response.headers), response.headers.__class__)
+        # print(response.headers.__class__, dir(response.headers))
         actual = response.headers
         self.assertTrue(actual)
         expected_keys = [k for k, v in expected]
         actual_keys = [k.lower() for k in actual.keys()]
         expected_keys.sort()
         actual_keys.sort()
-        #self._hr()
-        #self._show_in_out(actual_keys, expected_keys, "actual keys", "expected keys")
+        # self._hr()
+        # self._show_in_out(actual_keys, expected_keys, "actual keys", "expected keys")
         self.assertTrue(actual_keys == expected_keys)
-
 
     def test_options(self):
         expected = [
@@ -182,10 +180,9 @@ class TestEnhancedRequest(util.FSTemplateTest):
         actual_keys = [k.lower() for k in actual.keys()]
         expected_keys.sort()
         actual_keys.sort()
-        #self._hr()
-        #self._show_in_out(actual_keys, expected_keys, "actual keys", "expected keys")
+        # self._hr()
+        # self._show_in_out(actual_keys, expected_keys, "actual keys", "expected keys")
         self.assertTrue(actual_keys == expected_keys)
-
 
     def test_post(self):
         expected = {
@@ -194,12 +191,12 @@ class TestEnhancedRequest(util.FSTemplateTest):
             'origin': '192.168.1.70',
             'headers': {
                 'Content-Length': '21',
-                #'X-Request-Id': 'e4f0cb78-afc7-4617-aac1-a0c13fa746cc',
+                # 'X-Request-Id': 'e4f0cb78-afc7-4617-aac1-a0c13fa746cc',
                 'Accept-Encoding': 'identity',
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'User-Agent': 'Python-urllib/3.5',
                 'Host': 'httpbin.org',
-                #'Connection': 'close',
+                # 'Connection': 'close',
             },
             'data': '',
             'files': {},
@@ -218,18 +215,17 @@ class TestEnhancedRequest(util.FSTemplateTest):
         expected_keys = list(expected.keys())
         actual_keys.sort()
         expected_keys.sort()
-        #self._hr()
-        #self._show_in_out(actual_keys, expected_keys, "actual keys", "expected keys")
+        # self._hr()
+        # self._show_in_out(actual_keys, expected_keys, "actual keys", "expected keys")
         self.assertTrue(actual_keys == expected_keys)
         akeys = list(actual.get('headers', {}).keys())
         ekeys = list(expected['headers'].keys())
         akeys.sort()
         ekeys.sort()
-        #self._hr()
-        #self._show_in_out(akeys, ekeys, "actual head keys", "expected head keys")
+        # self._hr()
+        # self._show_in_out(akeys, ekeys, "actual head keys", "expected head keys")
         self.assertTrue(akeys == ekeys)
         self.assertTrue(actual.get('form', None) == expected['form'])
-
 
     def test_put(self):
         expected = {
@@ -238,11 +234,11 @@ class TestEnhancedRequest(util.FSTemplateTest):
             'origin': '192.168.1.70',
             'headers': {
                 'Content-Length': '0',
-                #'X-Request-Id': 'e4f0cb78-afc7-4617-aac1-a0c13fa746cc',
+                # 'X-Request-Id': 'e4f0cb78-afc7-4617-aac1-a0c13fa746cc',
                 'Accept-Encoding': 'identity',
                 'User-Agent': 'Python-urllib/3.5',
                 'Host': 'httpbin.org',
-                #'Connection': 'close'
+                # 'Connection': 'close'
             },
             'data': '',
             'files': {},

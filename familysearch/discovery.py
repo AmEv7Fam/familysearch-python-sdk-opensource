@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Discovery submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Discovery(object):
     """https://familysearch.org/developers/docs/api/tree/FamilySearch_Collections_resource"""
@@ -11,8 +15,8 @@ class Discovery(object):
         # until absolutely necessary...
         self.root_collection = self.get(self.base + '/.well-known/collection')
         self.subcollections = self.get(self.root_collection['response']
-                                    ['collections'][0]['links']
-                                    ['subcollections']['href'])
+                                       ['collections'][0]['links']
+                                       ['subcollections']['href'])
         self.collections = {}
         self.fix_discovery()
 

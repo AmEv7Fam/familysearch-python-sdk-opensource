@@ -50,6 +50,7 @@ except KeyError as e:
     print("KeyError:", str(e))
     raise
 
+
 def qshow():
     def hr(): print("="*80)
     hr()
@@ -77,10 +78,12 @@ def qshow():
     hr()
 qshow()
 
-fslogin = fs._add_query_params(fslogin, {'response_type': 'code',
-                             'client_id': fs.key,
-                             'redirect_uri': redirect
-                             })
+fslogin = fs._add_query_params(fslogin, {
+                                         'response_type': 'code',
+                                         'client_id': fs.key,
+                                         'redirect_uri': redirect
+                                        })
+
 
 class getter(server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -118,8 +121,8 @@ class getter(server.BaseHTTPRequestHandler):
 
     def logged_in(self):
         string = 'Search given FamilySearch PID (default is your own)<form>'
-        string +='<input type="text" name="pid" value='+ fs.user['personId']
-        string +='><br />input type="submit" value="Submit"></form>'
+        string += '<input type="text" name="pid" value='+ fs.user['personId']
+        string += '><br />input type="submit" value="Submit"></form>'
         return string
 
     def has_pid(self, person):
@@ -139,8 +142,8 @@ class getter(server.BaseHTTPRequestHandler):
         if person['response']['persons'][0]['display']['gender'] == "Male":
             string += 'His'
         else:
-            string +="Her"
-        string +=' lifespan is "'
+            string += "Her"
+        string += ' lifespan is "'
         string += person['persons'][0]['display']['lifespan']
         string += '".<br />'
         return string

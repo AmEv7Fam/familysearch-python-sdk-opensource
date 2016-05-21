@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """Utilities to assist in testing."""
 
 # import system modules
@@ -28,6 +29,7 @@ def get_config():
     config = configparser.ConfigParser()
     config.read(config_path)
     return config
+
 
 class FSTemplateTest(unittest.TestCase):
     """FSTemplateTest is the base class for familysearch tests.

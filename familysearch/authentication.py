@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Authentication submodule"""
+
 # Python imports
 from __future__ import print_function
 
@@ -19,13 +22,15 @@ import json
 
 # Magic
 
+
 class Authentication(object):
+
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#authentication
         Set up the URLs for authentication.
         """
         self.token = self.root_collection['response']['collections'][0]['links']\
-        ['http://oauth.net/core/2.0/endpoint/token']['href']
+            ['http://oauth.net/core/2.0/endpoint/token']['href']
         cookie_handler = HTTPCookieProcessor()
         self.cookies = cookie_handler.cookiejar
         self.opener = build_opener(cookie_handler)
@@ -41,14 +46,17 @@ class Authentication(object):
                                  'password': password,
                                  'client_id': self.key,
                                  'grant_type': 'password'
-                                 })
+                                }
+                               )
         credentials = credentials.encode("utf-8")
         headers = {"Content-type": "application/x-www-form-urlencoded",
-                                 "Accept": "application/json;charset=ISO-8859-1"}
+                   "Accept": "application/json;charset=ISO-8859-1"}
+
         def xprint():
             print("url:", url)
             print("credentials:", credentials)
             print("headers:", headers)
+
         xprint()
         response = self.post(url, credentials, headers)
         self.access_token = response['response']['access_token']
@@ -69,11 +77,13 @@ class Authentication(object):
         self.logged_in = False
         self.cookies.clear()
         url = self.root_collection['response']['collections'][0]['links']\
-        ['http://oauth.net/core/2.0/endpoint/authorize']['href']
-        url = self._add_query_params(url, {'response_type': 'code',
-                                     'client_id': self.key,
-                                     'redirect_uri': ruri
-                                     })
+            ['http://oauth.net/core/2.0/endpoint/authorize']['href']
+        url = self._add_query_params(url,
+                                     {'response_type': 'code',
+                                      'client_id': self.key,
+                                      'redirect_uri': ruri,
+                                     }
+                                    )
         webbrowser.open(url)
         server.HTTPServer(('', 63342), Getter).handle_request()
         # Now that we have the authentication token, grab the access token.
@@ -87,12 +97,13 @@ class Authentication(object):
         url = self.token
         credentials = urlencode({'grant_type': 'authorization_code',
                                  'code': code,
-                                 'client_id': self.key
-                                  })
+                                 'client_id': self.key,
+                                }
+                               )
         credentials = credentials.encode("utf-8")
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "application/json"}
-        response = self.post(url, credentials ,headers, nojson=True)
+        response = self.post(url, credentials, headers, nojson=True)
         response = json.loads()
         self.access_token = response['response']['access_token']
         self.logged_in = True
@@ -108,7 +119,7 @@ class Authentication(object):
         self.cookies.clear()
         url = self.token
         credentials = urlencode({'ip_address': ip_address,
-                                 #TODO: make IP address generiation automatic
+                                 # TODO: make IP address generiation automatic
                                  'client_id': self.key,
                                  'grant_type': 'unauthenticated_session'
                                  })
@@ -130,6 +141,7 @@ class Authentication(object):
         self.access_token = None
         self.cookies.clear()
         self.fix_discovery()
+
 
 class Getter(server.BaseHTTPRequestHandler):
     """Sample login page, mostly for oauth_desktop_login."""

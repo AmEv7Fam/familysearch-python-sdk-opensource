@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Records submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Records:
     """https://familysearch.org/developers/docs/api/resources#records"""

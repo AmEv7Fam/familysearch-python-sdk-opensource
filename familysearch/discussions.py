@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Discussions submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Discussions:
     """https://familysearch.org/developers/docs/api/resources#discussions"""

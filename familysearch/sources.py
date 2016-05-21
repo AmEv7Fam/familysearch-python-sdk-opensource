@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Vocabularies submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Sources:
     """https://familysearch.org/developers/docs/api/resources#sources"""

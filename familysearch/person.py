@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Person submodule"""
+
 # Python imports
 
 # Magic
+
 
 class Person:
     """https://familysearch.org/developers/docs/api/examples#person"""
@@ -27,7 +31,7 @@ class Person:
 
     def person_children(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Children_of_a_Person_resource"""
-        return self.get(self.person_base+pid+"/children")
+        return self.get(self.person_base + pid + "/children")
 
     def spouse_relationships(self, pid, **kwargs):
         """https://familysearch.org/developers/docs/api/tree/Person_Relationships_to_Spouses_resource"""
@@ -52,7 +56,7 @@ class Person:
     def person_conclusion(self, pid, cid):
         """https://familysearch.org/developers/docs/api/tree/Person_Conclusion_resource"""
         return self.person_base + pid + "conclusions" + cid
-    
+
     def person_source_references(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Source_References_resource"""
         return self.person_base + pid + "source-references"
@@ -60,7 +64,7 @@ class Person:
     def person_source_reference(self, pid, srid):
         """https://familysearch.org/developers/docs/api/tree/Person_Source_References_resource"""
         return self.person_base + pid + "source-references/" + srid
-    
+
     def person_sources_query(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Sources_Query_resource"""
         return self.person_base + pid + "sources"
@@ -104,7 +108,7 @@ class Person:
         """https://familysearch.org/developers/docs/api/tree/Preferred_Parent_Relationship_resource"""
         if uid is None:
             uid = self.user['userId']
-        return self.user_base + uid +"/preferred-parent-relationships/" + pid
+        return self.user_base + uid + "/preferred-parent-relationships/" + pid
 
     def person_memories(self, pid):
         """https://familysearch.org/developers/docs/api/tree/Person_Memories_resource"""
