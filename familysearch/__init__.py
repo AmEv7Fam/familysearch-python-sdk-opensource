@@ -64,7 +64,7 @@ from familysearch.vocabularies import Vocabularies
 
 # Magic
 
-__version__ = '1.2.0'
+__version__ = '1.3.0alpha'
 
 
 class Request(BaseRequest):
@@ -120,13 +120,13 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         self.logged_in = bool(self.access_token)
 
         Discovery.__init__(self)
-        super().__init__()
+        super(FamilySearch, self).__init__()
         # Discovery needs to explicitly be first, as it is the hypermedia
         # engine.
 
         # There might be a better fix, but it's better than nothing.
 
-        
+
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.
