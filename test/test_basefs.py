@@ -40,7 +40,7 @@ class TestFamilySearch(util.FSTemplateTest):
         fs = familysearch.FamilySearch(self.agent, self.devkey)
         self.assertTrue(fs.base == 'https://sandbox.familysearch.org')
         print("Base is correct.")
-        self.assertTrue(fs.key == self.devkey)
+        self.assertTrue(fs.dev_key == self.devkey)
         print("Key is correct.")
         self.assertTrue(isinstance(fs.opener, request.OpenerDirector))
         print("HTTP opener works.")
