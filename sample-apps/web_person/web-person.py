@@ -23,16 +23,10 @@ config_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/config.ini"
 
 config = configparser.ConfigParser()
 config.read(config_path)
-try:
-    app_key = config["fskey"]["devkey"]
-    base = config["fskey"]["base"]
-    port = config["server"]["port"]
-    redirect = config["server"]["redirect_uri"]
-except AttributeError:
-    app_key = config.get("fskey", "devkey")
-    base = config.get("fskey", "base")
-    port = config.get("server", "port")
-    redirect = config.get("server", "redirect_uri")
+dev_key = config.get("fskey", "devkey")
+base = config.get("fskey", "base")
+port = config.get("server", "port")
+redirect = config.get("server", "redirect_uri")
 
 url = "http://localhost" + (":" + port) if port is not "80" else ""
 ruri = ""
@@ -41,7 +35,7 @@ for x in redirect[::-1]:
     if x is "/":
         break
 
-fs = FamilySearch("FSPySDK/SampleApps", app_key, base=base)
+fs = FamilySearch("FSPySDK/SampleApps", dev_key, base=base)
 
 try:
     fslogin = fs.root_collection["response"]['collections'][0]['links']\
@@ -76,39 +70,44 @@ def qshow():
     print("""fs.root_collection["response"]["collections"][0]["links"]['http://oauth.net/core/2.0/endpoint/authorize']['href']: ...""")
     pp.pprint(fs.root_collection["response"]["collections"][0]["links"]['http://oauth.net/core/2.0/endpoint/authorize']['href'])
     hr()
-qshow()
+# qshow()
 
+print("fslogin:", fslogin)
 fslogin = fs._add_query_params(fslogin, {
                                          'response_type': 'code',
-                                         'client_id': fs.key,
+                                         'client_id': fs.dev_key,
                                          'redirect_uri': redirect
                                         })
+print("fslogin:", fslogin)
 
 
 class getter(server.BaseHTTPRequestHandler):
+
     def do_GET(self):
         self.send_response(code=200)
-        self.send_header("Content-type", "text/html")
+        self.send_header("Content-type", "text/html;charset=utf-8")
         self.end_headers()
         path = self.path
+        print("path:", path)
 
         top = "<!DOCTYPE html><html><head><title>FSPySDK Sample App</title>"
+        top += '<meta charset="UTF-8">'
         middle = "</head><body>"
         bottom = "</body></html>"
         if path.startswith(ruri):
             bottom = self.get_code(path) + bottom
         else:
             if fs.logged_in:
-                middle += logged_in()
+                middle += self.logged_in()
                 if path.startswith("/?pid="):
                     pid = parse_qs(path)["/?pid"][0]
-                    person = fs.get_person(pid)
-                    middle += has_pid(person)
+                    person = fs.get(fs.person(pid))  # = fs.get_person(pid)
+                    middle += self.has_pid(person)
             else:
                 middle = self.not_logged_in() + middle
                 middle = self.not_logged_in()
 
-            body = top + middle + bottom
+        body = top + middle + bottom
 
         self.wfile.write(body.encode("utf-8"))
 
@@ -120,9 +119,34 @@ class getter(server.BaseHTTPRequestHandler):
         return string
 
     def logged_in(self):
+        def show_fs():
+            print("="*80)
+            pp = pprint.PrettyPrinter(width=120, indent=2)
+            for k in sorted(list(fs.__dict__.keys())):
+                if k[0] == '_': continue
+                v = fs.__dict__[k]
+                vt = type(v)
+                if isinstance(v, (bool, type(''), type(b''), type(u''), tuple, list, set, frozenset)):
+                    print(k, vt, v)
+                elif isinstance(v, (dict,)):
+                    print(k, vt, "...")
+                    pp.pprint(v)
+                else:
+                    print(k, vt)
+                print("")
+            print("="*80)
+
+        def p():
+            show_fs()
+            print("fs.user:", type(fs.user), fs.user)
+            print("fs.current_user():", fs.current_user())
+            print("fs.current_user_person():", fs.current_user_person())
+            print("fs.agent('x'):", fs.agent('x'))
+            print("fs.current_user_history():", fs.current_user_history())
+        p()
         string = 'Search given FamilySearch PID (default is your own)<form>'
-        string += '<input type="text" name="pid" value='+ fs.user['personId']
-        string += '><br />input type="submit" value="Submit"></form>'
+        string += '<input type="text" name="pid" value=' + '"KW41-44D"' # fs.user['personId']
+        string += '><br /><input type="submit" value="Submit"></form>'
         return string
 
     def has_pid(self, person):
