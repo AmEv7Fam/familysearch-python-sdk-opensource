@@ -3,7 +3,7 @@
 * [`place_group(pgid)`](https://familysearch.org/developers/docs/api/places/Place_Group_resource)
 * [`place(pid)`](https://familysearch.org/developers/docs/api/places/Place_resource)
 * [`place_description_children()`](https://familysearch.org/developers/docs/api/places/Place_Description_Children_resource)
-* [`place_type(ptid):`](https://familysearch.org/developers/docs/api/places/Place_Type_resource)
+* [`place_type(ptid)`](https://familysearch.org/developers/docs/api/places/Place_Type_resource)
 * [`place_type_group(ptgid)`](https://familysearch.org/developers/docs/api/places/Place_Type_Group_resource)
 * [`place_types(self)`](https://familysearch.org/developers/docs/api/places/Place_Types_resource)
 * [`def place_type_groups(self):`](https://familysearch.org/developers/docs/api/places/Place_Type_Groups_resource)
