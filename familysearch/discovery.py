@@ -9,9 +9,11 @@
 
 class Discovery(object):
     """https://familysearch.org/developers/docs/api/tree/FamilySearch_Collections_resource"""
+
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#discovery"""
-        # TODO: Set it up so that it doesn't need to call the sumbodules
+
+        # TODO: Set it up so that it doesn't need to call the submodules
         # until absolutely necessary...
         self.root_collection = self.get(self.base + '/.well-known/collection')
         self.subcollections = self.get(self.root_collection['response']
@@ -21,8 +23,8 @@ class Discovery(object):
         self.fix_discovery()
 
     def update_collection(self, collection):
-            response = self.get(self.collections[collection]['url'])['response']
-            self.collections[collection]['response'] = response
+        response = self.get(self.collections[collection]['url'])['response']
+        self.collections[collection]['response'] = response
 
     def fix_discovery(self):
         """The Hypermedia items are semi-permanent. Some things change
@@ -34,7 +36,7 @@ class Discovery(object):
             if item['id'] == 'LDSO':
                 try:
                     self.update_collection("LDSO")
-                except:
+                except KeyError:
                     self.lds_user = False
                 else:
                     self.lds_user = True

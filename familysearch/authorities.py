@@ -9,8 +9,10 @@
 
 class Authorities():
     """https://familysearch.org/developers/docs/api/resources#authorities"""
+
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#authorities."""
+
         pass
 
     def dates(self, **kwargs):
