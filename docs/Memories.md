@@ -1,7 +1,7 @@
 * [`memories(**kwargs)`](https://familysearch.org/developers/docs/api/memories/Memories_resource)
 * [`memory(mid)`](https://familysearch.org/developers/docs/api/memories/Memory_resource)
 * [`user_memories(**kwargs)`](https://familysearch.org/developers/docs/api/memories/User_Memories_resource)
-* [`memory_personas(mid):`](https://familysearch.org/developers/docs/api/memories/Memory_Personas_resource)
+* [`memory_personas(mid)`](https://familysearch.org/developers/docs/api/memories/Memory_Personas_resource)
 * [`memory_persona(mid, pid)`](https://familysearch.org/developers/docs/api/memories/Memory_Persona_resource)
 * [`memory_comments(mid)`](https://familysearch.org/developers/docs/api/memories/Memory_Comments_resource)
 * [`memories_comment(mid, cmid)`](https://familysearch.org/developers/docs/api/memories/Memories_Comment_resource)

@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Authentication submodule"""
+
 # Python imports
+from __future__ import print_function
 
 try:
     # Python 3
@@ -18,33 +22,49 @@ import json
 
 # Magic
 
+
 class Authentication(object):
+
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#authentication
         Set up the URLs for authentication.
         """
+
         self.token = self.root_collection['response']['collections'][0]['links']\
-        ['http://oauth.net/core/2.0/endpoint/token']['href']
+            ['http://oauth.net/core/2.0/endpoint/token']['href']
         cookie_handler = HTTPCookieProcessor()
         self.cookies = cookie_handler.cookiejar
         self.opener = build_opener(cookie_handler)
+        self.logged_in = False
+        self.access_token = None
 
     def login(self, username, password):
         """Log into FamilySearch using Basic Authentication.
         This mechanism is available only to approved developer keys.
         """
+
         self.logged_in = False
         self.cookies.clear()
         url = self.token
         credentials = urlencode({'username': username,
                                  'password': password,
-                                 'client_id': self.key,
+                                 'client_id': self.dev_key,
                                  'grant_type': 'password'
-                                 })
+                                }
+                               )
         credentials = credentials.encode("utf-8")
         headers = {"Content-type": "application/x-www-form-urlencoded",
-                                 "Accept": "application/json"}
+                   "Accept": "application/x-fs-v1+json;application/x-gedcomx-v1+json;application/x-gedcomx-atom+json;application/json",
+                   "Accept-Charset": "utf-8"}
+
+        def xprint():
+            print("url:", url)
+            print("credentials:", credentials)
+            print("headers:", headers)
+
+        xprint()
         response = self.post(url, credentials, headers)
+        print("authentication.login:response:", response)
         self.access_token = response['response']['access_token']
         self.logged_in = True
         self.fix_discovery()
@@ -52,22 +72,25 @@ class Authentication(object):
     def oauth_desktop_login(self, ruri=None):
         """
         Log into FamilySearch using OAuth2 Authentication.
-        This is primarily a convenience function for destop apps.
+        This is primarily a convenience function for desktop apps.
         Not normally intended for production apps, but should
         work while waiting for approval for password login.
         Default Redirect URI is "http://localhost:63342/fslogin",
         but you can set your own as a paramater.
         """
+
         if ruri is None:
             ruri = "http://localhost:63342/fslogin"
         self.logged_in = False
         self.cookies.clear()
         url = self.root_collection['response']['collections'][0]['links']\
-        ['http://oauth.net/core/2.0/endpoint/authorize']['href']
-        url = self._add_query_params(url, {'response_type': 'code',
-                                     'client_id': self.key,
-                                     'redirect_uri': ruri
-                                     })
+            ['http://oauth.net/core/2.0/endpoint/authorize']['href']
+        url = self._add_query_params(url,
+                                     {'response_type': 'code',
+                                      'client_id': self.dev_key,
+                                      'redirect_uri': ruri,
+                                     }
+                                    )
         webbrowser.open(url)
         server.HTTPServer(('', 63342), Getter).handle_request()
         # Now that we have the authentication token, grab the access token.
@@ -78,17 +101,26 @@ class Authentication(object):
         Convenience function for Web servers to log into FamilySearch
         with the token code FamilySearch hands you.
         """
+
         url = self.token
         credentials = urlencode({'grant_type': 'authorization_code',
                                  'code': code,
-                                 'client_id': self.key
-                                  })
+                                 'client_id': self.dev_key,
+                                }
+                               )
         credentials = credentials.encode("utf-8")
         headers = {"Content-type": "application/x-www-form-urlencoded",
-                   "Accept": "application/json"}
-        response = self.post(url, credentials ,headers, nojson=True)
-        response = json.loads()
-        self.access_token = response['response']['access_token']
+                   "Accept": "application/x-fs-v1+json;application/x-gedcomx-v1+json;application/x-gedcomx-atom+json;application/json",
+                   "Accept-Charset": "utf-8"}
+        response = self.post(url, credentials, headers, nojson=True)
+        def rprint(response):
+            import pprint
+            pp = pprint.PrettyPrinter(indent=2, width=120)
+            pp.pprint(response)
+        #rprint(response)
+        json_response = json.loads(response["response"])
+        self.access_token = json_response['access_token']
+        print("access_token:", self.access_token)
         self.logged_in = True
         self.fix_discovery()
 
@@ -98,16 +130,18 @@ class Authentication(object):
         Has very limited read-only access.
         Not intended for general use.
         """
+
         self.logged_in = False
         self.cookies.clear()
         url = self.token
         credentials = urlencode({'ip_address': ip_address,
-                                 #TODO: make IP address generiation automatic
-                                 'client_id': self.key,
+                                 # TODO: make IP address generation automatic
+                                 'client_id': self.dev_key,
                                  'grant_type': 'unauthenticated_session'
-                                 })
+                                })
         headers = {"Content-type": "application/x-www-form-urlencoded",
-                   "Accept": "application/json"}
+                   "Accept": "application/x-fs-v1+json;application/x-gedcomx-v1+json;application/x-gedcomx-atom+json;application/json",
+                   "Accept-Charset": "utf-8"}
         credentials = credentials.encode("utf-8")
         response = self.post(url, credentials, headers)
         self.access_token = response['response']['access_token']
@@ -118,6 +152,7 @@ class Authentication(object):
         """
         Log the current session out of FamilySearch.
         """
+
         self.logged_in = False
         url = self.token + "?access_token=" + self.access_token
         self.delete(url)
@@ -125,12 +160,15 @@ class Authentication(object):
         self.cookies.clear()
         self.fix_discovery()
 
+
 class Getter(server.BaseHTTPRequestHandler):
     """Sample login page, mostly for oauth_desktop_login."""
+
     def do_GET(self):
         """Sample page to get Oauth code, and log in with."""
+
         self.send_response(code=200)
-        self.send_header("Content-type", "text/html")
+        self.send_header("Content-type", "text/html;charset=utf-8")
         self.end_headers()
         path = self.path
         global qs
@@ -141,4 +179,3 @@ class Getter(server.BaseHTTPRequestHandler):
         sendme += "<p>You can safely close this page.</p></body></html>"
         sendme = sendme.encode("UTF-8")
         self.wfile.write(sendme)
-        

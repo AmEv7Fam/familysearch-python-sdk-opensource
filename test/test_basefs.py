@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+
 """
 Test the base familysearch module contained in __init__.py
 """
+
 # import system modules
+from __future__ import print_function
 import json
 try:
     from urllib import request
@@ -15,9 +18,10 @@ from test import util
 # import familysearch module
 import familysearch
 
+
 class TestFamilySearch(util.FSTemplateTest):
     """Test the base familysearch module contained in __init__.py"""
-    
+
     def runTest(self):
         self.setUp()
         self.test_base_fs_creation()
@@ -36,10 +40,9 @@ class TestFamilySearch(util.FSTemplateTest):
         fs = familysearch.FamilySearch(self.agent, self.devkey)
         self.assertTrue(fs.base == 'https://sandbox.familysearch.org')
         print("Base is correct.")
-        self.assertTrue(fs.key == self.devkey)
+        self.assertTrue(fs.dev_key == self.devkey)
         print("Key is correct.")
         self.assertTrue(isinstance(fs.opener, request.OpenerDirector))
         print("HTTP opener works.")
-        self.assertTrue(fs.access_token == None)
+        self.assertIsNone(fs.access_token)
         print("Access token works.")
-

@@ -1,14 +1,18 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Discussions submodule"""
+
 # Python imports
 
 # Magic
 
+
 class Discussions:
     """https://familysearch.org/developers/docs/api/resources#discussions"""
+
     def __init__(self):
         """https://familysearch.org/developers/docs/api/resources#discussions"""
         self.discuss_base = self.base + "/platform/discussions/discussions/"
-        pass
 
     def discussions(self):
         """https://familysearch.org/developers/docs/api/discussions/Discussions_resource"""
