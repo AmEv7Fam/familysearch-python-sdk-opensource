@@ -1,12 +1,18 @@
+# -*- coding: utf-8 -*-
+
 """FamilySearch Records submodule"""
+
 # Python imports
 
 # Magic
 
+
 class Records:
     """https://familysearch.org/developers/docs/api/resources#records"""
+
     def __init__(self):
         """https://familysearch.org/developers/docs/api/examples#records"""
+
         pass
 
     # There might be a way to reverse-engineer something from the resource,

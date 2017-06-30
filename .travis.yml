@@ -5,11 +5,12 @@ python:
    - "3.2"
    - "3.3"
    - "3.4"
+   - "3.5"
 
 install: pip install coveralls
 
 # SDK does not have any external dependencies.
-  
+
 script: coverage run --source=familysearch setup.py test
 
 after_success: coveralls

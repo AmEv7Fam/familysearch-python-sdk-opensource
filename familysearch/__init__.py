@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 # For PyLint users:
-# I'll get back to you to the recommeneded command.
-r"""This is a WIP, unofficial SDK for accessing
+# I'll get back to you to the recommended command.
+
+"""This is a WIP, unofficial SDK for accessing
 the FamilySearch API.
 Currently designed to support Python 3.2+ and 2.6+.
 
@@ -23,7 +26,6 @@ fs.logout()
 """
 
 # Python imports
-
 
 try:
     # Python 3
@@ -66,13 +68,14 @@ from familysearch.vocabularies import Vocabularies
 
 # Magic
 
-__version__ = '1.2.0'
+__version__ = '1.3.0alpha'
 
 
 class Request(BaseRequest):
     """Add ability for the Request object to allow it to handle
     additional methods.
     """
+
     def __init__(self, *args, **kwargs):
         self._method = kwargs.pop('method', None)
         BaseRequest.__init__(self, *args, **kwargs)
@@ -81,6 +84,7 @@ class Request(BaseRequest):
         """The Request object has been enhanced to handle PUT, DELETE, OPTIONS,
         and HEAD request methods.
         """
+
         if self._method:
             return self._method
         else:
@@ -98,22 +102,21 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
     ...needs to be re-written...
     """
 
-    def __init__(self, agent, key, session=None,
+    def __init__(self, agent, dev_key, session=None,
                  base='https://sandbox.familysearch.org'):
-
         """Instantiate a FamilySearch proxy object.
 
         Keyword arguments:
         agent -- User-agent string to use for requests
-        key -- FamilySearch developer key
+        dev_key -- FamilySearch developer key
                (optional if reusing an existing session ID)
         session (optional) -- existing session ID to reuse
         base (optional) -- base URL for the API;
                            defaults to 'https://sandbox.familysearch.org'
         """
 
-        self.agent = '%s FSPySDK/%s' % (agent, __version__)
-        self.key = key
+        self.user_agent = '%s FSPySDK/%s' % (agent, __version__)
+        self.dev_key = dev_key
         self.access_token = session
         self.base = base
         self.user_base = self.base + "/platform/users/"
@@ -131,7 +134,6 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
 
         # There might be a better fix, but it's better than nothing.
 
-        
     def _request(self, url, data=None, headers=None, method=None, nojson=False):
         """
         Make a request to the FamilySearch API.
@@ -142,6 +144,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
 
         Returns a file-like object representing the response.
         """
+
         if headers is None:
             headers = {}
         if data:
@@ -153,26 +156,28 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
             try:
                 data = data.encode('utf-8')
             except AttributeError:
-                #Some things are not JSON, and need to be sent as bytes!
+                # Some things are not JSON, and need to be sent as bytes!
                 pass
         request = Request(url, data, headers, method=method)
         if not nojson:
             if method is not "GET" and "Content-type" not in request.headers:
                 request.add_header('Content-type', 'application/x-fs-v1+json')
             if 'Accept' not in request.headers:
-                request.add_header('Accept', 'application/json')
+                request.add_header('Accept', 'application/x-fs-v1+json;application/x-gedcomx-v1+json;application/x-gedcomx-atom+json;application/json')
+            if 'Accept-Charset' not in request.headers:
+                request.add_header('Accept-Charset', 'UTF-8')
         if self.logged_in and not self.cookies:
             # Add sessionId parameter to url if cookie is not set
             request.add_header('Authorization', 'Bearer ' + self.access_token)
-        request.add_header('User-Agent', self.agent)
+        request.add_header('User-Agent', self.user_agent)
         try:
             return self.opener.open(request)
         except HTTPError as error:
-            eh = dict(error.headers)
+            error_headers = dict(error.headers)
             if error.code == 401:
                 self.logged_in = False
             if error.code == 429:
-                time.sleep(eh['Retry-after']/1000)
+                time.sleep(error_headers['Retry-after'] / 1000)
                 return self._request(url, data, headers, method, nojson)
             raise
 
@@ -182,8 +187,8 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
 
         For example, adding sub to http://example.com/path?query
         becomes http://example.com/path/sub?query.
-
         """
+
         parts = urlsplit(url)
         path = parts[2] + '/' + subpath
         return urlunsplit((parts[0], parts[1], path, parts[3], parts[4]))
@@ -192,6 +197,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         """Add the specified query parameters to the given URL.
         Parameters can be passed either as a dictionary or as keyword arguments.
         """
+
         if params is None:
             params = {}
         parts = urlsplit(url)
@@ -207,6 +213,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         Take JSON from FamilySearch response, and allow Python to handle it.
         Also, inject headers into response.
         """
+
         headers = dict(response.info())
         response = response.read()
         response = response.decode("utf-8")
@@ -223,25 +230,30 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
 
     def post(self, url, data=None, headers=None, nojson=False):
         """HTTP POST request"""
+
         return self._fs2py(self._request(
             url, data, headers, "POST", nojson), nojson)
 
     def put(self, url, data=None, headers=None, nojson=False):
         """HTTP PUT request"""
+
         return self._fs2py(self._request(
             url, data, headers, "PUT", nojson), nojson)
 
     def head(self, url, data=None, headers=None, nojson=False):
         """HTTP HEAD request"""
+
         return self._fs2py(self._request(
             url, data, headers, "HEAD", nojson), nojson)
 
     def options(self, url, data=None, headers=None, nojson=False):
         """HTTP OPTIONS request"""
+
         return self._fs2py(self._request(
             url, data, headers, "OPTIONS", nojson), nojson)
 
     def delete(self, url, data=None, headers=None, nojson=False):
         """HTTP DELETE request"""
+
         return self._fs2py(self._request(
             url, data, headers, "DELETE", nojson), nojson)

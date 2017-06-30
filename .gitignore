@@ -12,6 +12,8 @@ lib
 include
 man
 share
+__pycache__
+*.egg-info
 
 # Ignore Python byte compiled files and Windows GUI Python files
 *.pyc
@@ -20,6 +22,8 @@ share
 
 # Ignore text editor backup files
 *~
+*.bak
 
-# Ignore test/config.ini
+# Ignore all config.ini file: they contain private config info
 test/config.ini
+sample-apps/*/config.ini

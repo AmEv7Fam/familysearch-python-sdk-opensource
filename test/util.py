@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 """Utilities to assist in testing."""
 
 # import system modules
+from __future__ import print_function
 import inspect
 import os
 import sys
@@ -28,6 +30,7 @@ def get_config():
     config.read(config_path)
     return config
 
+
 class FSTemplateTest(unittest.TestCase):
     """FSTemplateTest is the base class for familysearch tests.
     """
@@ -36,15 +39,15 @@ class FSTemplateTest(unittest.TestCase):
         unittest.TestCase.setUp(self)
         self.config = get_config()
         try:
-            #Python 2
+            # Python 2
             self.user = self.config.get('fsTest', 'user')
             self.password = self.config.get('fsTest', 'password')
-            self.devkey = self.config.get('fsTest', 'devkey')                
+            self.devkey = self.config.get('fsTest', 'devkey')
         except AttributeError:
             # Python 3
             self.devkey = self.config["fsTest"]["devkey"]
-            self.username = self.config["fsTest"]["username"]
-            self.username = self.config["fsTest"]["password"]
+            self.user = self.config["fsTest"]["username"]
+            self.password = self.config["fsTest"]["password"]
 
     # common teardown
     def tearDown(self):
