@@ -31,12 +31,14 @@ try:
     from urllib.request import build_opener
     from urllib.error import HTTPError
     from urllib.parse import(urlsplit, urlunsplit, parse_qs, urlencode)
+    PY3 = True
 except ImportError:
     # Python 2
     from urllib import urlencode
     from urllib2 import Request as BaseRequest
     from urllib2 import build_opener, HTTPError
     from urlparse import(urlsplit, urlunsplit, parse_qs)
+    PY3 = False
 
 import json
 import time
@@ -120,7 +122,10 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
         self.logged_in = bool(self.access_token)
 
         Discovery.__init__(self)
-        super().__init__()
+        if PY3:
+            super().__init__()
+        else:
+            super(FamilySearch, self).__init__()
         # Discovery needs to explicitly be first, as it is the hypermedia
         # engine.
 
