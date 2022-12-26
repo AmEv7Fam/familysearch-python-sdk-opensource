@@ -152,7 +152,7 @@ class FamilySearch(Authentication, Authorities, ChangeHistory, Discovery,
                 pass
         request = Request(url, data, headers, method=method)
         if not nojson:
-            if method is not "GET" and "Content-type" not in request.headers:
+            if method != "GET" and "Content-type" not in request.headers:
                 request.add_header('Content-type', 'application/x-fs-v1+json')
             if 'Accept' not in request.headers:
                 request.add_header('Accept', 'application/json')
